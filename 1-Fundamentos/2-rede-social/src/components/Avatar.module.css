@@ -1,0 +1,33 @@
+.avatar { 
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+
+    /* segunda forma de fazer isso */
+
+    /* não expreme o elemento, faz ele ter o tamanho que total com as props setadas */
+    /* box-sizing: initial;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;*/
+}
+
+.avatarWithBorder {
+    width: calc(3rem + 12px);
+    height: calc(3rem + 12px);
+    border-radius: 8px;
+    /* ele usa px no border-radius pq pra que arrendondar mais quando o usuario aumentar ou diminuir a fonte do dispositivo */
+    /* normalmente usa rem para coisas que representam tamanho na tela como altura, largura */
+    border: 4px solid var(--gray-800);
+    outline: 2px solid var(--green-500);
+
+    /* segunda forma de fazer isso */
+
+    /* não expreme o elemento, faz ele ter o tamanho que total com as props setadas */
+    /* box-sizing: initial;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    border: 4px solid var(--gray-800);
+    outline: 2px solid var(--green-500); */
+}
