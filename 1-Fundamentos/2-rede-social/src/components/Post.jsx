@@ -9,20 +9,19 @@ import styles from './Post.module.css'
 
 export function Post({author, content, publishedAt}){
 
-        let [comments, setComments] = useState([
+    let [comments, setComments] = useState([
         {
+            id: 'Adorei seu novo portifa Devon!',
             author: {
                 name: 'Jenny Wilson',
                 avatarUrl: 'https://plus.unsplash.com/premium_photo-1661716909682-d21f1fadb186?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             },
-            content: [
-                'Adorei seu novo portifa Devon!',
-                'Vou entrar la e seguir'
-            ],
+            content: 'Adorei seu novo portifa Devon!',
             likes: 12,
             publishedAt: new Date('2024-02-23 21:13:38')
         },
     ])
+    let [newCommentText, setNewCommentText] = useState('')
 
     // trabalhando com datas de forma nativa no javascript
     // const publishedDateFormatted = new Intl.DateTimeFormat('pt-BR',{
@@ -54,25 +53,41 @@ export function Post({author, content, publishedAt}){
     */
     function handleCreateNewComment() {
         event.preventDefault()
-        console.log('submit')
-        // pegando o valor de um input dentro de um form
 
-        const newComment = {
+        const newCommentFormated = {
+            //essa não é a forma correta de gerar um id unico, apenas coloquei para parar o erro de key
+            id: newCommentText,
             author: {
                 name: 'Alexandra fernandes',
                 avatarUrl: 'https://images.unsplash.com/photo-1537803340330-1dccb2774801?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
             },
-            content: [
-                event.target.comment.value
-            ],
+            content: newCommentText,
             likes: 30,
             publishedAt: new Date('2024-02-22 21:13:38')
         }
-
-        setComments([...comments,{...newComment}])
-
-        event.target.comment.value = ''
+        setComments([...comments,{...newCommentFormated}])
+        setNewCommentText('')
     }
+
+    function handleNewCommentChange(){
+        event.target.setCustomValidity('')
+        setNewCommentText(event.target.value)
+    }
+
+    function handleNewCommentInvalid() {
+        event.target.setCustomValidity('Esse campo é obrigatório')
+    }
+
+    function deleteComment(content) {
+        let commentsWithoutDeleteOne = [...comments];
+        commentsWithoutDeleteOne = commentsWithoutDeleteOne.filter(comment=>{
+            return comment.content!=content
+        })
+        setComments([...commentsWithoutDeleteOne])
+
+    }
+
+    const isNewCommentEmpty = newCommentText.length == 0;
 
     return (
         <article className={styles.post}>
@@ -92,18 +107,28 @@ export function Post({author, content, publishedAt}){
             <div className={styles.content}>
                 {content.map(line => {
                     if(line.type == 'paragraph') {
-                        return (<p>{line.content}</p>)
+                        return (<p key={line.content}>{line.content}</p>)
                     }else if(line.type == 'link') {
-                        return (<p><a href="">{line.content}</a></p>)
+                        return (<p key={line.content}><a href="">{line.content}</a></p>)
                     }
                     return <></>
                 })}
             </div>
             <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
                 <strong>Deixe seu feedback</strong>
-                <textarea name="comment" placeholder="Deixe um comentário" />
+                <textarea 
+                    placeholder="Deixe um comentário" 
+                    onChange={handleNewCommentChange} 
+                    required value={newCommentText} 
+                    onInvalid={handleNewCommentInvalid} 
+                />
                 <footer>
-                    <button type="submit">Publicar</button>
+                    <button 
+                        disabled={isNewCommentEmpty} 
+                        type="submit"
+                    >
+                        Publicar
+                    </button>
                 </footer>
             </form>
             <div className={styles.commentList}>
@@ -111,10 +136,11 @@ export function Post({author, content, publishedAt}){
                     comments.map(comment => {
                         return (
                         <Comment 
+                            key={comment.content}
                             author={comment.author} 
                             content={comment.content}
                             publishedAt={comment.publishedAt} 
-                            likes={comment.likes}
+                            onDeleteComment={deleteComment}
                         />
                         )
                     })
