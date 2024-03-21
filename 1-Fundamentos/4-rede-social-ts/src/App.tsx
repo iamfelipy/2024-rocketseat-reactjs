@@ -13,7 +13,7 @@ function App() {
       id: 1,
       author: {
         authorName: 'Felcam',
-        avatarUrl: 'https://encurtador.com.br/bdTZ1',
+        avatarUrl: 'https://plus.unsplash.com/premium_photo-1708275671991-6b8514fc53ee?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         role: 'Full-Stack Developer'
       },
       content: [
@@ -33,7 +33,7 @@ function App() {
       id: 2,
       author: {
         authorName: 'Vitor Antonio',
-        avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/e19559115aa488fd4cb9438cd24d1955~c5_100x100.jpeg?lk3s=a5d48078&x-expires=1708891200&x-signature=cj1O9QMALTXCzeH%2Fe93DLnyMTTA%3D',
+        avatarUrl: 'https://images.unsplash.com/photo-1710268503377-7fe212765db8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         role: 'Dev Front-End'
       },
       content: [
