@@ -308,4 +308,4 @@ Error generating stack: `+o.message+`
 
   display: flex;
   flex-direction: column;
-`;function vx(){return M.jsxs(yx,{children:[M.jsx(mx,{}),M.jsx(r_,{})]})}function gx(){return M.jsx(o_,{children:M.jsxs(ds,{path:"/",element:M.jsx(vx,{}),children:[M.jsx(ds,{path:"/",element:M.jsx(Ok,{})}),M.jsx(ds,{path:"/history",element:M.jsx(fx,{})})]})})}function _x(){return M.jsx(M.Fragment,{children:M.jsxs(u1,{theme:h1,children:[M.jsx(h_,{children:M.jsx(sk,{children:M.jsx(gx,{})})}),M.jsx(p1,{})]})})}Rl.createRoot(document.getElementById("root")).render(M.jsx(w.StrictMode,{children:M.jsx(_x,{})}));
+`;function vx(){return M.jsxs(yx,{children:[M.jsx(mx,{}),M.jsx(r_,{})]})}function gx(){return M.jsx(o_,{children:M.jsxs(ds,{path:"/",element:M.jsx(vx,{}),children:[M.jsx(ds,{path:"/",element:M.jsx(Ok,{})}),M.jsx(ds,{path:"/history",element:M.jsx(fx,{})})]})})}const _x="_teste_ctit1_1",wx={teste:_x};function kx(){return M.jsx("div",{className:wx.teste,children:M.jsxs(u1,{theme:h1,children:[M.jsx(h_,{children:M.jsx(sk,{children:M.jsx(gx,{})})}),M.jsx(p1,{})]})})}Rl.createRoot(document.getElementById("root")).render(M.jsx(w.StrictMode,{children:M.jsx(kx,{})}));
