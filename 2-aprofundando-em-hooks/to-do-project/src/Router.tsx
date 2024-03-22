@@ -6,9 +6,20 @@ import { DefaultLayout } from './layouts/DefaultLayout'
 export function Router() {
   return (
     <Routes>
-      <Route path={'/'} element={<DefaultLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/history" element={<History />} />
+      <Route
+        path={
+          '/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/'
+        }
+        element={<DefaultLayout />}
+      >
+        <Route
+          path="/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/"
+          element={<Home />}
+        />
+        <Route
+          path="/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/history/"
+          element={<History />}
+        />
       </Route>
 
       {/* <Route path="/admin" element={<AdminLayout />}>

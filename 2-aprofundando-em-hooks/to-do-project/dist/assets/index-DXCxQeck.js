@@ -48,7 +48,7 @@ Error generating stack: `+o.message+`
 
     :focus {
         outline: 0;
-        box-shadow: 0 0 0 2px ${e=>e.theme["green-500"]}
+        box-shadow: 0 0 0 2px ${e=>e.theme["green-500"]};
     }
 
     body {
@@ -297,7 +297,7 @@ Error generating stack: `+o.message+`
       }
     }
   }
-`,px="data:image/svg+xml,%3csvg%20width='40'%20height='40'%20viewBox='0%200%2040%2040'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20opacity='0.5'%20d='M39.9903%200.270225L30.2035%2036.8334C30.1538%2036.9993%2029.9547%2037.0491%2029.8386%2036.9329L23.2864%2030.3771L28.1964%2012.0541C28.2462%2011.8881%2028.0969%2011.7387%2027.931%2011.7885L9.61815%2016.7012L3.09917%2010.1786C2.98306%2010.0624%203.03282%209.86327%203.1987%209.81348L39.7249%200.00467392C39.8907%20-0.02852%2040.04%200.120853%2039.9903%200.270225Z'%20fill='%2300B37E'/%3e%3cpath%20opacity='0.5'%20d='M23.2861%2030.3768L20.7648%2039.8371C20.715%2040.0031%2020.516%2040.0529%2020.3998%2039.9367L0.0632817%2019.6054C-0.0528324%2019.4892%20-0.00306943%2019.2901%200.162808%2019.2403L9.61781%2016.7009L23.2861%2030.3768Z'%20fill='%2300B37E'/%3e%3cpath%20d='M28.1957%2012.0538L23.2857%2030.3768L9.61743%2016.7009L27.9303%2011.7882C28.0962%2011.7384%2028.2454%2011.8878%2028.1957%2012.0538Z'%20fill='%2300B37E'/%3e%3c/svg%3e";function mx(){return M.jsxs(hx,{children:[M.jsx("img",{src:px,alt:""}),M.jsxs("nav",{children:[M.jsx(Vf,{to:"/",title:"Timer",children:M.jsx(T_,{size:24})}),M.jsx(Vf,{to:"/history",title:"HIstorico",children:M.jsx(P_,{size:24})})]})]})}const yx=Qe.div`
+`,px="data:image/svg+xml,%3csvg%20width='40'%20height='40'%20viewBox='0%200%2040%2040'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20opacity='0.5'%20d='M39.9903%200.270225L30.2035%2036.8334C30.1538%2036.9993%2029.9547%2037.0491%2029.8386%2036.9329L23.2864%2030.3771L28.1964%2012.0541C28.2462%2011.8881%2028.0969%2011.7387%2027.931%2011.7885L9.61815%2016.7012L3.09917%2010.1786C2.98306%2010.0624%203.03282%209.86327%203.1987%209.81348L39.7249%200.00467392C39.8907%20-0.02852%2040.04%200.120853%2039.9903%200.270225Z'%20fill='%2300B37E'/%3e%3cpath%20opacity='0.5'%20d='M23.2861%2030.3768L20.7648%2039.8371C20.715%2040.0031%2020.516%2040.0529%2020.3998%2039.9367L0.0632817%2019.6054C-0.0528324%2019.4892%20-0.00306943%2019.2901%200.162808%2019.2403L9.61781%2016.7009L23.2861%2030.3768Z'%20fill='%2300B37E'/%3e%3cpath%20d='M28.1957%2012.0538L23.2857%2030.3768L9.61743%2016.7009L27.9303%2011.7882C28.0962%2011.7384%2028.2454%2011.8878%2028.1957%2012.0538Z'%20fill='%2300B37E'/%3e%3c/svg%3e";function mx(){return M.jsxs(hx,{children:[M.jsx("img",{src:px,alt:""}),M.jsxs("nav",{children:[M.jsx(Vf,{to:"/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist",title:"Timer",children:M.jsx(T_,{size:24})}),M.jsx(Vf,{to:"/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/history",title:"HIstorico",children:M.jsx(P_,{size:24})})]})]})}const yx=Qe.div`
   max-width: 74rem;
   height: calc(100vh - 10rem);
   margin: 5rem auto;
@@ -308,4 +308,4 @@ Error generating stack: `+o.message+`
 
   display: flex;
   flex-direction: column;
-`;function vx(){return M.jsxs(yx,{children:[M.jsx(mx,{}),M.jsx(r_,{})]})}function gx(){return M.jsx(o_,{children:M.jsxs(ds,{path:"/",element:M.jsx(vx,{}),children:[M.jsx(ds,{path:"/",element:M.jsx(Ok,{})}),M.jsx(ds,{path:"/history",element:M.jsx(fx,{})})]})})}function _x(){return M.jsx(M.Fragment,{children:M.jsxs(u1,{theme:h1,children:[M.jsx(h_,{children:M.jsx(sk,{children:M.jsx(gx,{})})}),M.jsx(p1,{})]})})}Rl.createRoot(document.getElementById("root")).render(M.jsx(w.StrictMode,{children:M.jsx(_x,{})}));
+`;function vx(){return M.jsxs(yx,{children:[M.jsx(mx,{}),M.jsx(r_,{})]})}function gx(){return M.jsx(o_,{children:M.jsxs(ds,{path:"/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/",element:M.jsx(vx,{}),children:[M.jsx(ds,{path:"/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/",element:M.jsx(Ok,{})}),M.jsx(ds,{path:"/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/history/",element:M.jsx(fx,{})})]})})}function _x(){return M.jsx("div",{children:M.jsx(u1,{theme:h1,children:M.jsxs(h_,{children:[M.jsx(sk,{children:M.jsx(gx,{})}),M.jsx(p1,{})]})})})}Rl.createRoot(document.getElementById("root")).render(M.jsx(w.StrictMode,{children:M.jsx(_x,{})}));

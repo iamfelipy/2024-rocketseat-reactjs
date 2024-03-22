@@ -7,15 +7,15 @@ import { CyclesContextProvider } from './contexts/CyclesContext'
 
 export function App() {
   return (
-    <>
+    <div>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <CyclesContextProvider>
             <Router />
           </CyclesContextProvider>
+          <GlobalStyle />
         </BrowserRouter>
-        <GlobalStyle />
       </ThemeProvider>
-    </>
+    </div>
   )
 }
