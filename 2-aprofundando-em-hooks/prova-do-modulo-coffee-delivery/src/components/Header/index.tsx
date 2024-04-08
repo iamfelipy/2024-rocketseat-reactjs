@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Aside, Container } from './styles'
 import { MapPin, ShoppingCart } from '@phosphor-icons/react'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartProvider'
 
 export function Header() {
-  const cart = []
+  const { cart } = useContext(CartContext)
 
   return (
     <Container>
