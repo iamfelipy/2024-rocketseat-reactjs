@@ -1,6 +1,6 @@
 import { CheckFat, ShoppingCart } from '@phosphor-icons/react'
 import { useTheme } from 'styled-components'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   CoffeeImg,
   Container,
@@ -12,6 +12,7 @@ import {
   Title,
 } from './styles'
 import { QuantifyInput } from '../Form/QuantifyInput'
+import { CartContext } from '../../contexts/CartProvider'
 
 type Props = {
   coffee: {
@@ -28,6 +29,7 @@ export function Card({ coffee }: Props) {
   const [quantity, setQuantity] = useState(1)
   const [isItemAdded, setIsItemAdded] = useState(false)
   const theme = useTheme()
+  const { addItem } = useContext(CartContext)
 
   function incrementQuantity() {
     setQuantity((state) => state + 1)
@@ -40,6 +42,7 @@ export function Card({ coffee }: Props) {
   }
 
   function handleAddItem() {
+    addItem({ id: coffee.id, quantity })
     setIsItemAdded(true)
     setQuantity(1)
   }
