@@ -7,7 +7,7 @@ type Props = {
   decrementQuantity: () => void
 }
 
-export function QuantifyInput({
+export function QuantityInput({
   quantity,
   incrementQuantity,
   decrementQuantity,

@@ -11,7 +11,7 @@ import {
   Tags,
   Title,
 } from './styles'
-import { QuantifyInput } from '../Form/QuantifyInput'
+import { QuantityInput } from '../Form/QuantityInput'
 import { CartContext } from '../../contexts/CartProvider'
 
 type Props = {
@@ -79,7 +79,7 @@ export function Card({ coffee }: Props) {
           <span>{coffee.price.toFixed(2)}</span>
         </Price>
         <Order $itemAdded={isItemAdded}>
-          <QuantifyInput
+          <QuantityInput
             quantity={quantity}
             incrementQuantity={incrementQuantity}
             decrementQuantity={decrementQuantity}
