@@ -4,6 +4,7 @@ import { App } from './App.tsx'
 import { Home } from './pages/Home/index.tsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Cart } from './pages/Cart/index.tsx'
+import { Sucess } from './pages/Sucess/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />,
+      },
+      {
+        path: '/order/:orderId/sucess',
+        element: <Sucess />,
       },
     ],
   },
