@@ -70,7 +70,10 @@ export function decrementItemQuantityAction(itemId: Item['id']) {
   } satisfies Actions
 }
 
-export function checkoutAction(order: OrderInfo, callback: NavigateFunction) {
+export function checkoutCartAction(
+  order: OrderInfo,
+  callback: NavigateFunction,
+) {
   return {
     type: ActionTypes.CHECKOUT_CART,
     payload: {

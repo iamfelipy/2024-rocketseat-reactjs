@@ -61,7 +61,13 @@ export type OrderInfo = z.infer<typeof newOrder>
 const shippingPrice = 3.5
 
 export function Cart() {
-  const { cart } = useContext(CartContext)
+  const {
+    cart,
+    incrementItemQuantity,
+    decrementItemQuantity,
+    removeItem,
+    checkout,
+  } = useContext(CartContext)
 
   const coffeesInCart = cart.map((item) => {
     const coffeeInfo = coffees.find((coffee) => coffee.id === item.id)
@@ -92,23 +98,22 @@ export function Cart() {
   const selectedPaymentMethod = watch('paymentMethod')
 
   function handleItemIncrement(itemId: string) {
-    // incrementItemQuantity(itemId)
+    incrementItemQuantity(itemId)
   }
 
   function handleItemDecrement(itemId: string) {
-    // decrementItemQuantity(itemId)
+    decrementItemQuantity(itemId)
   }
 
   function handleItemRemove(itemId: string) {
-    // removeItem(itemId)
+    removeItem(itemId)
   }
 
   const handleOrderCheckout: SubmitHandler<FormInputs> = (data) => {
     if (cart.length === 0) {
       return alert('É preciso ter pelo menos um item no carrinho')
     }
-
-    // checkout(data)
+    checkout(data)
   }
 
   return (

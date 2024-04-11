@@ -1,10 +1,23 @@
 import { ReactNode, createContext, useEffect, useReducer } from 'react'
-import { Item, cartReducer } from '../reducers/cart/reducer'
-import { addItemAction } from '../reducers/cart/actions'
+import { Item, Order, cartReducer } from '../reducers/cart/reducer'
+import {
+  addItemAction,
+  checkoutCartAction,
+  decrementItemQuantityAction,
+  incrementItemQuantityAction,
+  removeItemAction,
+} from '../reducers/cart/actions'
+import { OrderInfo } from '../pages/Cart'
+import { useNavigate } from 'react-router-dom'
 
 interface CartContextType {
   cart: Item[]
+  orders: Order[]
   addItem: (item: Item) => void
+  removeItem: (itemId: Item['id']) => void
+  decrementItemQuantity: (itemId: Item['id']) => void
+  incrementItemQuantity: (itemId: Item['id']) => void
+  checkout: (order: OrderInfo) => void
 }
 
 export const CartContext = createContext({} as CartContextType)
@@ -18,6 +31,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     cartReducer,
     {
       cart: [],
+      orders: [],
     },
     (cartState) => {
       const storedStateAsJSON = localStorage.getItem(
@@ -31,10 +45,28 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     },
   )
 
-  const { cart } = cartState
+  const navigate = useNavigate()
+
+  const { cart, orders } = cartState
 
   function addItem(item: Item) {
     dispatch(addItemAction(item))
+  }
+
+  function removeItem(itemId: Item['id']) {
+    dispatch(removeItemAction(itemId))
+  }
+
+  function checkout(order: OrderInfo) {
+    dispatch(checkoutCartAction(order, navigate))
+  }
+
+  function incrementItemQuantity(itemId: Item['id']) {
+    dispatch(incrementItemQuantityAction(itemId))
+  }
+
+  function decrementItemQuantity(itemId: Item['id']) {
+    dispatch(decrementItemQuantityAction(itemId))
   }
 
   useEffect(() => {
@@ -50,6 +82,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       value={{
         addItem,
         cart,
+        orders,
+        decrementItemQuantity,
+        incrementItemQuantity,
+        removeItem,
+        checkout,
       }}
     >
       {children}
