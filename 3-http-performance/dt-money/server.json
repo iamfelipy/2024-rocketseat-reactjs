@@ -23,6 +23,22 @@
       "category": "Educação",
       "price": 1980,
       "createdAt": "2024-04-15T19:30:38.031Z"
+    },
+    {
+      "description": "peixaria",
+      "category": "comdia",
+      "price": 100,
+      "type": "outcome",
+      "createdAt": "2024-04-18T17:20:04.027Z",
+      "id": 4
+    },
+    {
+      "description": "novo sistema",
+      "price": 22123,
+      "category": "trabalho",
+      "type": "income",
+      "createdAt": "2024-04-18T18:22:25.994Z",
+      "id": 5
     }
   ]
 }
