@@ -39,6 +39,22 @@
       "type": "income",
       "createdAt": "2024-04-18T18:22:25.994Z",
       "id": 5
+    },
+    {
+      "description": "viagem",
+      "price": 6000,
+      "category": "viagem",
+      "type": "outcome",
+      "createdAt": "2024-04-25T16:59:09.898Z",
+      "id": 6
+    },
+    {
+      "description": "loteria sorteado",
+      "price": 1000,
+      "category": "loteria",
+      "type": "income",
+      "createdAt": "2024-04-25T16:59:41.713Z",
+      "id": 7
     }
   ]
 }
