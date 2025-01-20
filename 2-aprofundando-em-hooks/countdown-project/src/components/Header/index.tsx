@@ -9,16 +9,10 @@ export function Header() {
     <HeaderContainer>
       <img src={logoIgnite} alt="" />
       <nav>
-        <NavLink
-          to="/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist"
-          title="Timer"
-        >
+        <NavLink to="/" title="Timer">
           <Timer size={24} />
         </NavLink>
-        <NavLink
-          to="/2024-rocketseat-reactjs/2-aprofundando-em-hooks/to-do-project/dist/history"
-          title="HIstorico"
-        >
+        <NavLink to="/history" title="HIstorico">
           <Scroll size={24} />
         </NavLink>
       </nav>
