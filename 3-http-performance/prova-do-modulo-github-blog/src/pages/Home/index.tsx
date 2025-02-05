@@ -1,3 +1,10 @@
+import { ProfileSummary } from './components/ProfileSummary'
+import { Container } from './styles'
+
 export function Home() {
-  return <main>Home</main>
+  return (
+    <Container>
+      <ProfileSummary />
+    </Container>
+  )
 }
