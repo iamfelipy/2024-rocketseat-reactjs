@@ -11,14 +11,20 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
   background-size: cover;
   display: flex;
   justify-content: center;
+  align-items: center;
   /* align-items: center; */
   > img {
-    margin-top: 4rem;
+    margin-top: -4rem;
     width: 9.25rem;
     height: 6.125rem;
   }
 
   @media (max-width: 728px) {
     height: 10rem;
+    > img {
+      margin-top: 0;
+      width: 9.25rem;
+      height: 4.125rem;
+    }
   }
 `
