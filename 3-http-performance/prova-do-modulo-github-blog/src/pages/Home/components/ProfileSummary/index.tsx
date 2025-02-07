@@ -36,6 +36,7 @@ export function ProfileSummary() {
     async function FetchData() {
       try {
         const { data } = await api.get('/users/iamfelipy')
+        // const { data } = { data: {} } as { data: IGitHubUser }
 
         GitHubUserSchema.parse(data)
 

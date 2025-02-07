@@ -12,6 +12,7 @@ export const Container = styled.section`
   gap: 2rem;
   padding: 2rem 2rem 2rem 2.5rem;
   margin-top: -6rem;
+  margin-bottom: 4.5rem;
 
   > img {
     width: 9.25rem;
@@ -34,8 +35,16 @@ export const NameAndLinkProfileGithub = styled.div`
   > a {
     text-decoration: none;
     color: ${(props) => props.theme.colors.blue};
-    height: 1.1875rem;
+    height: 1.5rem;
     align-self: flex-start;
+    padding-bottom: 0.4rem;
+    transition: all 0.2s;
+    border-bottom: 1px transparent solid;
+
+    &:hover {
+      border-bottom: 1px ${(props) => props.theme.colors.blue} solid;
+    }
+
     & > span {
       ${mixins.fonts.link}
     }
