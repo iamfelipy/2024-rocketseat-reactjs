@@ -8,7 +8,10 @@ import {
 import { api } from '../lib/axios'
 
 interface Post {
-  ['key']: string
+  title: string
+  body: string
+  number: number
+  created_at: string
 }
 
 interface PostContextType {
@@ -25,16 +28,15 @@ export const PostContext = createContext({} as PostContextType)
 export function PostsProvider({ children }: PostsProviderProps) {
   const [posts, setPosts] = useState<Post[]>([])
 
-  const fetchPosts = useCallback(async (query?: string) => {
+  const fetchPosts = useCallback(async (query: string = '') => {
     const response = await api.get('/search/issues', {
       params: {
         q: `${query} repo:iamfelipy/2024-rocketseat-reactjs`,
       },
     })
 
-    // const posts = response?.data?.items ?? []
-    console.log(response?.data)
-    setPosts([])
+    const posts = response?.data?.items ?? []
+    setPosts([...posts])
   }, [])
 
   useEffect(() => {
