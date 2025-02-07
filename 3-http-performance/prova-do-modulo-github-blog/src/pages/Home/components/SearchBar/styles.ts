@@ -28,6 +28,7 @@ export const WrapperInputAndButton = styled.div`
   border-radius: 6px;
   border: 1px ${(props) => props.theme.colors['base-border']} solid;
   margin-bottom: 3rem;
+  transition: all 0.2s;
 
   &:focus-within {
     border: 1px ${(props) => props.theme.colors.blue} solid;
