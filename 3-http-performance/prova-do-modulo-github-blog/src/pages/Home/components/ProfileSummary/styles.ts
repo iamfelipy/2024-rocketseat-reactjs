@@ -19,6 +19,13 @@ export const Container = styled.section`
     height: 9.25rem;
     border-radius: 8px;
   }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    height: 100%;
+    margin-top: -1rem;
+    padding: 1rem;
+  }
 `
 
 export const UserInfo = styled.div``
@@ -27,6 +34,7 @@ export const NameAndLinkProfileGithub = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   margin-bottom: 0.5rem;
   > span {
     ${mixins.fonts.titleL}
@@ -64,7 +72,13 @@ export const UserDescription = styled.div`
 export const SocialMediasContainer = styled.div`
   display: flex;
   gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    /* padding: 1rem; */
+  }
   > div {
+    flex: 1;
     display: flex;
     align-items: center;
     > svg {
