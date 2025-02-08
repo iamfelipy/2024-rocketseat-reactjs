@@ -6,6 +6,14 @@ export const Container = styled.section`
   gap: 2rem;
   flex-wrap: wrap;
   margin-bottom: 3rem;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+    align-items: center;
+    /* justify-content: center; */
+    margin: 0rem 1rem 1rem;
+  }
 `
 
 export const PostCard = styled.article`
@@ -16,6 +24,13 @@ export const PostCard = styled.article`
   height: 16.25rem;
   padding: 2rem;
   transition: border 0.2s;
+
+  @media (max-width: 425px) {
+    width: 100%;
+    & + & {
+      margin-top: 1rem;
+    }
+  }
 
   &:hover {
     border: 2px ${(props) => props.theme.colors['base-label']} solid;

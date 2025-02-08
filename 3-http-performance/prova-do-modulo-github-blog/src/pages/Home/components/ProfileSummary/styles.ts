@@ -23,12 +23,21 @@ export const Container = styled.section`
   @media (max-width: 768px) {
     flex-wrap: wrap;
     height: 100%;
-    margin-top: -1rem;
+    margin-top: -5rem;
     padding: 1rem;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 425px) {
+    margin-top: -1rem;
   }
 `
 
-export const UserInfo = styled.div``
+export const UserInfo = styled.div`
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
 
 export const NameAndLinkProfileGithub = styled.div`
   display: flex;
@@ -36,6 +45,7 @@ export const NameAndLinkProfileGithub = styled.div`
   align-items: center;
 
   margin-bottom: 0.5rem;
+
   > span {
     ${mixins.fonts.titleL}
     color: ${(props) => props.theme.colors['base-title']}
@@ -73,22 +83,23 @@ export const SocialMediasContainer = styled.div`
   display: flex;
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
-    flex-wrap: wrap;
-    /* padding: 1rem; */
-  }
-  > div {
+  & > div {
     flex: 1;
     display: flex;
     align-items: center;
-    > svg {
+
+    @media (max-width: 768px) {
+      flex: none;
+    }
+
+    & > svg {
       display: flex;
       margin-right: 0.5rem;
       height: 1.125rem;
       width: 1.125rem;
       color: ${(props) => props.theme.colors['base-label']};
     }
-    > span {
+    & > span {
       ${mixins.fonts.textM}
       color: ${(props) => props.theme.colors['base-subtitle']};
       line-height: normal;

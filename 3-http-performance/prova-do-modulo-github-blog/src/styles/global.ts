@@ -27,4 +27,10 @@ export const GlobalStyle = createGlobalStyle`
     border: none;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 87.33%;
+    }
+  }
 `
