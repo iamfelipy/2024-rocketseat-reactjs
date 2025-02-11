@@ -3,6 +3,7 @@ import { PostContext } from '../../../../contexts/PostContext'
 import { Container, PostCard } from './styles'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { Link } from 'react-router-dom'
 
 export function PostList() {
   const { posts } = useContext(PostContext)
@@ -31,24 +32,26 @@ export function PostList() {
   return (
     <Container>
       {posts.map((post) => (
-        <PostCard key={post.number}>
-          <header>
-            <h3>{truncateString(post.title, 30)}</h3>
-            <span>
-              {formatDistanceToNow(new Date(post.created_at), {
-                addSuffix: true,
-                locale: ptBR,
-              })}
-            </span>
-          </header>
-          <p>
-            {size.width > 780 && truncateString(post.body, 170)}
-            {size.width >= 425 &&
-              size.width <= 780 &&
-              truncateString(post.body, 170)}
-            {size.width < 420 && truncateString(post.body, 80)}
-          </p>
-        </PostCard>
+        <Link to={`post/${post.number}`} key={post.number}>
+          <PostCard>
+            <header>
+              <h3>{truncateString(post.title, 30)}</h3>
+              <span>
+                {formatDistanceToNow(new Date(post.created_at), {
+                  addSuffix: true,
+                  locale: ptBR,
+                })}
+              </span>
+            </header>
+            <p>
+              {size.width > 780 && truncateString(post.body, 170)}
+              {size.width >= 425 &&
+                size.width <= 780 &&
+                truncateString(post.body, 170)}
+              {size.width < 420 && truncateString(post.body, 80)}
+            </p>
+          </PostCard>
+        </Link>
       ))}
     </Container>
   )
