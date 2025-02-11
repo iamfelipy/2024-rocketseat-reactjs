@@ -12,3 +12,4 @@ Nesse desafio, você vai desenvolver uma aplicação que utilizará da API do Gi
 - (FIGMA)[https://www.figma.com/file/claurf91O5XFMagf0QXCpM/GitHub-Blog-(Community)?type=design&node-id=0-1&mode=design&t=x9bTJsDlAa2NZZ9t-0]
 - (instrução do desafio)[https://efficient-sloth-d85.notion.site/Desafio-03-Github-Blog-13593953670346908462ddc648d42cf1]
 - (resposta em video)[https://www.youtube.com/watch?v=9wmSjF6ozjk&t=1s]
+- (Possivel solucao para o desafio)[https://github.com/GBDev13/ignite-react-2022-desafios/tree/master/github-blog]
