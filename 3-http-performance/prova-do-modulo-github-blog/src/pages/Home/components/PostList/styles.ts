@@ -8,6 +8,10 @@ export const Container = styled.section`
   margin-bottom: 3rem;
   justify-content: center;
 
+  > a {
+    text-decoration: none;
+  }
+
   @media (max-width: 768px) {
     gap: 0.5rem;
     align-items: center;
