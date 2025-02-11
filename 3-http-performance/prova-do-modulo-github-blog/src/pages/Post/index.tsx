@@ -24,9 +24,22 @@ import { PostContext } from '../../contexts/PostContext'
 export function Post() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getPost, post } = useContext(PostContext)
+  const { getPost, post, setPost } = useContext(PostContext)
   useEffect(() => {
     getPost(Number(id))
+
+    return () => {
+      setPost({
+        title: '',
+        body: '',
+        number: 0,
+        created_at: new Date(),
+        user: {
+          login: '',
+        },
+        comments: 0,
+      })
+    }
   }, [])
 
   function handleGoBack() {
