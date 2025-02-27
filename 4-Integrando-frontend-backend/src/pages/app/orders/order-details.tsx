@@ -4,7 +4,7 @@ import { ptBR } from 'date-fns/locale'
 
 import {
   getOrderDetails,
-  getOrderDetailsResponse,
+  GetOrderDetailsResponse,
 } from '@/api/get-order-details'
 import { OrderStatus } from '@/components/order-status'
 import {
@@ -29,7 +29,7 @@ export interface OrderDetailsProps {
 }
 
 export function OrderDetails({ orderId, open }: OrderDetailsProps) {
-  const { data: order } = useQuery<getOrderDetailsResponse>({
+  const { data: order } = useQuery<GetOrderDetailsResponse>({
     queryKey: ['order', orderId],
     queryFn: () => getOrderDetails({ orderId }),
     enabled: open,
