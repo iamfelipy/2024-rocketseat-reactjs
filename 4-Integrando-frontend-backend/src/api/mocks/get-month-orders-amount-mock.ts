@@ -12,9 +12,9 @@ export const getMonthOrdersAmountMock = http.get<
   never,
   never,
   GetMonthOrdersAmountResponse
->('/metrics/day-orders-amount', () => {
+>('/metrics/month-orders-amount', async () => {
   return HttpResponse.json({
-    amount: 20,
-    diffFromLastMonth: -5,
+    amount: 200,
+    diffFromLastMonth: 20,
   })
 })
