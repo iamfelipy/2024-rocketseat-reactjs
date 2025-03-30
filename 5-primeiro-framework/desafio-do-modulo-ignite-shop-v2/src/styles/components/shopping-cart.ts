@@ -128,7 +128,7 @@ export const CartFooter = styled('footer', {
 
   button: {
     width: '100%',
-    backgroundColor: '#00B37E',
+    backgroundColor: '$green500',
     color: '#FFFFFF',
     border: 'none',
     borderRadius: '8px',
@@ -137,8 +137,13 @@ export const CartFooter = styled('footer', {
     fontWeight: 'bold',
     cursor: 'pointer',
 
-    '&:hover': {
-      backgroundColor: '#00875F',
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed'
     },
+
+    '&:not(:disabled):hover': {
+      backgroundColor: '$green300'
+    }
   },
 });
