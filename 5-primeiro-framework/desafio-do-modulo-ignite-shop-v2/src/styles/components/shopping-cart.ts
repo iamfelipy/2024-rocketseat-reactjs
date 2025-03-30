@@ -59,12 +59,10 @@ export const CartItemList = styled('div', {
 export const CartItem = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
-  height: '5.875rem',
   marginBottom: '1.5rem',
   gap: '1.25rem',
 
   'div:first-child': {
-    height: '5.875rem',
     background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
     borderRadius: 8,
     img: {
@@ -75,29 +73,31 @@ export const CartItem = styled('div', {
 
   'div:last-child': {
     display: 'flex',
-    flex: 1,
     flexDirection: 'column',
     height: '5.875rem',
 
     strong: {
-      fontSize: '1rem',
-      color: '#E1E1E6',
+      fontSize: '$md',
+      fontWeight: '500',
+      color: '$gray300',
       marginBottom: '0.5rem',
     },
 
     span: {
-      fontSize: '0.875rem',
-      color: '#8D8D99',
-      marginBottom: '0.5rem',
+      fontSize: '$md',
+      color: '$gray100',
+      fontWeight: 'bold',
     },
-
+    
     button: {
+      marginTop: '0.5rem',
       background: 'none',
       border: 'none',
-      color: '#00B37E',
-      fontSize: '0.875rem',
+      color: '$green500',
+      fontWeight: 'bold',
+      fontSize: '1rem',
       cursor: 'pointer',
-      height: '1.62rem',
+      width: 'min-content',
 
       '&:hover': {
         textDecoration: 'underline',
