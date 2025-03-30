@@ -11,7 +11,7 @@ export function Header() {
   return (
     <Container>
       <Image src={logoImg} width="130" height="52" alt="Logo" />
-      <CartButtonContainer onClick={handleCartClick}>
+      <CartButtonContainer disabled={!cartCount} onClick={handleCartClick}>
         <Handbag size="1.5rem" weight="bold" />
         {cartCount > 0 && <CartCountBadge>{cartCount}</CartCountBadge>} {/* Exibe o número de itens */}
       </CartButtonContainer>

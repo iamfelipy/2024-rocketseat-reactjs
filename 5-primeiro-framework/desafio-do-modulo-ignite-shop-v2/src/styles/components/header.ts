@@ -23,8 +23,13 @@ export const CartButtonContainer = styled('button', {
   justifyContent: 'center',
   alignItems: 'center',
 
-  '&:hover': {
+  '&:not(:disabled):hover': {
     backgroundColor: '$gray700',
+  },
+
+  '&:disabled': {
+    opacity: 0.6,
+    cursor: 'not-allowed'
   },
 })
 
