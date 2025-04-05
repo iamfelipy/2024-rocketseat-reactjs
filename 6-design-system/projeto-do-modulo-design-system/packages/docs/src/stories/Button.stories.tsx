@@ -2,7 +2,7 @@ import type { StoryObj, Meta } from '@storybook/react'
 import { Button, ButtonProps } from '@ignite-ui/react'
 
 export default {
-  title: 'Button',
+  title: 'Form/Button',
   component: Button,
   // se args é definido aqui ele é compartilhado com todos os stories
   args: {
