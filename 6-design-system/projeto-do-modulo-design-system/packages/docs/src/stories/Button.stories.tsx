@@ -8,8 +8,27 @@ export default {
   // se args é definido aqui ele é compartilhado com todos os stories
   args: {
     children: 'Send',
+    variant: 'primary',
+    size: 'md',
   },
   argTypes: {
+    variant: {
+      options: ['primary', 'secondary', 'tertiary'],
+      control: {
+        type: 'inline-radio',
+      },
+    },
+    size: {
+      options: ['sm', 'md'],
+      control: {
+        type: 'inline-radio',
+      },
+    },
+    disabled: {
+      control: {
+        type: 'boolean',
+      },
+    },
     onClick: {
       action: 'click',
     },

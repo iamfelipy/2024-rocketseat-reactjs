@@ -6,8 +6,31 @@ export default {
   component: Text,
   // se args é definido aqui ele é compartilhado com todos os stories
   args: {
+    size: 'md',
     children:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet debitis et, fuga facilis accusantium enim delectus odit impedit repudiandae explicabo laudantium quam sunt officiis tempore aut magni aspernatur atque voluptate?',
+  },
+  argTypes: {
+    size: {
+      options: [
+        'xxs',
+        'xs',
+        'sm',
+        'md',
+        'lg',
+        'xl',
+        '2xl',
+        '4xl',
+        '5xl',
+        '6xl',
+        '7xl',
+        '8xl',
+        '9xl',
+      ],
+      control: {
+        type: 'inline-radio',
+      },
+    },
   },
 } as Meta<TextProps>
 
