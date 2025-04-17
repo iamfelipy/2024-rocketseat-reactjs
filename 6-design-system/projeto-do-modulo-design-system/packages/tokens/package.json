@@ -14,8 +14,8 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@ignite-ui/ts-config": "*",
-    "@ignite-ui/eslint-config": "*",
+    "@felipy-ui/ts-config": "*",
+    "@felipy-ui/eslint-config": "*",
     "typescript": "^4.8.4",
     "tsup": "^6.2.3"
   }

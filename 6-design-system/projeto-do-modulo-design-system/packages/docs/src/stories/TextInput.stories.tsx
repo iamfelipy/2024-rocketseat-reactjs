@@ -1,5 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/react'
-import { Box, TextInput, TextInputProps, Text } from '@ignite-ui/react'
+import { Box, TextInput, TextInputProps, Text } from '@felipy-ui/react'
 
 export default {
   title: 'Form/Text Input',

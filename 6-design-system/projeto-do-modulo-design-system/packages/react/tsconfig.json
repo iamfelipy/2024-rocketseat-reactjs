@@ -1,4 +1,4 @@
 {
-  "extends": "@ignite-ui/ts-config/react.json",
+  "extends": "@felipy-ui/ts-config/react.json",
   "include": ["src"]
 }
