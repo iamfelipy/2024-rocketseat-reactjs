@@ -28,6 +28,10 @@ export const Button = styled('button', {
     color: 'not-allowed',
   },
 
+  '&:focus': {
+    boxShadow: '0 0 0 2px $colors$ignite100',
+  },
+
   variants: {
     variant: {
       primary: {
