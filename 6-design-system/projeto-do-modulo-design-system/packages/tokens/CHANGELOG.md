@@ -1,5 +1,11 @@
 # @felipy-ui/tokens
 
+## 3.0.1
+
+### Patch Changes
+
+- add new font inter
+
 ## 3.0.0
 
 ### Major Changes

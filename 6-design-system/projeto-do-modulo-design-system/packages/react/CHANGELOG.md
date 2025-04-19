@@ -1,5 +1,11 @@
 # @felipy-ui/react
 
+## 3.1.0
+
+### Minor Changes
+
+- add Tooltip Component
+
 ## 3.0.1
 
 ### Patch Changes
