@@ -64,7 +64,7 @@ export const CalendarBody = styled('table', {
     color: '$gray800',
   },
 
-  'tbody th': {
+  'tbody td': {
     boxSizing: 'border-box',
   },
 })
