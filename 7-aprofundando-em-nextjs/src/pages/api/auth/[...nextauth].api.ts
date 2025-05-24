@@ -17,6 +17,10 @@ export function buildNextAuthOptions(
           params: {
             scope:
               'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar',
+            // forced to use the offline access type to get a refresh token
+            prompt: 'consent',
+            access_type: 'offline',
+            response_type: 'code',
           },
         },
         profile(profile: GoogleProfile) {
