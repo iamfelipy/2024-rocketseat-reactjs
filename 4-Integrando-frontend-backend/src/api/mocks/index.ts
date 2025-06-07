@@ -19,9 +19,11 @@ import { geProfileMock } from './get-profile-mock'
 import { registerRestaurantMock } from './register-restaurant-mock'
 import { signInMock } from './sign-in-mock'
 import { updateProfileMock } from './update-profile-mock'
+import { signOutMock } from './sign-out-mock'
 
 export const worker = setupWorker(
   signInMock,
+  signOutMock,
   registerRestaurantMock,
   getDayOrdersAmountMock,
   getMonthOrdersAmountMock,
