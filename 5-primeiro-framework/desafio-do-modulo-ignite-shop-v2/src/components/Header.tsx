@@ -1,4 +1,4 @@
-import { Handbag } from "@phosphor-icons/react"
+import { Handbag } from "phosphor-react"
 import { ShoppingCart } from "./ShoppingCart"
 import logoImg from '../assets/logo.svg'
 import Image from 'next/future/image'
