@@ -4,13 +4,27 @@ Este projeto é um **Design System** que fornece componentes reutilizáveis para
 
 ---
 
+## 🌐 Deploy - Documentação do Storybook
+
+Acesse a documentação completa dos componentes neste link:  
+🔗 [Storybook - Home Page](https://iamfelipy.github.io/modulo-6-design-system-rocketseat-reactjs/?path=/story/home--page)
+
+---
+
 ## 🛠️ Ferramentas e Tecnologias
 
 - **React**: Biblioteca JavaScript para construção de interfaces.
-- **Stitches**: Biblioteca moderna de CSS-in-JS para estilização.
+- **TypeScript**: Tipagem estática para maior segurança e produtividade.
+- **Vite**: Bundler moderno e rápido para desenvolvimento.
 - **Storybook**: Desenvolva e teste componentes de UI de forma isolada.
+- **Stitches**: Biblioteca moderna de CSS-in-JS para estilização.
+- **Radix UI**: Acessibilidade e componentes não estilizados de alta qualidade.
+- **Polished**: Utilitários para manipulação de cores em CSS-in-JS.
 - **Turborepo**: Gerenciamento eficiente de monorepo.
 - **Changesets**: Controle de versionamento e publicação de pacotes.
+- **TSUP**: Empacotador de código TypeScript moderno e simples.
+- **Phosphor React**: Ícones SVG personalizáveis para interfaces.
+- **ESLint & Prettier**: Padrões de código e formatação automáticos.
 
 ---
 
@@ -79,8 +93,3 @@ Este projeto executa duas **GitHub Actions**:
 
 Veja o design do projeto no Figma:  
 🔗 https://www.figma.com/design/cowwFHJimoyQomSAynMjGz/Ignite-Call--%E2%80%A2-Projeto-React?node-id=21-107&p=f&t=n4d9YXWW0YURxJnU-0
-
-## 🌐 Documentação do Storybook
-
-Acesse a documentação completa dos componentes neste link:  
-🔗 [Storybook - Home Page](https://iamfelipy.github.io/modulo-6-design-system-rocketseat-reactjs/?path=/story/home--page)
