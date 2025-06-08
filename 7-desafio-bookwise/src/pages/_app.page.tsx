@@ -1,5 +1,8 @@
 import { ReactNode, ReactElement } from 'react'
 import type { AppProps } from 'next/app'
+import { globalStyles } from '@/styles/global'
+
+globalStyles()
 
 type NextPageWithLayout = AppProps['Component'] & {
   getLayout?: (page: ReactElement) => ReactNode

@@ -34,6 +34,7 @@ export default function Sidebar() {
     </Container>
   )
 }
+// background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
 
 const Container = styled('aside', {
   padding: '$4',
