@@ -14,10 +14,6 @@ const Container = styled('aside', {
   borderLeft: '1px solid $gray700',
   padding: '$4',
   backgroundColor: '$gray900',
-
-  '@media (max-width: 1024px)': {
-    display: 'none',
-  },
 })
 
 const Title = styled('h2', {

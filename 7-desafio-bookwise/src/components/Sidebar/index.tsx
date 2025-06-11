@@ -1,8 +1,25 @@
-import { styled } from '@/styles'
-import Link from 'next/link'
+import {
+  AvatarWrapper,
+  Button,
+  Container,
+  Footer,
+  LoggedUser,
+  Logo,
+  Nav,
+  NavItem,
+  Wrapper,
+} from './styles'
 // import { signIn, signOut, useSession } from 'next-auth/react'
 
+import logoImg from '@/assets/mdi_book-heart-outline.svg'
+
+import Image from 'next/image'
+
+import { useRouter } from 'next/router'
+import { ChartLineUp, Binoculars, User, SignIn, SignOut } from 'phosphor-react'
+
 export default function Sidebar() {
+  const { pathname } = useRouter()
   // const { data: session } = useSession()
   // const isAuthenticated = !!session
   const isAuthenticated = true
@@ -11,80 +28,56 @@ export default function Sidebar() {
   const signIn = () => {}
 
   return (
-    <Container>
-      <Logo>📚 BookWise</Logo>
+    <Wrapper>
+      <Container>
+        <Logo>
+          <Image src={logoImg} width="24" height="24" alt="" />
+          BookWise
+        </Logo>
 
-      <Nav>
-        <NavItem href="/">Início</NavItem>
-        <NavItem href="/explorer">Explorar</NavItem>
-        {isAuthenticated && (
-          <>
-            <NavItem href="/profile">Perfil</NavItem>
-          </>
-        )}
-      </Nav>
+        <Nav>
+          <NavItem href="/" active={pathname === '/'}>
+            <ChartLineUp size={24} weight="bold" />
+            Início
+          </NavItem>
 
-      <Footer>
-        {isAuthenticated ? (
-          <Button onClick={() => signOut()}>Sair</Button>
-        ) : (
-          <Button onClick={() => signIn()}>Entrar</Button>
-        )}
-      </Footer>
-    </Container>
+          <NavItem href="/explorer" active={pathname === '/explorer'}>
+            <Binoculars size={24} weight="bold" />
+            Explorar
+          </NavItem>
+
+          {isAuthenticated && (
+            <NavItem href="/profile" active={pathname === '/profile'}>
+              <User size={24} weight="bold" />
+              Perfil
+            </NavItem>
+          )}
+        </Nav>
+
+        <Footer>
+          {isAuthenticated ? (
+            <Button variant="logout" onClick={() => signOut()}>
+              <LoggedUser>
+                <AvatarWrapper>
+                  <Image
+                    src="https://avatars.githubusercontent.com/u/50622611?v=4"
+                    width={32}
+                    height={32}
+                    alt=""
+                  />
+                </AvatarWrapper>
+                <span>Cristofer</span>
+              </LoggedUser>
+              <SignOut size={20} weight="bold" />
+            </Button>
+          ) : (
+            <Button variant="login" onClick={() => signIn()}>
+              Fazer Login
+              <SignIn size={20} weight="bold" />
+            </Button>
+          )}
+        </Footer>
+      </Container>
+    </Wrapper>
   )
 }
-// background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-
-const Container = styled('aside', {
-  padding: '$4',
-  borderRight: '1px solid $gray700',
-  backgroundColor: '$gray800',
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-
-  '@media (max-width: 768px)': {
-    display: 'none',
-  },
-})
-
-const Logo = styled('div', {
-  fontWeight: 'bold',
-  fontSize: '$xl',
-  marginBottom: '$6',
-})
-
-const Nav = styled('nav', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '$4',
-})
-
-const NavItem = styled(Link, {
-  color: '$gray100',
-  textDecoration: 'none',
-  fontSize: '$md',
-
-  '&:hover': {
-    color: '$green100',
-  },
-})
-
-const Footer = styled('footer', {
-  marginTop: 'auto',
-})
-
-const Button = styled('button', {
-  background: 'none',
-  border: 'none',
-  color: '$gray100',
-  cursor: 'pointer',
-  fontSize: '$sm',
-  padding: 0,
-
-  '&:hover': {
-    color: '$green100',
-  },
-})
