@@ -1,17 +1,8 @@
 import { styled } from '@/styles'
-import {
-  List,
-  X,
-  ChartLineUp,
-  Binoculars,
-  User,
-  SignIn,
-  SignOut,
-} from 'phosphor-react'
+import { List, X } from 'phosphor-react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import logoImg from '@/assets/mdi_book-heart-outline.svg'
+import { SidebarContent } from '../Sidebar/SidebarContent'
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,6 +17,16 @@ export default function MobileMenu() {
     setIsOpen(false)
   }
 
+  const handleSignIn = () => {
+    closeMenu()
+    // Adicione lógica de login se necessário
+  }
+
+  const handleSignOut = () => {
+    closeMenu()
+    // Adicione lógica de logout se necessário
+  }
+
   return (
     <MobileMenuContainer>
       <MenuButton onClick={toggleMenu}>
@@ -36,65 +37,17 @@ export default function MobileMenu() {
 
       <MenuContent isOpen={isOpen}>
         <MenuHeader>
-          <Logo>
-            <Image src={logoImg} width="24" height="24" alt="" />
-            BookWise
-          </Logo>
           <CloseButton onClick={closeMenu}>
             <X size={24} />
           </CloseButton>
         </MenuHeader>
-
-        <Nav>
-          <NavItem href="/" active={pathname === '/'} onClick={closeMenu}>
-            <ChartLineUp size={24} weight="bold" />
-            Início
-          </NavItem>
-
-          <NavItem
-            href="/explorer"
-            active={pathname === '/explorer'}
-            onClick={closeMenu}
-          >
-            <Binoculars size={24} weight="bold" />
-            Explorar
-          </NavItem>
-
-          {isAuthenticated && (
-            <NavItem
-              href="/profile"
-              active={pathname === '/profile'}
-              onClick={closeMenu}
-            >
-              <User size={24} weight="bold" />
-              Perfil
-            </NavItem>
-          )}
-        </Nav>
-
-        <Footer>
-          {isAuthenticated ? (
-            <Button variant="logout" onClick={closeMenu}>
-              <LoggedUser>
-                <AvatarWrapper>
-                  <Image
-                    src="https://avatars.githubusercontent.com/u/50622611?v=4"
-                    width={32}
-                    height={32}
-                    alt=""
-                  />
-                </AvatarWrapper>
-                <span>Cristofer</span>
-              </LoggedUser>
-              <SignOut size={20} weight="bold" />
-            </Button>
-          ) : (
-            <Button variant="login" onClick={closeMenu}>
-              Fazer Login
-              <SignIn size={20} weight="bold" />
-            </Button>
-          )}
-        </Footer>
+        <SidebarContent
+          pathname={pathname}
+          isAuthenticated={isAuthenticated}
+          onNavClick={closeMenu}
+          onSignIn={handleSignIn}
+          onSignOut={handleSignOut}
+        />
       </MenuContent>
     </MobileMenuContainer>
   )
