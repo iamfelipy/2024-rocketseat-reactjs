@@ -1,27 +1,27 @@
 import { styled } from '@/styles'
 import { ReactNode } from 'react'
-import Sidebar from '@/components/Sidebar'
-import AsidePanel from '@/components/AsidePanel'
 import MobileMenu from '@/components/MobileMenu'
 
 interface AppLayout3ColsProps {
   children: ReactNode
-  right?: ReactNode
+  left: ReactNode
+  right: ReactNode
 }
 
 export default function AppLayout3Cols({
   children,
+  left,
   right,
 }: AppLayout3ColsProps) {
   return (
     <LayoutWrapper>
       <MobileMenu />
-      <Sidebar />
+      <SidebarWrapper>{left}</SidebarWrapper>
       <MainContent>
         <header>Cabeçalho</header>
         {children}
       </MainContent>
-      <AsideWrapper>{right ?? <AsidePanel />}</AsideWrapper>
+      <AsideWrapper>{right}</AsideWrapper>
     </LayoutWrapper>
   )
 }
@@ -45,6 +45,12 @@ const LayoutWrapper = styled('div', {
       display: 'none',
     },
   },
+})
+
+const SidebarWrapper = styled('aside', {
+  borderRight: '1px solid $gray700',
+  backgroundColor: '$gray900',
+  height: '100%',
 })
 
 const MainContent = styled('main', {
