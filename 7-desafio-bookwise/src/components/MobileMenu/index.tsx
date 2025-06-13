@@ -2,7 +2,7 @@ import { styled } from '@/styles'
 import { List, X } from 'phosphor-react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { SidebarContent } from '../Sidebar/SidebarContent'
+import { NavigationContent } from '../shared/NavigationContent'
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -41,7 +41,7 @@ export default function MobileMenu() {
             <X size={24} />
           </CloseButton>
         </MenuHeader>
-        <SidebarContent
+        <NavigationContent
           pathname={pathname}
           isAuthenticated={isAuthenticated}
           onNavClick={closeMenu}
@@ -146,136 +146,5 @@ const CloseButton = styled('button', {
 
   '&:hover': {
     color: '$gray100',
-  },
-})
-
-const Logo = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$2',
-  fontWeight: '$bold',
-  fontSize: '$xl',
-  backgroundImage: '$gradient-horizontal',
-  backgroundClip: 'text',
-  WebkitBackgroundClip: 'text',
-  color: 'transparent',
-  WebkitTextFillColor: 'transparent',
-})
-
-const Nav = styled('nav', {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '$4',
-})
-
-const NavItem = styled('a', {
-  color: '$gray400',
-  textDecoration: 'none',
-  fontSize: '$md',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$3',
-  position: 'relative',
-  paddingLeft: '1.5rem',
-
-  '&::before': {
-    content: '',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: '4px',
-    borderRadius: '999px',
-    backgroundImage: '$gradient-horizontal',
-    opacity: 0,
-    transition: 'opacity 0.2s',
-  },
-
-  '&:hover': {
-    fontWeight: '$regular',
-  },
-
-  variants: {
-    active: {
-      true: {
-        color: '$white',
-        fontWeight: '$bold',
-        '&::before': {
-          opacity: 1,
-        },
-      },
-    },
-  },
-})
-
-const Footer = styled('footer', {
-  marginTop: 'auto',
-  display: 'flex',
-  justifyContent: 'center',
-})
-
-const Button = styled('button', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: '$3',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
-  fontSize: '$md',
-  fontWeight: '$bold',
-  padding: 0,
-
-  variants: {
-    variant: {
-      login: {
-        color: '$gray100',
-
-        '& > svg': {
-          color: '$green100',
-        },
-      },
-
-      logout: {
-        color: '#F75A68',
-
-        '&:hover': {
-          color: '#F75A68',
-        },
-
-        '& > svg': {
-          color: '#F75A68',
-        },
-      },
-    },
-  },
-
-  defaultVariants: {
-    variant: 'login',
-  },
-})
-
-const LoggedUser = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '$3',
-  fontSize: '$sm',
-  color: '$gray200',
-  fontWeight: '$regular',
-})
-
-const AvatarWrapper = styled('div', {
-  width: '32px',
-  height: '32px',
-  borderRadius: '999px',
-  padding: '0.0625rem',
-  backgroundImage: '$gradient-vertical',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  img: {
-    borderRadius: '999px',
   },
 })

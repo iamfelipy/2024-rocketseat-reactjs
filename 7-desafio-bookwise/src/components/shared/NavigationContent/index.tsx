@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { ChartLineUp, Binoculars, User, SignIn, SignOut } from 'phosphor-react'
 import logoImg from '@/assets/mdi_book-heart-outline.svg'
 
-interface SidebarContentProps {
+interface NavigationContentProps {
   pathname: string
   isAuthenticated: boolean
   onNavClick?: () => void
@@ -19,13 +19,13 @@ interface SidebarContentProps {
   onSignOut?: () => void
 }
 
-export function SidebarContent({
+export function NavigationContent({
   pathname,
   isAuthenticated,
   onNavClick,
   onSignIn,
   onSignOut,
-}: SidebarContentProps) {
+}: NavigationContentProps) {
   return (
     <>
       <Logo>

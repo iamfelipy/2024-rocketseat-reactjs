@@ -1,5 +1,5 @@
 import { Wrapper, Container } from './styles'
-import { SidebarContent } from './SidebarContent'
+import { NavigationContent } from '../shared/NavigationContent'
 import { useRouter } from 'next/router'
 
 export default function Sidebar() {
@@ -12,7 +12,7 @@ export default function Sidebar() {
   return (
     <Wrapper>
       <Container>
-        <SidebarContent
+        <NavigationContent
           pathname={pathname}
           isAuthenticated={isAuthenticated}
           onSignIn={signIn}
