@@ -28,7 +28,7 @@ export default function AppLayout3Cols({
 
 const LayoutWrapper = styled('div', {
   display: 'grid',
-  gridTemplateColumns: '252px 1fr 300px',
+  gridTemplateColumns: '252px 1fr 420px',
   minHeight: '100vh',
 
   '@media (max-width: 1024px)': {
@@ -62,7 +62,7 @@ const MainContent = styled('main', {
 })
 
 const AsideWrapper = styled('aside', {
-  borderLeft: '1px solid $gray700',
-  padding: '$4',
+  marginTop: '8.625rem',
+  marginRight: '6rem',
   backgroundColor: '$gray900',
 })

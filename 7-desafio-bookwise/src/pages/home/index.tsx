@@ -2,7 +2,7 @@ import React from 'react'
 import AppLayout3Cols from '@/layouts/AppLayout3Cols'
 import { styled } from '@/styles'
 import Sidebar from '@/components/Sidebar'
-import AsidePanel from '@/components/AsidePanel'
+import PopularBooksSection from '@/components/PopularBooksSection'
 
 const HomeContainer = styled('div', {
   display: 'flex',
@@ -24,7 +24,7 @@ export default function HomePage() {
 
 HomePage.getLayout = function getLayout(page: React.ReactElement) {
   return (
-    <AppLayout3Cols left={<Sidebar />} right={<AsidePanel />}>
+    <AppLayout3Cols left={<Sidebar />} right={<PopularBooksSection />}>
       {page}
     </AppLayout3Cols>
   )

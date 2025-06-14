@@ -9,7 +9,6 @@ import {
 } from './styles'
 import Image from 'next/image'
 import { ChartLineUp, Binoculars, User, SignIn, SignOut } from 'phosphor-react'
-import logoImg from '@/assets/mdi_book-heart-outline.svg'
 
 interface NavigationContentProps {
   pathname: string
@@ -29,7 +28,12 @@ export function NavigationContent({
   return (
     <>
       <Logo>
-        <Image src={logoImg} width="24" height="24" alt="" />
+        <Image
+          src={'/images/mdi_book-heart-outline.svg'}
+          width="24"
+          height="24"
+          alt=""
+        />
         BookWise
       </Logo>
 
