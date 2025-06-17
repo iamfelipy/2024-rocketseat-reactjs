@@ -79,6 +79,9 @@ export default function HomePage() {
         <RecentReviewsList>
           <SectionWithHeader title="Avaliações mais recentes">
             <BookCard
+              css={{
+                padding: '$6',
+              }}
               imageWidth={108}
               imageHeight={152}
               book={{
@@ -98,6 +101,9 @@ export default function HomePage() {
               showBookCardHeader
             />
             <BookCard
+              css={{
+                padding: '$6',
+              }}
               imageWidth={108}
               imageHeight={152}
               book={{
@@ -112,6 +118,9 @@ export default function HomePage() {
               description="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectu..."
             />
             <BookCard
+              css={{
+                padding: '$6',
+              }}
               imageWidth={108}
               imageHeight={152}
               book={{
@@ -127,6 +136,9 @@ export default function HomePage() {
     Proin sed proin at leo quis ac sem. Nam donec accumsan curabitur amet tortor quam sit. Bibendum enim sit dui lorem urna amet elit rhoncus ut. Aliquet euismod vitae ut turpis. Aliquam amet integer pellentesque."
             />
             <BookCard
+              css={{
+                padding: '$6',
+              }}
               imageWidth={108}
               imageHeight={152}
               book={{

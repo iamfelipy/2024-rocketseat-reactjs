@@ -36,6 +36,7 @@ interface BookCardProps {
   showRating?: boolean
   showBookCardHeader?: boolean
   showDateAndRating?: boolean
+  css?: any
 }
 
 const MAX_DESCRIPTION_LENGTH = 228
@@ -52,6 +53,7 @@ export default function BookCard({
   showRating = false,
   showBookCardHeader,
   showDateAndRating,
+  css,
 }: BookCardProps) {
   const [expanded, setExpanded] = useState(false)
 
@@ -69,7 +71,7 @@ export default function BookCard({
   const relativeDate = createdAt ? dayjs(createdAt).fromNow() : null
 
   return (
-    <CardContainer>
+    <CardContainer css={css}>
       {showBookCardHeader && user && relativeDate && (
         <BookCardHeader user={user} date={relativeDate} rating={book.rating} />
       )}

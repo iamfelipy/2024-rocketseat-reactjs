@@ -47,7 +47,6 @@ export const BookTitle = styled('div', {
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
-  maxHeight: '2.75rem',
 })
 
 export const BookAuthor = styled('div', {
