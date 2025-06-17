@@ -9,6 +9,4 @@ export default function Main({ children }: MainProps) {
   return <MainContainer>{children}</MainContainer>
 }
 
-const MainContainer = styled('main', {
-  padding: '$4',
-})
+const MainContainer = styled('main', {})

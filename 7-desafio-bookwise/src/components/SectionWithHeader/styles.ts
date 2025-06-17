@@ -1,11 +1,11 @@
 import { styled } from '@/styles'
 
-export const SectionContainer = styled('section', {
+export const Wrapper = styled('section', {
   backgroundColor: '$gray900',
   borderRadius: '$md',
 })
 
-export const SectionHeader = styled('div', {
+export const HeaderContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -16,8 +16,15 @@ export const SectionHeader = styled('div', {
   },
 })
 
-export const BooksList = styled('div', {
+export const Title = styled('h2', {
+  fontSize: '$sm',
+  fontWeight: '$regular',
+  color: '$gray100',
+})
+
+export const ActionArea = styled('div', {
   display: 'flex',
-  flexDirection: 'column',
   gap: '$3',
+  alignItems: 'center',
+  color: '$purple100',
 })

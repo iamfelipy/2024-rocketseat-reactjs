@@ -1,6 +1,6 @@
 import { styled } from '@/styles'
 
-export const LinkButtonContainer = styled('a', {
+export const LinkButtonContainer = styled('div', {
   display: 'inline-flex',
   alignItems: 'center',
   gap: '$2',

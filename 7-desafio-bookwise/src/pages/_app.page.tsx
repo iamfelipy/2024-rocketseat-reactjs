@@ -1,19 +1,12 @@
-import { ReactNode, ReactElement } from 'react'
+import '../lib/dayjs'
+
 import type { AppProps } from 'next/app'
 import { globalStyles } from '@/styles/global'
 
 globalStyles()
 
-type NextPageWithLayout = AppProps['Component'] & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
 function MyApp({ Component, pageProps }: AppProps) {
-  const Comp = Component as NextPageWithLayout
-
-  const getLayout = Comp.getLayout ?? ((page) => page)
-
-  return getLayout(<Comp {...pageProps} />)
+  return <Component {...pageProps} />
 }
 
 export default MyApp

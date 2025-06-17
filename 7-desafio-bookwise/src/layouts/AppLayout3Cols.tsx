@@ -17,10 +17,7 @@ export default function AppLayout3Cols({
     <LayoutWrapper>
       <MobileMenu />
       <SidebarWrapper>{left}</SidebarWrapper>
-      <MainContent>
-        <header>Cabeçalho</header>
-        {children}
-      </MainContent>
+      <MainContent>{children}</MainContent>
       <AsideWrapper>{right}</AsideWrapper>
     </LayoutWrapper>
   )
@@ -30,6 +27,8 @@ const LayoutWrapper = styled('div', {
   display: 'grid',
   gridTemplateColumns: '252px 1fr 420px',
   minHeight: '100vh',
+  maxWidth: '1440px',
+  margin: '0 auto',
 
   '@media (max-width: 1024px)': {
     gridTemplateColumns: '1fr',
@@ -54,10 +53,10 @@ const SidebarWrapper = styled('aside', {
 })
 
 const MainContent = styled('main', {
-  padding: '$4',
+  padding: '4.5rem 4rem 1rem 6rem',
 
   '@media (max-width: 1024px)': {
-    paddingTop: 'calc($4 + 3.5rem)',
+    padding: '5rem 1rem 1rem',
   },
 })
 

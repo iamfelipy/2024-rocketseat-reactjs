@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { LinkButtonContainer } from './styles'
 
 type LinkButtonProps = {
@@ -16,14 +17,24 @@ export function LinkButton({
   href,
   onClick,
 }: LinkButtonProps) {
+  if (!href) {
+    return (
+      <LinkButtonContainer
+        as="button"
+        color={color}
+        size={size}
+        onClick={onClick}
+      >
+        {children}
+      </LinkButtonContainer>
+    )
+  }
+
   return (
-    <LinkButtonContainer
-      color={color}
-      size={size}
-      href={href}
-      onClick={onClick}
-    >
-      {children}
-    </LinkButtonContainer>
+    <Link href={href} passHref legacyBehavior>
+      <LinkButtonContainer color={color} size={size} onClick={onClick}>
+        {children}
+      </LinkButtonContainer>
+    </Link>
   )
 }

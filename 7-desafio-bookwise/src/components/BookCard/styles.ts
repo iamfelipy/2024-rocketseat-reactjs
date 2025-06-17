@@ -3,11 +3,16 @@ import Image from 'next/image'
 
 export const CardContainer = styled('div', {
   display: 'flex',
-  alignItems: 'stretch',
-  gap: '$5',
+  flexDirection: 'column',
   backgroundColor: '$gray700',
   borderRadius: '$md',
   padding: '1.125rem 1.25rem',
+})
+
+export const BookContent = styled('div', {
+  display: 'flex',
+  alignItems: 'stretch',
+  gap: '$5',
 })
 
 export const BookImage = styled(Image, {
@@ -18,27 +23,60 @@ export const BookImage = styled(Image, {
 export const BookInfo = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'stretch',
   flex: 1,
-  minWidth: 0,
-  '& > *:last-child': {
-    marginTop: 'auto',
+})
+
+export const DateAndRating = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '$3',
+  gap: '$2',
+  '& > span:first-child': {
+    color: '$gray300',
+    fontSize: '$sm',
   },
 })
 
-export const BookTitle = styled('strong', {
-  color: '$gray100',
+export const BookTitle = styled('div', {
   fontSize: '$md',
   fontWeight: '$bold',
   lineHeight: '$short',
-  width: '100%',
+  color: '$gray100',
+  display: '-webkit-box',
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
+  maxHeight: '2.75rem',
 })
 
-export const BookAuthor = styled('span', {
-  color: '$gray400',
+export const BookAuthor = styled('div', {
   fontSize: '$sm',
   lineHeight: '$base',
+  color: '$gray400',
+})
+
+export const ReviewCount = styled('div', {
+  fontSize: '0.8125rem',
+  color: '$purple100',
+})
+
+export const Description = styled('div', {
+  fontSize: '$sm',
+  color: '$gray300',
+  lineHeight: '$base',
+  marginTop: '$5',
+})
+
+export const DescriptionBottomComponent = styled('div', {
+  fontSize: '$sm',
+  color: '$gray300',
+  lineHeight: '$base',
+})
+
+export const SeeMoreButton = styled('button', {
+  color: '$purple100',
+  fontSize: '$sm',
+  cursor: 'pointer',
+  fontWeight: '$bold',
 })

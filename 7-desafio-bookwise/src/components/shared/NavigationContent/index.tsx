@@ -1,12 +1,5 @@
-import {
-  Logo,
-  Nav,
-  NavItem,
-  Footer,
-  Button,
-  LoggedUser,
-  AvatarWrapper,
-} from './styles'
+import { Avatar } from '@/components/Avatar'
+import { Logo, Nav, NavItem, Footer, Button, LoggedUser } from './styles'
 import Image from 'next/image'
 import { ChartLineUp, Binoculars, User, SignIn, SignOut } from 'phosphor-react'
 
@@ -66,14 +59,12 @@ export function NavigationContent({
         {isAuthenticated ? (
           <Button variant="logout" onClick={onSignOut}>
             <LoggedUser>
-              <AvatarWrapper>
-                <Image
-                  src="https://avatars.githubusercontent.com/u/50622611?v=4"
-                  width={32}
-                  height={32}
-                  alt=""
-                />
-              </AvatarWrapper>
+              <Avatar
+                src="https://avatars.githubusercontent.com/u/50622611?v=4"
+                width={30}
+                height={30}
+                alt=""
+              />
               <span>Cristofer</span>
             </LoggedUser>
             <SignOut size={20} weight="bold" />

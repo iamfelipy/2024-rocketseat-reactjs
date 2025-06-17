@@ -161,18 +161,3 @@ export const LoggedUser = styled('div', {
   color: '$gray200',
   fontWeight: '$regular',
 })
-
-export const AvatarWrapper = styled('div', {
-  width: '32px',
-  height: '32px',
-  borderRadius: '999px',
-  padding: '0.0625rem',
-  backgroundImage: '$gradient-vertical',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  img: {
-    borderRadius: '999px',
-  },
-})
