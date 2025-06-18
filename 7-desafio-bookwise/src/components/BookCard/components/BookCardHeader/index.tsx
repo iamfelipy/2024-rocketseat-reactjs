@@ -18,9 +18,14 @@ interface BookCardHeaderProps {
   rating: number
 }
 
-export function BookCardHeader({ user, date, rating }: BookCardHeaderProps) {
+export function BookCardHeader({
+  user,
+  date,
+  rating,
+  ...props
+}: BookCardHeaderProps) {
   return (
-    <HeaderContainer>
+    <HeaderContainer {...props}>
       <UserInfo>
         <Avatar src={user.avatarUrl} alt={user.name} width={38} height={38} />
         <UserText>

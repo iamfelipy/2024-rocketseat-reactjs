@@ -1,13 +1,7 @@
 import { styled } from '@/styles'
 import Image from 'next/image'
-
-export const CardContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: '$gray700',
-  borderRadius: '$md',
-  padding: '1.125rem 1.25rem',
-})
+import { HeaderContainer } from './components/BookCardHeader/styles'
+import { StarRatingContainer } from '../StarRating/styles'
 
 export const BookContent = styled('div', {
   display: 'flex',
@@ -78,4 +72,32 @@ export const SeeMoreButton = styled('button', {
   fontSize: '$sm',
   cursor: 'pointer',
   fontWeight: '$bold',
+})
+
+export const CardContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '$gray700',
+  borderRadius: '$md',
+  padding: '1.125rem 1.25rem',
+
+  '@media (max-width: 1200px)': {
+    [`> ${HeaderContainer}`]: {
+      display: 'block',
+      marginBottom: '$3',
+      [`${StarRatingContainer}`]: {
+        marginTop: '$2',
+      },
+    },
+    [`> ${BookContent}`]: {
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+
+      [`> ${BookImage}`]: {
+        margin: '0 auto',
+
+        objectFit: 'cover',
+      },
+    },
+  },
 })
