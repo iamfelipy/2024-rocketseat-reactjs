@@ -10,6 +10,7 @@ export const HeaderContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   marginBottom: '$4',
+  height: '1.875rem',
   '& > span': {
     color: '$gray100',
     fontSize: '$sm',

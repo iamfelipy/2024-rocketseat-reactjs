@@ -47,7 +47,6 @@ const LayoutWrapper = styled('div', {
 })
 
 const SidebarWrapper = styled('aside', {
-  borderRight: '1px solid $gray700',
   backgroundColor: '$gray900',
   height: '100%',
 })
@@ -61,7 +60,7 @@ const MainContent = styled('main', {
 })
 
 const AsideWrapper = styled('aside', {
-  marginTop: '8.625rem',
+  marginTop: '9.125rem',
   marginRight: '6rem',
   backgroundColor: '$gray900',
 })

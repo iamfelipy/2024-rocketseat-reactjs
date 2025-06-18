@@ -8,10 +8,9 @@ export const Wrapper = styled('aside', {
 
 export const Container = styled('div', {
   width: '232px',
-  position: 'relative', // importante para posicionar o ::before
+  position: 'relative',
 
   padding: '$10 3rem $6',
-  borderRight: '1px solid $gray700',
   borderRadius: '12px',
   backgroundImage: `linear-gradient(105deg, $green200, $purple200, $gray800)`,
   maxHeight: '61.75rem',
@@ -20,18 +19,17 @@ export const Container = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  overflow: 'hidden', // para o before não vazar
+  overflow: 'hidden',
 
   '&::before': {
     content: '',
     position: 'absolute',
-    inset: 0, // cobre todo o aside
+    inset: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    pointerEvents: 'none', // deixa clicar nos elementos abaixo
+    pointerEvents: 'none',
     zIndex: 1,
   },
 
-  // opcional: elevar o conteúdo acima do ::before
   '& > *': {
     position: 'relative',
     zIndex: 2,
