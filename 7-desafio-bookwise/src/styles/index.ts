@@ -1,6 +1,6 @@
 // stitches.config.ts
 
-import { createStitches } from '@stitches/react'
+import { createStitches, defaultThemeMap } from '@stitches/react'
 
 export const {
   config,
@@ -12,6 +12,12 @@ export const {
   theme,
   createTheme,
 } = createStitches({
+  themeMap: {
+    ...defaultThemeMap,
+    height: 'space',
+    width: 'space',
+  },
+
   theme: {
     fonts: {
       default: 'Nunito, sans-serif',
@@ -83,16 +89,5 @@ export const {
       lg: '20px',
       full: '99999px',
     },
-  },
-  utils: {
-    marginX: (value: string) => ({
-      marginLeft: value,
-      marginRight: value,
-    }),
-  },
-  media: {
-    bp1: '(min-width: 640px)',
-    bp2: '(min-width: 768px)',
-    bp3: '(min-width: 1024px)',
   },
 })

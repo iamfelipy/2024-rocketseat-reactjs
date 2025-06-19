@@ -56,7 +56,7 @@ export default function MobileMenu() {
 const MobileMenuContainer = styled('div', {
   display: 'none',
 
-  '@media (max-width: 1024px)': {
+  '@media (max-width: 1250px)': {
     display: 'block',
     position: 'fixed',
     top: 0,
