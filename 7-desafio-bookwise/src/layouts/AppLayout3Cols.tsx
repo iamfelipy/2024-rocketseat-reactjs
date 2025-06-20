@@ -26,6 +26,7 @@ export default function AppLayout3Cols({
 const SidebarWrapper = styled('aside', {
   backgroundColor: '$gray900',
   height: '100%',
+  margin: '$5 0 $5 $5',
   gridArea: 'sidebar',
 })
 

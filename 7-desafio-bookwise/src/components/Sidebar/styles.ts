@@ -1,13 +1,12 @@
 import { styled } from '@/styles'
 
 export const Wrapper = styled('aside', {
-  padding: '$5',
   maxHeight: '61.75rem',
   height: '100%',
 })
 
 export const Container = styled('div', {
-  width: '232px',
+  width: '100%',
   position: 'relative',
 
   padding: '$10 3rem $6',

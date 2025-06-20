@@ -11,6 +11,8 @@ import {
   SeeMoreButton,
   DescriptionBottomComponent,
   DateAndRating,
+  ReadBadge,
+  BookImageContainer,
 } from './styles'
 import StarRating from '../StarRating'
 import { BookCardHeader } from './components/BookCardHeader'
@@ -36,6 +38,7 @@ interface BookCardProps {
   showRating?: boolean
   showBookCardHeader?: boolean
   showDateAndRating?: boolean
+  isRead?: boolean
   css?: any
 }
 
@@ -53,6 +56,7 @@ export default function BookCard({
   showRating = false,
   showBookCardHeader,
   showDateAndRating,
+  isRead,
   css,
 }: BookCardProps) {
   const [expanded, setExpanded] = useState(false)
@@ -72,16 +76,19 @@ export default function BookCard({
 
   return (
     <CardContainer css={css}>
+      {isRead && <ReadBadge>LIDO</ReadBadge>}
       {showBookCardHeader && user && relativeDate && (
         <BookCardHeader user={user} date={relativeDate} rating={book.rating} />
       )}
       <BookContent>
-        <BookImage
-          src={book.imageUrl}
-          alt={book.title}
-          width={imageWidth}
-          height={imageHeight}
-        />
+        <BookImageContainer
+          css={{
+            width: imageWidth,
+            height: imageHeight,
+          }}
+        >
+          <BookImage src={book.imageUrl} alt={book.title} fill />
+        </BookImageContainer>
         <BookInfo>
           {showDateAndRating && (
             <DateAndRating>

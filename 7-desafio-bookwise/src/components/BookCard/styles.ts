@@ -9,6 +9,11 @@ export const BookContent = styled('div', {
   gap: '$5',
 })
 
+export const BookImageContainer = styled('div', {
+  position: 'relative',
+  alignSelf: 'center',
+})
+
 export const BookImage = styled(Image, {
   objectFit: 'cover',
   borderRadius: '$sm',
@@ -80,6 +85,8 @@ export const CardContainer = styled('div', {
   backgroundColor: '$gray700',
   borderRadius: '$md',
   padding: '1.125rem 1.25rem',
+  position: 'relative',
+  overflow: 'hidden',
 
   '@media (max-width: 1200px)': {
     [`> ${HeaderContainer}`]: {
@@ -100,4 +107,16 @@ export const CardContainer = styled('div', {
       },
     },
   },
+})
+
+export const ReadBadge = styled('span', {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  background: '$green300',
+  color: '$green100',
+  fontWeight: '$bold',
+  fontSize: '$xs',
+  padding: '$1 $3',
+  borderRadius: '0px 0px 0px 4px',
 })
