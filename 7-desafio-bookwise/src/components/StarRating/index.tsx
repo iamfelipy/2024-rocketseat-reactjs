@@ -1,20 +1,45 @@
-import React from 'react'
-import { StarRatingContainer, Star } from './styles'
-import { Star as StarIcon } from 'phosphor-react'
+import React, { useState } from 'react'
+import { Star } from 'phosphor-react'
+import { StarContainer } from './styles'
 
-interface StarRatingProps {
+type StarRatingProps = {
   rating: number
   css?: any
+  onRatingChange?: (rating: number) => void
+  size?: 'sm' | 'md' | 'lg'
 }
 
-export default function StarRating({ rating, css }: StarRatingProps) {
+export default function StarRating({
+  rating,
+  onRatingChange,
+  size = 'md',
+  css,
+}: StarRatingProps) {
+  const [tempRating, setTempRating] = useState(1)
+
+  const handleStarClick = (newRating: number) => {
+    if (onRatingChange) {
+      onRatingChange(newRating)
+    }
+  }
+
+  const displayRating = tempRating > 0 ? tempRating : rating
+
   return (
-    <StarRatingContainer css={css}>
+    <StarContainer
+      size={size}
+      css={css}
+      onMouseLeave={onRatingChange ? () => setTempRating(0) : undefined}
+    >
       {[1, 2, 3, 4, 5].map((i) => (
-        <Star key={i}>
-          <StarIcon weight={i <= rating ? 'fill' : 'regular'} size={16} />
-        </Star>
+        <Star
+          key={i}
+          weight={i <= displayRating ? 'fill' : 'regular'}
+          onClick={() => handleStarClick(i)}
+          onMouseEnter={onRatingChange ? () => setTempRating(i) : undefined}
+          style={{ cursor: onRatingChange ? 'pointer' : 'default' }}
+        />
       ))}
-    </StarRatingContainer>
+    </StarContainer>
   )
 }

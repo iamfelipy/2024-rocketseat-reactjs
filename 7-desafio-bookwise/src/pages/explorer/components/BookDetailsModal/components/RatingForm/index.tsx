@@ -1,5 +1,6 @@
 import { Avatar } from '@/components/Avatar'
-import { Check, X, Star } from 'phosphor-react'
+import StarRating from '@/components/StarRating'
+import { Check, X } from 'phosphor-react'
 import {
   ActionButton,
   ActionsContainer,
@@ -31,7 +32,6 @@ export function RatingForm({
   initialComment = '',
 }: RatingFormProps) {
   const [rating, setRating] = useState(initialRating)
-  const [tempRating, setTempRating] = useState(initialRating)
   const [comment, setComment] = useState(initialComment)
 
   const commentLength = comment.length
@@ -41,27 +41,13 @@ export function RatingForm({
   }
 
   return (
-    <RatingFormContainer>
+    <RatingFormContainer as="form">
       <FormHeader>
         <UserInfo>
           <Avatar src={user.avatarUrl} alt={user.name} width={40} height={40} />
           <span>{user.name}</span>
         </UserInfo>
-        <div
-          style={{ display: 'flex', gap: '0.25rem' }}
-          onMouseLeave={() => setTempRating(rating)}
-        >
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star
-              key={i}
-              weight={i <= tempRating ? 'fill' : 'regular'}
-              size={24}
-              onClick={() => setRating(i)}
-              onMouseEnter={() => setTempRating(i)}
-              style={{ cursor: 'pointer', color: '#8381D9' }}
-            />
-          ))}
-        </div>
+        <StarRating rating={rating} onRatingChange={setRating} />
       </FormHeader>
       <TextAreaContainer>
         <textarea

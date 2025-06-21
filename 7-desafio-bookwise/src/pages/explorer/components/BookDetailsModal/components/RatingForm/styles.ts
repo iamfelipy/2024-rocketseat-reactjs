@@ -4,14 +4,23 @@ export const RatingFormContainer = styled('div', {
   background: '$gray700',
   padding: '1.5rem',
   borderRadius: '$md',
-  marginTop: '1rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
+  marginBottom: '1rem',
 })
 
 export const FormHeader = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '1rem',
+  width: '100%',
+
+  '@media (max-width: 425px)': {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '1rem',
+  },
 })
 
 export const UserInfo = styled('div', {
@@ -20,6 +29,7 @@ export const UserInfo = styled('div', {
   gap: '1rem',
 
   span: {
+    fontSize: '$md',
     fontWeight: '$bold',
     color: '$gray100',
   },
@@ -34,7 +44,7 @@ export const TextAreaContainer = styled('div', {
     height: 164,
     background: '$gray800',
     border: '1px solid $gray500',
-    borderRadius: '$sm',
+    borderRadius: '4px',
     padding: '0.875rem 1.25rem',
     color: '$gray200',
     fontSize: '$sm',
@@ -44,12 +54,16 @@ export const TextAreaContainer = styled('div', {
       outline: 'none',
       borderColor: '$green200',
     },
+
+    '&::placeholder': {
+      color: '$gray400',
+    },
   },
 
   span: {
     position: 'absolute',
-    bottom: '0.5rem',
-    right: '0.5rem',
+    bottom: 8,
+    right: 8,
     fontSize: '$xs',
     color: '$gray400',
   },
@@ -59,7 +73,6 @@ export const ActionsContainer = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
   gap: '0.5rem',
-  marginTop: '0.75rem',
 })
 
 export const ActionButton = styled('button', {
@@ -75,10 +88,6 @@ export const ActionButton = styled('button', {
 
   '&:hover': {
     background: '$gray500',
-  },
-
-  '&:first-of-type': {
-    color: '$purple100',
   },
 
   '&:last-of-type': {

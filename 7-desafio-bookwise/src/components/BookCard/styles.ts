@@ -1,7 +1,7 @@
 import { styled } from '@/styles'
 import Image from 'next/image'
 import { HeaderContainer } from './components/BookCardHeader/styles'
-import { StarRatingContainer } from '../StarRating/styles'
+import { StarContainer } from '../StarRating/styles'
 
 export const BookContent = styled('div', {
   display: 'flex',
@@ -92,7 +92,7 @@ export const CardContainer = styled('div', {
     [`> ${HeaderContainer}`]: {
       display: 'block',
       marginBottom: '$3',
-      [`${StarRatingContainer}`]: {
+      [`${StarContainer}`]: {
         marginTop: '$2',
       },
     },

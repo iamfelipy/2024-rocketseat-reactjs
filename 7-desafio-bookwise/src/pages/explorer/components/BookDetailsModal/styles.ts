@@ -32,6 +32,11 @@ export const Content = styled(Dialog.Content, {
   '&::-webkit-scrollbar-thumb': {
     background: '$gray600',
   },
+
+  '@media (max-width: 400px)': {
+    padding: '1rem',
+    paddingTop: '4rem',
+  },
 })
 
 export const CloseButton = styled(Dialog.Close, {
@@ -94,17 +99,16 @@ export const StatItem = styled('div', {
 
 export const RatingsSection = styled('div', {
   marginTop: '2.5rem',
-  '> div': {
+  '& > div:first-child': {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '1rem',
-  },
-
-  h3: {
-    fontSize: '$sm',
-    color: '$gray200',
-    fontWeight: '$regular',
+    '& > h3': {
+      fontSize: '$sm',
+      color: '$gray200',
+      fontWeight: '$base',
+    },
   },
 })
 
@@ -113,10 +117,64 @@ export const RatingCard = styled('div', {
   padding: '1.5rem',
   borderRadius: '$md',
   marginBottom: '0.75rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
 
   p: {
     fontSize: '$sm',
     color: '$gray300',
     lineHeight: '$base',
+  },
+
+  variants: {
+    isUserRating: {
+      true: {
+        background: '$gray600',
+        cursor: 'pointer',
+      },
+    },
+  },
+
+  '@media (max-width: 425px)': {
+    justifyContent: 'flex-start',
+  },
+})
+
+export const RatingHeader = styled('header', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+  marginBottom: '1rem',
+
+  '@media (max-width: 425px)': {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '100%',
+  },
+})
+
+export const UserInfoContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1rem',
+
+  '@media (max-width: 425px)': {
+    marginBottom: '1rem',
+  },
+})
+
+export const UserDetails = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+
+  strong: {
+    color: '$gray100',
+    lineHeight: '$short',
+  },
+  span: {
+    color: '$gray400',
+    fontSize: '$sm',
   },
 })
