@@ -1,38 +1,49 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { ButtonHTMLAttributes } from 'react'
+import Link, { LinkProps } from 'next/link'
 import { LinkButtonContainer } from './styles'
 
-type LinkButtonProps = {
+type LinkButtonProps = (
+  | ({ asButton?: false } & LinkProps)
+  | ({ asButton: true } & ButtonHTMLAttributes<HTMLButtonElement>)
+) & {
   children: React.ReactNode
   color?: 'white' | 'purple'
   size?: 'md' | 'sm'
-  href?: string
-  onClick?: () => void
+  className?: string
 }
 
 export function LinkButton({
   children,
   color = 'purple',
   size = 'md',
-  href,
-  onClick,
+  className,
+  ...props
 }: LinkButtonProps) {
-  if (!href) {
+  if (props.asButton) {
+    const { asButton, ...buttonProps } = props
     return (
       <LinkButtonContainer
         as="button"
         color={color}
         size={size}
-        onClick={onClick}
+        className={className}
+        {...buttonProps}
       >
         {children}
       </LinkButtonContainer>
     )
   }
 
+  const { asButton, ...linkProps } = props
+
   return (
-    <Link href={href} passHref legacyBehavior>
-      <LinkButtonContainer color={color} size={size} onClick={onClick}>
+    <Link {...linkProps} passHref legacyBehavior>
+      <LinkButtonContainer
+        as="a"
+        color={color}
+        size={size}
+        className={className}
+      >
         {children}
       </LinkButtonContainer>
     </Link>

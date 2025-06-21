@@ -62,7 +62,7 @@ const MobileMenuContainer = styled('div', {
     top: 0,
     left: 0,
     right: 0,
-    zIndex: 100,
+    zIndex: 1,
     backgroundColor: '$gray800',
     padding: '$4',
     borderBottom: '1px solid $gray700',

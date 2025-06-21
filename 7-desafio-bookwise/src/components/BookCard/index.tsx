@@ -40,6 +40,7 @@ interface BookCardProps {
   showDateAndRating?: boolean
   isRead?: boolean
   css?: any
+  onClick?: () => void
 }
 
 const MAX_DESCRIPTION_LENGTH = 228
@@ -58,6 +59,7 @@ export default function BookCard({
   showDateAndRating,
   isRead,
   css,
+  ...props
 }: BookCardProps) {
   const [expanded, setExpanded] = useState(false)
 
@@ -75,7 +77,7 @@ export default function BookCard({
   const relativeDate = createdAt ? dayjs(createdAt).fromNow() : null
 
   return (
-    <CardContainer css={css}>
+    <CardContainer css={css} {...props}>
       {isRead && <ReadBadge>LIDO</ReadBadge>}
       {showBookCardHeader && user && relativeDate && (
         <BookCardHeader user={user} date={relativeDate} rating={book.rating} />
@@ -87,7 +89,7 @@ export default function BookCard({
             height: imageHeight,
           }}
         >
-          <BookImage src={book.imageUrl} alt={book.title} fill />
+          <BookImage src={book.imageUrl} alt={book.title} fill loading="lazy" />
         </BookImageContainer>
         <BookInfo>
           {showDateAndRating && (

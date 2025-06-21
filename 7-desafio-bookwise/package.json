@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.6",
     "@stitches/react": "^1.2.8",
     "dayjs": "^1.11.13",
     "next": "13.0.6",

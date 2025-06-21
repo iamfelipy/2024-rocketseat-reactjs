@@ -14,6 +14,8 @@ import {
 } from './styles'
 import { SearchInput } from '@/components/SearchInput'
 import BookCard from '@/components/BookCard'
+import * as Dialog from '@radix-ui/react-dialog'
+import { BookDetailsModal } from './components/BookDetailsModal'
 
 const tags = [
   'Tudo',
@@ -151,46 +153,60 @@ const books = [
 
 export default function ExplorerPage() {
   const [selectedTag, setSelectedTag] = React.useState('Tudo')
+  const [selectedBookId, setSelectedBookId] = React.useState<string | null>(
+    null,
+  )
 
   return (
     <AppLayout2Cols left={<Sidebar />}>
       <Main>
-        <ExplorerContainer>
-          <Header>
-            <PageTitle>
-              <Binoculars size={32} weight="bold" />
-              Explorar
-            </PageTitle>
-            <SearchInputContainer>
-              <SearchInput />
-            </SearchInputContainer>
-          </Header>
+        <Dialog.Root
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedBookId(null)
+            }
+          }}
+        >
+          <ExplorerContainer>
+            <Header>
+              <PageTitle>
+                <Binoculars size={32} weight="bold" />
+                Explorar
+              </PageTitle>
+              <SearchInputContainer>
+                <SearchInput />
+              </SearchInputContainer>
+            </Header>
 
-          <TagsContainer>
-            {tags.map((tag) => (
-              <Tag
-                key={tag}
-                data-active={selectedTag === tag}
-                onClick={() => setSelectedTag(tag)}
-              >
-                {tag}
-              </Tag>
-            ))}
-          </TagsContainer>
+            <TagsContainer>
+              {tags.map((tag) => (
+                <Tag
+                  key={tag}
+                  data-active={selectedTag === tag}
+                  onClick={() => setSelectedTag(tag)}
+                >
+                  {tag}
+                </Tag>
+              ))}
+            </TagsContainer>
 
-          <BooksGrid>
-            {books.map((book) => (
-              <BookCard
-                showRating
-                imageHeight={152}
-                imageWidth={108}
-                key={book.id}
-                book={book}
-                isRead={book.isRead}
-              />
-            ))}
-          </BooksGrid>
-        </ExplorerContainer>
+            <BooksGrid>
+              {books.map((book) => (
+                <Dialog.Trigger key={book.id} asChild>
+                  <BookCard
+                    onClick={() => setSelectedBookId(String(book.id))}
+                    showRating
+                    imageHeight={152}
+                    imageWidth={108}
+                    book={book}
+                    isRead={book.isRead}
+                  />
+                </Dialog.Trigger>
+              ))}
+            </BooksGrid>
+          </ExplorerContainer>
+          {selectedBookId && <BookDetailsModal bookId={selectedBookId} />}
+        </Dialog.Root>
       </Main>
     </AppLayout2Cols>
   )
