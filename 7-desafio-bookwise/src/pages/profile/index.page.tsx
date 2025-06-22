@@ -23,7 +23,7 @@ const reviewsData = [
   {
     id: 3,
     title: 'Entendendo Algoritmos',
-    author: 'Aditya Bhargava',
+    author: { id: 1, name: 'Aditya Bhargava' },
     imageUrl: '/images/book-algoritmos.png',
     rating: 4,
     createdAt: new Date('2025-06-13T10:00:00.000Z'),
@@ -33,7 +33,7 @@ const reviewsData = [
   {
     id: 2,
     title: 'O guia do mochileiro das galáxias',
-    author: 'Douglas Adams',
+    author: { id: 2, name: 'Douglas Adams' },
     imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
     rating: 5,
     createdAt: new Date('2025-06-10T15:30:00.000Z'),
@@ -43,7 +43,7 @@ const reviewsData = [
   {
     id: 4,
     title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: 'Zeno Rocha',
+    author: { id: 3, name: 'Zeno Rocha' },
     imageUrl: '/images/book-habitos.png',
     rating: 4,
     createdAt: new Date('2025-06-08T09:15:00.000Z'),
@@ -72,7 +72,7 @@ const fetchReviews = async (query: string): Promise<Review[]> => {
   return reviewsData.filter(
     (review) =>
       review.title.toLowerCase().includes(lowerCaseQuery) ||
-      review.author.toLowerCase().includes(lowerCaseQuery),
+      review.author.name.toLowerCase().includes(lowerCaseQuery),
   )
 }
 
@@ -141,7 +141,10 @@ export default function ProfilePage() {
                   book={{
                     id: review.id,
                     title: review.title,
-                    author: review.author,
+                    author: {
+                      id: review.author.id,
+                      name: review.author.name,
+                    },
                     imageUrl: review.imageUrl,
                     rating: review.rating,
                   }}

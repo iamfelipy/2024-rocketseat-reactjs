@@ -17,21 +17,21 @@ const books = [
   {
     id: 1,
     title: 'A revolução dos bichos',
-    author: 'George Orwell',
+    author: { id: 4, name: 'George Orwell' },
     imageUrl: '/images/book-bichos.png',
     rating: 4,
   },
   {
     id: 2,
     title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: 'Zeno Rocha',
+    author: { id: 3, name: 'Zeno Rocha' },
     imageUrl: '/images/book-habitos.png',
     rating: 4,
   },
   {
     id: 3,
     title: 'O Fim da Eternidade',
-    author: 'Isaac Asimov',
+    author: { id: 5, name: 'Isaac Asimov' },
     imageUrl: '/images/book-eternidade.png',
     rating: 4,
   },
@@ -43,7 +43,7 @@ const recentReviews = [
     book: {
       id: 1,
       title: 'O Hobbit',
-      author: 'J.R.R. Tolkien',
+      author: { id: 8, name: 'J.R.R. Tolkien' },
       imageUrl: '/images/book-hobbit.png',
       rating: 4,
     },
@@ -60,7 +60,7 @@ const recentReviews = [
     book: {
       id: 2,
       title: 'O guia do mochileiro das galáxias',
-      author: 'Douglas Adams',
+      author: { id: 2, name: 'Douglas Adams' },
       imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
       rating: 4,
     },
@@ -77,7 +77,7 @@ const recentReviews = [
     book: {
       id: 3,
       title: 'Entendendo Algoritmos',
-      author: 'Aditya Bhargava',
+      author: { id: 1, name: 'Aditya Bhargava' },
       imageUrl: '/images/book-algoritmos.png',
       rating: 4,
     },
@@ -147,7 +147,7 @@ export default function HomePage() {
                   book={{
                     id: 3,
                     title: 'Entendendo Algoritmos',
-                    author: 'Aditya Bhargava',
+                    author: { id: 1, name: 'Aditya Bhargava' },
                     imageUrl: '/images/book-algoritmos.png',
                     rating: 4,
                   }}

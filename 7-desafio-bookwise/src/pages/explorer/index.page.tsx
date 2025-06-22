@@ -32,7 +32,7 @@ const books = [
   {
     id: 1,
     title: 'A revolução dos bichos',
-    author: 'George Orwell',
+    author: { id: 4, name: 'George Orwell' },
     imageUrl: '/images/book-bichos.png',
     rating: 3,
     isRead: false,
@@ -40,7 +40,7 @@ const books = [
   {
     id: 2,
     title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: 'Zeno Rocha',
+    author: { id: 3, name: 'Zeno Rocha' },
     imageUrl: '/images/book-habitos.png',
     rating: 4,
     isRead: false,
@@ -48,7 +48,7 @@ const books = [
   {
     id: 3,
     title: 'O fim da eternidade',
-    author: 'Isaac Asimov',
+    author: { id: 5, name: 'Isaac Asimov' },
     imageUrl: '/images/book-eternidade.png',
     rating: 4,
     isRead: false,
@@ -56,7 +56,7 @@ const books = [
   {
     id: 4,
     title: 'Entendendo Algoritmos',
-    author: 'Aditya Y. Bhargava',
+    author: { id: 1, name: 'Aditya Y. Bhargava' },
     imageUrl: '/images/book-algoritmos.png',
     rating: 3,
     isRead: true,
@@ -64,7 +64,7 @@ const books = [
   {
     id: 5,
     title: 'Código limpo',
-    author: 'Robert C. Martin',
+    author: { id: 6, name: 'Robert C. Martin' },
     imageUrl: '/images/codigo-limpo.png',
     rating: 4,
     isRead: false,
@@ -72,7 +72,7 @@ const books = [
   {
     id: 6,
     title: 'O poder do hábito',
-    author: 'Charles Duhigg',
+    author: { id: 7, name: 'Charles Duhigg' },
     imageUrl: '/images/book-o-poder-do-habito.png',
     rating: 4,
     isRead: false,
@@ -80,7 +80,7 @@ const books = [
   {
     id: 7,
     title: 'Arquitetura limpa',
-    author: 'Robert C. Martin',
+    author: { id: 6, name: 'Robert C. Martin' },
     imageUrl: '/images/book-arquitetura-limpa.png',
     rating: 2,
     isRead: false,
@@ -88,7 +88,7 @@ const books = [
   {
     id: 8,
     title: 'O Hobbit',
-    author: 'J.R.R. Tolkien',
+    author: { id: 8, name: 'J.R.R. Tolkien' },
     imageUrl: '/images/book-hobbit.png',
     rating: 3,
     isRead: true,
@@ -96,7 +96,7 @@ const books = [
   {
     id: 9,
     title: 'Histórias extraordinárias',
-    author: 'Edgar Allan Poe',
+    author: { id: 9, name: 'Edgar Allan Poe' },
     imageUrl: '/images/book-historias-extraordinarias.png',
     rating: 3,
     isRead: false,
@@ -104,7 +104,7 @@ const books = [
   {
     id: 10,
     title: 'Refatoração',
-    author: 'Martin Fowler',
+    author: { id: 10, name: 'Martin Fowler' },
     imageUrl: '/images/book-refatoracao.png',
     rating: 3,
     isRead: false,
@@ -112,7 +112,7 @@ const books = [
   {
     id: 11,
     title: 'Domain-Driven Design',
-    author: 'Eric Evans',
+    author: { id: 11, name: 'Eric Evans' },
     imageUrl: '/images/book-domain-driven-design.png',
     rating: 3,
     isRead: false,
@@ -120,7 +120,7 @@ const books = [
   {
     id: 12,
     title: 'Viagem ao Centro da Terra',
-    author: 'Júlio Verne',
+    author: { id: 12, name: 'Júlio Verne' },
     imageUrl: '/images/book-viagem-ao-centro-da-terra.png',
     rating: 3,
     isRead: false,
@@ -128,7 +128,7 @@ const books = [
   {
     id: 13,
     title: 'O guia do mochileiro das galáxias',
-    author: 'Douglas Adams',
+    author: { id: 2, name: 'Douglas Adams' },
     imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
     rating: 4,
     isRead: true,
@@ -136,7 +136,7 @@ const books = [
   {
     id: 14,
     title: 'Fragmentos do Horror',
-    author: 'Junji Ito',
+    author: { id: 13, name: 'Junji Ito' },
     imageUrl: '/images/book-fragmentos-do-horror.png',
     rating: 4,
     isRead: false,
@@ -144,7 +144,7 @@ const books = [
   {
     id: 15,
     title: 'O Programador Pragmático',
-    author: 'Andrew Hunt',
+    author: { id: 14, name: 'Andrew Hunt' },
     imageUrl: '/images/book-o-programador-pragmatico.png',
     rating: 4,
     isRead: false,

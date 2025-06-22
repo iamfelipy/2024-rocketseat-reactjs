@@ -21,7 +21,10 @@ import dayjs from 'dayjs'
 interface Book {
   id: number
   title: string
-  author: string
+  author: {
+    id: number
+    name: string
+  }
   imageUrl: string
   rating: number
 }
@@ -99,7 +102,7 @@ export default function BookCard({
             </DateAndRating>
           )}
           <BookTitle>{book.title}</BookTitle>
-          <BookAuthor>{book.author}</BookAuthor>
+          <BookAuthor>{book.author.name}</BookAuthor>
           {showRating && (
             <StarRating rating={book.rating} css={{ marginTop: 'auto' }} />
           )}
