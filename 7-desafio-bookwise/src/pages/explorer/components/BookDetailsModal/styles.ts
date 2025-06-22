@@ -1,3 +1,5 @@
+import { BookImageContainer } from '@/components/BookCard/styles'
+import { StarContainer } from '@/components/StarRating/styles'
 import { styled } from '@/styles'
 import * as Dialog from '@radix-ui/react-dialog'
 
@@ -55,11 +57,21 @@ export const BookDetailsContainer = styled('div', {
   flexDirection: 'column',
   background: '$gray700',
   borderRadius: '$md',
-  padding: '1.5rem 2rem',
+  padding: '2.5rem 2rem',
 })
 
 export const BookCardContainer = styled('div', {
   marginBottom: '2.5rem',
+
+  '@media (max-width: 1200px)': {
+    marginBottom: '1rem',
+    [`& ${BookImageContainer}`]: {
+      marginBottom: '1rem',
+    },
+    [`& ${StarContainer}`]: {
+      margin: '1rem 0',
+    },
+  },
 })
 
 export const BookStats = styled('div', {
@@ -68,6 +80,10 @@ export const BookStats = styled('div', {
   display: 'flex',
   gap: '3.5rem',
   flexWrap: 'wrap',
+  '@media (max-width: 1200px)': {
+    paddingTop: '1.5rem',
+    gap: '1rem',
+  },
 })
 
 export const StatItem = styled('div', {

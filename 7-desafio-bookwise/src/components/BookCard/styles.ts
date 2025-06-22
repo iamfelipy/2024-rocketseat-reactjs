@@ -46,6 +46,10 @@ export const BookTitle = styled('div', {
   WebkitLineClamp: 2,
   WebkitBoxOrient: 'vertical',
   overflow: 'hidden',
+
+  '@media (min-width: 1200px)': {
+    marginRight: '3.4rem',
+  },
 })
 
 export const BookAuthor = styled('div', {
