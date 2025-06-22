@@ -1,6 +1,22 @@
 import { Wrapper } from '@/components/SectionWithHeader/styles'
 import { styled } from '@/styles'
 
+export const Header = styled('header', {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  marginBottom: '2.5rem',
+
+  '@media (max-width: 480px)': {
+    marginBottom: '$10',
+  },
+})
+
+export const SearchInputContainer = styled('div', {
+  width: '100%',
+})
+
 export const PageTitle = styled('h1', {
   display: 'flex',
   alignItems: 'center',

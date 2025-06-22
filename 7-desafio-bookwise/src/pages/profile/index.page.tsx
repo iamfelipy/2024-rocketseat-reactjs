@@ -6,8 +6,14 @@ import { User } from 'phosphor-react'
 import Main from '@/components/Main'
 import { SectionWithHeader } from '@/components/SectionWithHeader'
 import BookCard from '@/components/BookCard'
-import { PageTitle, RecentReviewsList } from '@/pages/profile/styles'
+import {
+  Header,
+  PageTitle,
+  RecentReviewsList,
+  SearchInputContainer,
+} from '@/pages/profile/styles'
 import dayjs from 'dayjs'
+import { SearchInput } from '@/components/SearchInput'
 
 export default function ProfilePage() {
   // Datas das avaliações
@@ -23,10 +29,15 @@ export default function ProfilePage() {
   return (
     <AppLayout3Cols left={<Sidebar />} right={<UserProfileInfo />}>
       <Main>
-        <PageTitle>
-          <User size={32} weight="bold" />
-          Perfil
-        </PageTitle>
+        <Header>
+          <PageTitle>
+            <User size={32} weight="bold" />
+            Perfil
+          </PageTitle>
+          <SearchInputContainer>
+            <SearchInput placeholder="Buscar livro avaliado" />
+          </SearchInputContainer>
+        </Header>
         <RecentReviewsList>
           <SectionWithHeader title={`${firstReviewRelativeDate}`}>
             <BookCard
