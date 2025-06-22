@@ -35,12 +35,59 @@ const books = [
     imageUrl: '/images/book-eternidade.png',
     rating: 4,
   },
+]
+
+const recentReviews = [
   {
-    id: 4,
-    title: 'Entendendo Algoritmos',
-    author: 'Aditya Bhargava',
-    imageUrl: '/images/book-algoritmos.png',
-    rating: 4,
+    id: 1,
+    book: {
+      id: 1,
+      title: 'O Hobbit',
+      author: 'J.R.R. Tolkien',
+      imageUrl: '/images/book-hobbit.png',
+      rating: 4,
+    },
+    user: {
+      name: 'Jason Dias',
+      avatarUrl: '/images/avatar-1.jpg',
+    },
+    createdAt: new Date('2025-06-13T10:00:00.000Z'),
+    description:
+      'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
+  },
+  {
+    id: 2,
+    book: {
+      id: 2,
+      title: 'O guia do mochileiro das galáxias',
+      author: 'Douglas Adams',
+      imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
+      rating: 4,
+    },
+    user: {
+      name: 'Brandon Botosh',
+      avatarUrl: '/images/avatar-2.jpg',
+    },
+    createdAt: new Date('2025-06-13T10:00:00.000Z'),
+    description:
+      'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
+  },
+  {
+    id: 3,
+    book: {
+      id: 3,
+      title: 'Entendendo Algoritmos',
+      author: 'Aditya Bhargava',
+      imageUrl: '/images/book-algoritmos.png',
+      rating: 4,
+    },
+    user: {
+      name: 'Lindsey Philips',
+      avatarUrl: '/images/avatar-3.jpg',
+    },
+    createdAt: new Date('2025-06-13T10:00:00.000Z'),
+    description:
+      'Integer at tincidunt sed mi. Venenatis nunc justo porta viverra lacus scelerisque ut orci ultricies. Massa ultrices lacus non lectus pellentesque cras posuere neque. Nunc nisl curabitur et non. Tellus senectus elit porta lorem.',
   },
 ]
 
@@ -55,7 +102,7 @@ const PopularBooksSection = () => {
     <SectionWithHeader
       title="Livros populares"
       actionText="Ver todos"
-      actionHref="/books"
+      actionHref="/explorer"
     >
       <BooksList>
         {books.map((book) => (
@@ -88,7 +135,7 @@ export default function HomePage() {
               <SectionWithHeader
                 title="Sua última leitura"
                 actionText="Ver todos"
-                actionHref="/books"
+                actionHref="/profile"
               >
                 <BookCard
                   css={{
@@ -113,121 +160,21 @@ export default function HomePage() {
           )}
           <RecentReviewsList>
             <SectionWithHeader title="Avaliações mais recentes">
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 1,
-                  title: 'O Hobbit',
-                  author: 'J.R.R. Tolkien',
-                  imageUrl: '/images/book-hobbit.png',
-                  rating: 4,
-                }}
-                user={{
-                  name: 'Jason Dias',
-                  avatarUrl: '/images/avatar-1.jpg',
-                }}
-                createdAt={new Date('2025-06-13T10:00:00.000Z')}
-                description="Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh"
-                showBookCardHeader
-              />
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 1,
-                  title: 'O guia do mochileiro das galáxias',
-                  author: 'Douglas Adams',
-                  imageUrl:
-                    '/images/book-o-guia-do-mochileiro-das-galaxias.png',
-                  rating: 4,
-                }}
-                user={{
-                  name: 'Brandon Botosh',
-                  avatarUrl: '/images/avatar-2.jpg',
-                }}
-                createdAt={new Date('2025-06-13T10:00:00.000Z')}
-                description="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget"
-                showBookCardHeader
-              />
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 1,
-                  title: 'Entendendo Algoritmos',
-                  author: 'Aditya Bhargava',
-                  imageUrl: '/images/book-algoritmos.png',
-                  rating: 4,
-                }}
-                user={{
-                  name: 'Lindsey Philips',
-                  avatarUrl: '/images/avatar-3.jpg',
-                }}
-                createdAt={new Date('2025-06-13T10:00:00.000Z')}
-                description="Integer at tincidunt sed mi. Venenatis nunc justo porta viverra lacus scelerisque ut orci ultricies. Massa ultrices lacus non lectus pellentesque cras posuere neque. Nunc nisl curabitur et non. Tellus senectus elit porta lorem."
-                showBookCardHeader
-              />
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 3,
-                  title: 'Entendendo Algoritmos',
-                  author: 'Aditya Bhargava',
-                  imageUrl: '/images/book-algoritmos.png',
-                  rating: 4,
-                }}
-                createdAt={new Date('2025-06-13T10:00:00.000Z')}
-                showDateAndRating
-                description="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectu..."
-              />
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 3,
-                  title: 'Entendendo Algoritmos',
-                  author: 'Aditya Bhargava',
-                  imageUrl: '/images/book-algoritmos.png',
-                  rating: 4,
-                }}
-                createdAt={new Date('2025-06-13T10:00:00.000Z')}
-                showRating
-                descriptionBottom="Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.
-    Proin sed proin at leo quis ac sem. Nam donec accumsan curabitur amet tortor quam sit. Bibendum enim sit dui lorem urna amet elit rhoncus ut. Aliquet euismod vitae ut turpis. Aliquam amet integer pellentesque."
-              />
-              <BookCard
-                css={{
-                  padding: '$6',
-                }}
-                imageWidth={108}
-                imageHeight={152}
-                book={{
-                  id: 4,
-                  title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-                  author: 'Zeno Rocha',
-                  imageUrl: '/images/book-habitos.png',
-                  rating: 4,
-                }}
-                reviewCount={3}
-                showRating
-              />
+              {recentReviews.map((review) => (
+                <BookCard
+                  key={review.id}
+                  css={{
+                    padding: '$6',
+                  }}
+                  imageWidth={108}
+                  imageHeight={152}
+                  book={review.book}
+                  user={review.user}
+                  createdAt={review.createdAt}
+                  description={review.description}
+                  showBookCardHeader
+                />
+              ))}
             </SectionWithHeader>
           </RecentReviewsList>
         </Main>
