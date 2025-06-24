@@ -25,7 +25,7 @@ import BookCard from '@/components/BookCard'
 const book = {
   id: 'mock-book-id',
   title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-  author: 'Zeno Rocha',
+  author: { id: 3, name: 'Zeno Rocha' },
   imageUrl: '/images/book-habitos.png',
   rating: 4,
   totalPages: 160,
@@ -34,7 +34,7 @@ const book = {
     {
       id: 1,
       user: {
-        id: 'user-1',
+        id: 1,
         name: 'Brandon Botosh',
         avatarUrl: '/images/avatar-1.jpg',
       },
@@ -46,7 +46,7 @@ const book = {
     {
       id: 2,
       user: {
-        id: 'user-2',
+        id: 2,
         name: 'Jaylon Franci',
         avatarUrl: '/images/avatar-2.jpg',
       },
@@ -59,7 +59,7 @@ const book = {
 
 // Para simular o usuário logado, mude o id para 'user-1' ou 'user-2' para testar a edição
 const currentUserMock = {
-  id: 'user-logged-in', // ID diferente para simular um novo usuário
+  id: 99,
   name: 'Cristofer Rosser',
   avatarUrl: '/images/avatar-3.jpg',
 }
@@ -113,7 +113,7 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
               book={{
                 id: 4,
                 title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-                author: 'Zeno Rocha',
+                author: { id: 3, name: 'Zeno Rocha' },
                 imageUrl: '/images/book-habitos.png',
                 rating: 4,
               }}

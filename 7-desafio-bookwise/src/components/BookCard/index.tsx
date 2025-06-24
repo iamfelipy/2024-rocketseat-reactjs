@@ -31,7 +31,7 @@ interface Book {
 
 interface BookCardProps {
   book: Book
-  user?: { name: string; avatarUrl: string }
+  user?: { id: number; name: string; avatarUrl: string }
   createdAt?: Date
   description?: string
   descriptionBottom?: string

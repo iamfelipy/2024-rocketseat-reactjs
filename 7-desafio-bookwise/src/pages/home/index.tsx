@@ -48,6 +48,7 @@ const recentReviews = [
       rating: 4,
     },
     user: {
+      id: 1,
       name: 'Jason Dias',
       avatarUrl: '/images/avatar-1.jpg',
     },
@@ -65,6 +66,7 @@ const recentReviews = [
       rating: 4,
     },
     user: {
+      id: 2,
       name: 'Brandon Botosh',
       avatarUrl: '/images/avatar-2.jpg',
     },
@@ -82,6 +84,7 @@ const recentReviews = [
       rating: 4,
     },
     user: {
+      id: 3,
       name: 'Lindsey Philips',
       avatarUrl: '/images/avatar-3.jpg',
     },

@@ -12,6 +12,12 @@ export const UserInfo = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+  cursor: 'pointer',
+  transition: 'opacity 0.2s',
+
+  '&:hover': {
+    opacity: 0.8,
+  },
 })
 
 export const UserText = styled('div', {
