@@ -12,6 +12,7 @@ export const BookContent = styled('div', {
 export const BookImageContainer = styled('div', {
   position: 'relative',
   alignSelf: 'center',
+  flexShrink: 0,
 })
 
 export const BookImage = styled(Image, {

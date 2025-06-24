@@ -174,6 +174,12 @@ export const UserInfoContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+  cursor: 'pointer',
+  transition: 'opacity 0.2s',
+
+  '&:hover': {
+    opacity: 0.8,
+  },
 
   '@media (max-width: 425px)': {
     marginBottom: '1rem',

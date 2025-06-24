@@ -20,6 +20,7 @@ import { LinkButton } from '@/components/LinkButton'
 import { useState } from 'react'
 import { RatingForm } from './components/RatingForm'
 import BookCard from '@/components/BookCard'
+import Link from 'next/link'
 
 // Mock data
 const book = {
@@ -187,18 +188,24 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
                 isUserRating={rating.user.id === session.data?.user?.id}
               >
                 <RatingHeader>
-                  <UserInfoContainer>
-                    <Avatar
-                      src={rating.user.avatarUrl}
-                      alt={rating.user.name}
-                      width={40}
-                      height={40}
-                    />
-                    <UserDetails>
-                      <strong>{rating.user.name}</strong>
-                      <span>{rating.date}</span>
-                    </UserDetails>
-                  </UserInfoContainer>
+                  <Link
+                    href={`/profile/${rating.user.id}`}
+                    prefetch={false}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <UserInfoContainer>
+                      <Avatar
+                        src={rating.user.avatarUrl}
+                        alt={rating.user.name}
+                        width={40}
+                        height={40}
+                      />
+                      <UserDetails>
+                        <strong>{rating.user.name}</strong>
+                        <span>{rating.date}</span>
+                      </UserDetails>
+                    </UserInfoContainer>
+                  </Link>
                   <StarRating rating={rating.rating} />
                 </RatingHeader>
                 <p>{rating.comment}</p>
