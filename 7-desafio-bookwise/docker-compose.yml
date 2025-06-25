@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: desafio-bookwise-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: desafio_bookwise
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+    ports:
+      - "5432:5432"
+    volumes:
+      - desafio_bookwise_data:/var/lib/postgresql/data
+    networks:
+      - desafio_bookwise_network
+
+volumes:
+  desafio_bookwise_data:
+    name: desafio_bookwise_postgres_data
+
+networks:
+  desafio_bookwise_network:
+    name: desafio_bookwise_network 
