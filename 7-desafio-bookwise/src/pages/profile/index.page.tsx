@@ -21,9 +21,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 const reviewsData = [
   {
-    id: 3,
+    id: '3',
     title: 'Entendendo Algoritmos',
-    author: { id: 1, name: 'Aditya Bhargava' },
+    author: { id: 'aditya-bhargava', name: 'Aditya Bhargava' },
     imageUrl: '/images/book-algoritmos.png',
     rating: 4,
     createdAt: new Date('2025-06-13T10:00:00.000Z'),
@@ -31,22 +31,22 @@ const reviewsData = [
       'Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.\nProin sed proin at leo quis ac sem. Nam donec accumsan curabitur amet tortor quam sit. Bibendum enim sit dui lorem urna amet elit rhoncus ut. Aliquet euismod vitae ut turpis. Aliquam amet integer pellentesque.',
   },
   {
-    id: 2,
-    title: 'O guia do mochileiro das galáxias',
-    author: { id: 2, name: 'Douglas Adams' },
+    id: '2',
+    title: 'O Guia do Mochileiro das Galáxias',
+    author: { id: 'douglas-adams', name: 'Douglas Adams' },
     imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
     rating: 5,
-    createdAt: new Date('2025-06-10T15:30:00.000Z'),
+    createdAt: new Date('2025-06-10T10:00:00.000Z'),
     descriptionBottom:
       'Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.\nProin sed proin at leo quis ac sem. Nam donec accumsan curabitur amet tortor quam sit. Bibendum enim sit dui lorem urna amet elit rhoncus ut. Aliquet euismod vitae ut turpis. Aliquam amet integer pellentesque.',
   },
   {
-    id: 4,
+    id: '1',
     title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: { id: 3, name: 'Zeno Rocha' },
+    author: { id: 'zeno-rocha', name: 'Zeno Rocha' },
     imageUrl: '/images/book-habitos.png',
     rating: 4,
-    createdAt: new Date('2025-06-08T09:15:00.000Z'),
+    createdAt: new Date('2025-06-08T10:00:00.000Z'),
     descriptionBottom:
       'Tristique massa sed enim lacinia odio. Congue ut faucibus nunc vitae non. Nam feugiat vel morbi viverra vitae mi. Vitae fringilla ut et suspendisse enim suspendisse vitae. Leo non eget lacus sollicitudin tristique pretium quam. Mollis et luctus amet sed convallis varius massa sagittis.\nProin sed proin at leo quis ac sem. Nam donec accumsan curabitur amet tortor quam sit. Bibendum enim sit dui lorem urna amet elit rhoncus ut. Aliquet euismod vitae ut turpis. Aliquam amet integer pellentesque.',
   },

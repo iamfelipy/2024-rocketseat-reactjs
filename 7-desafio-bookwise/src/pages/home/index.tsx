@@ -13,42 +13,42 @@ import {
 import { styled } from '@/styles'
 import { ChartLineUp } from 'phosphor-react'
 
-const books = [
+const popularBooks = [
   {
-    id: 1,
-    title: 'A revolução dos bichos',
-    author: { id: 4, name: 'George Orwell' },
-    imageUrl: '/images/book-bichos.png',
+    id: '1',
+    title: 'A Revolução dos Bichos',
+    author: { id: 'george-orwell', name: 'George Orwell' },
+    imageUrl: '/images/book-a-revolucao-dos-bichos.png',
     rating: 4,
   },
   {
-    id: 2,
+    id: '2',
     title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: { id: 3, name: 'Zeno Rocha' },
+    author: { id: 'zeno-rocha', name: 'Zeno Rocha' },
     imageUrl: '/images/book-habitos.png',
     rating: 4,
   },
   {
-    id: 3,
+    id: '3',
     title: 'O Fim da Eternidade',
-    author: { id: 5, name: 'Isaac Asimov' },
-    imageUrl: '/images/book-eternidade.png',
+    author: { id: 'isaac-asimov', name: 'Isaac Asimov' },
+    imageUrl: '/images/book-o-fim-da-eternidade.png',
     rating: 4,
   },
 ]
 
 const recentReviews = [
   {
-    id: 1,
+    id: '1',
     book: {
-      id: 1,
+      id: '4',
       title: 'O Hobbit',
-      author: { id: 8, name: 'J.R.R. Tolkien' },
-      imageUrl: '/images/book-hobbit.png',
+      author: { id: 'jrr-tolkien', name: 'J.R.R. Tolkien' },
+      imageUrl: '/images/book-o-hobbit.png',
       rating: 4,
     },
     user: {
-      id: 1,
+      id: 'jason-dias',
       name: 'Jason Dias',
       avatarUrl: '/images/avatar-1.jpg',
     },
@@ -57,16 +57,16 @@ const recentReviews = [
       'Semper et sapien proin vitae nisi. Feugiat neque integer donec et aenean posuere amet ultrices. Cras fermentum id pulvinar varius leo a in. Amet libero pharetra nunc elementum fringilla velit ipsum. Sed vulputate massa velit nibh',
   },
   {
-    id: 2,
+    id: '2',
     book: {
-      id: 2,
-      title: 'O guia do mochileiro das galáxias',
-      author: { id: 2, name: 'Douglas Adams' },
+      id: '5',
+      title: 'O Guia do Mochileiro das Galáxias',
+      author: { id: 'douglas-adams', name: 'Douglas Adams' },
       imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
       rating: 4,
     },
     user: {
-      id: 2,
+      id: 'brandon-botosh',
       name: 'Brandon Botosh',
       avatarUrl: '/images/avatar-2.jpg',
     },
@@ -75,16 +75,16 @@ const recentReviews = [
       'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectus leo. Sit porta eget nec vitae sit vulputate eget',
   },
   {
-    id: 3,
+    id: '3',
     book: {
-      id: 3,
+      id: '6',
       title: 'Entendendo Algoritmos',
-      author: { id: 1, name: 'Aditya Bhargava' },
+      author: { id: 'aditya-bhargava', name: 'Aditya Bhargava' },
       imageUrl: '/images/book-algoritmos.png',
       rating: 4,
     },
     user: {
-      id: 3,
+      id: 'lindsey-philips',
       name: 'Lindsey Philips',
       avatarUrl: '/images/avatar-3.jpg',
     },
@@ -108,7 +108,7 @@ const PopularBooksSection = () => {
       actionHref="/explorer"
     >
       <BooksList>
-        {books.map((book) => (
+        {popularBooks.map((book) => (
           <BookCard
             showRating
             imageWidth={64}
@@ -148,9 +148,9 @@ export default function HomePage() {
                   imageWidth={108}
                   imageHeight={152}
                   book={{
-                    id: 3,
+                    id: '3',
                     title: 'Entendendo Algoritmos',
-                    author: { id: 1, name: 'Aditya Bhargava' },
+                    author: { id: 'aditya-bhargava', name: 'Aditya Bhargava' },
                     imageUrl: '/images/book-algoritmos.png',
                     rating: 4,
                   }}

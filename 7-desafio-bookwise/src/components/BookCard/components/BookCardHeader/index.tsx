@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 interface BookCardHeaderProps {
   user: {
-    id: number
+    id: string
     name: string
     avatarUrl: string
   }

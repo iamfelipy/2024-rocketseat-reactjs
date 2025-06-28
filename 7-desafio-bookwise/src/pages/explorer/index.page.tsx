@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetServerSideProps } from 'next'
 import AppLayout2Cols from '@/layouts/AppLayout2Cols'
 import Main from '@/components/Main'
 import Sidebar from '@/components/Sidebar'
@@ -16,146 +17,73 @@ import { SearchInput } from '@/components/SearchInput'
 import BookCard from '@/components/BookCard'
 import * as Dialog from '@radix-ui/react-dialog'
 import { BookDetailsModal } from './components/BookDetailsModal'
+import { useBooks } from '@/lib/hooks/useBooks'
+import { useCategories } from '@/lib/hooks/useCategories'
+import { useSearchForm } from '@/lib/hooks/useSearchForm'
+import { api } from '@/lib/axios'
 
-const tags = [
-  'Tudo',
-  'Computação',
-  'Educação',
-  'Fantasia',
-  'Ficção científica',
-  'Horror',
-  'HQs',
-  'Suspense',
-]
+interface Book {
+  id: string
+  name: string
+  author: string
+  summary: string
+  cover_url: string
+  total_pages: number
+  created_at: string
+  categories: Array<{
+    id: string
+    name: string
+  }>
+  average_rating: number
+  ratings_count: number
+}
 
-const books = [
-  {
-    id: 1,
-    title: 'A revolução dos bichos',
-    author: { id: 4, name: 'George Orwell' },
-    imageUrl: '/images/book-bichos.png',
-    rating: 3,
-    isRead: false,
-  },
-  {
-    id: 2,
-    title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-    author: { id: 3, name: 'Zeno Rocha' },
-    imageUrl: '/images/book-habitos.png',
-    rating: 4,
-    isRead: false,
-  },
-  {
-    id: 3,
-    title: 'O fim da eternidade',
-    author: { id: 5, name: 'Isaac Asimov' },
-    imageUrl: '/images/book-eternidade.png',
-    rating: 4,
-    isRead: false,
-  },
-  {
-    id: 4,
-    title: 'Entendendo Algoritmos',
-    author: { id: 1, name: 'Aditya Y. Bhargava' },
-    imageUrl: '/images/book-algoritmos.png',
-    rating: 3,
-    isRead: true,
-  },
-  {
-    id: 5,
-    title: 'Código limpo',
-    author: { id: 6, name: 'Robert C. Martin' },
-    imageUrl: '/images/codigo-limpo.png',
-    rating: 4,
-    isRead: false,
-  },
-  {
-    id: 6,
-    title: 'O poder do hábito',
-    author: { id: 7, name: 'Charles Duhigg' },
-    imageUrl: '/images/book-o-poder-do-habito.png',
-    rating: 4,
-    isRead: false,
-  },
-  {
-    id: 7,
-    title: 'Arquitetura limpa',
-    author: { id: 6, name: 'Robert C. Martin' },
-    imageUrl: '/images/book-arquitetura-limpa.png',
-    rating: 2,
-    isRead: false,
-  },
-  {
-    id: 8,
-    title: 'O Hobbit',
-    author: { id: 8, name: 'J.R.R. Tolkien' },
-    imageUrl: '/images/book-hobbit.png',
-    rating: 3,
-    isRead: true,
-  },
-  {
-    id: 9,
-    title: 'Histórias extraordinárias',
-    author: { id: 9, name: 'Edgar Allan Poe' },
-    imageUrl: '/images/book-historias-extraordinarias.png',
-    rating: 3,
-    isRead: false,
-  },
-  {
-    id: 10,
-    title: 'Refatoração',
-    author: { id: 10, name: 'Martin Fowler' },
-    imageUrl: '/images/book-refatoracao.png',
-    rating: 3,
-    isRead: false,
-  },
-  {
-    id: 11,
-    title: 'Domain-Driven Design',
-    author: { id: 11, name: 'Eric Evans' },
-    imageUrl: '/images/book-domain-driven-design.png',
-    rating: 3,
-    isRead: false,
-  },
-  {
-    id: 12,
-    title: 'Viagem ao Centro da Terra',
-    author: { id: 12, name: 'Júlio Verne' },
-    imageUrl: '/images/book-viagem-ao-centro-da-terra.png',
-    rating: 3,
-    isRead: false,
-  },
-  {
-    id: 13,
-    title: 'O guia do mochileiro das galáxias',
-    author: { id: 2, name: 'Douglas Adams' },
-    imageUrl: '/images/book-o-guia-do-mochileiro-das-galaxias.png',
-    rating: 4,
-    isRead: true,
-  },
-  {
-    id: 14,
-    title: 'Fragmentos do Horror',
-    author: { id: 13, name: 'Junji Ito' },
-    imageUrl: '/images/book-fragmentos-do-horror.png',
-    rating: 4,
-    isRead: false,
-  },
-  {
-    id: 15,
-    title: 'O Programador Pragmático',
-    author: { id: 14, name: 'Andrew Hunt' },
-    imageUrl: '/images/book-o-programador-pragmatico.png',
-    rating: 4,
-    isRead: false,
-  },
-]
+interface Category {
+  id: string
+  name: string
+}
 
-export default function ExplorerPage() {
-  const [selectedTag, setSelectedTag] = React.useState('Tudo')
+interface ExplorerPageProps {
+  initialBooks: Book[]
+  initialCategories: Category[]
+}
+
+export default function ExplorerPage({
+  initialBooks,
+  initialCategories,
+}: ExplorerPageProps) {
+  const [selectedTag, setSelectedTag] = React.useState('all')
   const [selectedBookId, setSelectedBookId] = React.useState<string | null>(
     null,
   )
+
+  // Use custom search form hook
+  const { register, debouncedSearchQuery, errors, isSearching } =
+    useSearchForm()
+
+  // Use client-side data fetching only when user interacts (search or category change)
+  const { data: books = initialBooks, isLoading: isLoadingBooks } = useBooks({
+    category: selectedTag !== 'all' ? selectedTag : undefined,
+    search: debouncedSearchQuery || undefined,
+  })
+
+  const { data: categories = initialCategories } = useCategories()
+
+  // Create tags array with "all" as first option and then all categories
+  const tags = ['all', ...categories.map((cat) => cat.name)]
+
+  // Transform API book data to match BookCard interface
+  const transformedBooks = books.map((book) => ({
+    id: book.id,
+    title: book.name,
+    author: {
+      id: '00000000-0000-0000-0000-000000000000',
+      name: book.author,
+    },
+    imageUrl: book.cover_url,
+    rating: book.average_rating,
+    isRead: false,
+  }))
 
   return (
     <AppLayout2Cols left={<Sidebar />}>
@@ -174,7 +102,35 @@ export default function ExplorerPage() {
                 Explorar
               </PageTitle>
               <SearchInputContainer>
-                <SearchInput />
+                <SearchInput
+                  placeholder="Buscar livro ou autor"
+                  {...register('query')}
+                  hasError={!!errors.query}
+                />
+                {errors.query && (
+                  <div
+                    style={{
+                      color: '#ef4444',
+                      fontSize: '12px',
+                      marginTop: '4px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {errors.query.message}
+                  </div>
+                )}
+                {isSearching && (
+                  <div
+                    style={{
+                      color: '#6b7280',
+                      fontSize: '12px',
+                      marginTop: '4px',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    Searching...
+                  </div>
+                )}
               </SearchInputContainer>
             </Header>
 
@@ -191,18 +147,22 @@ export default function ExplorerPage() {
             </TagsContainer>
 
             <BooksGrid>
-              {books.map((book) => (
-                <Dialog.Trigger key={book.id} asChild>
-                  <BookCard
-                    onClick={() => setSelectedBookId(String(book.id))}
-                    showRating
-                    imageHeight={152}
-                    imageWidth={108}
-                    book={book}
-                    isRead={book.isRead}
-                  />
-                </Dialog.Trigger>
-              ))}
+              {isLoadingBooks ? (
+                <div>Loading books...</div>
+              ) : (
+                transformedBooks.map((book) => (
+                  <Dialog.Trigger key={book.id} asChild>
+                    <BookCard
+                      onClick={() => setSelectedBookId(book.id)}
+                      showRating
+                      imageHeight={152}
+                      imageWidth={108}
+                      book={book}
+                      isRead={book.isRead}
+                    />
+                  </Dialog.Trigger>
+                ))
+              )}
             </BooksGrid>
           </ExplorerContainer>
           {selectedBookId && <BookDetailsModal bookId={selectedBookId} />}
@@ -210,4 +170,29 @@ export default function ExplorerPage() {
       </Main>
     </AppLayout2Cols>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    // Fetch initial data server-side
+    const [booksResponse, categoriesResponse] = await Promise.all([
+      api.get('/books'),
+      api.get('/categories'),
+    ])
+
+    return {
+      props: {
+        initialBooks: booksResponse.data,
+        initialCategories: categoriesResponse.data,
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching initial data:', error)
+    return {
+      props: {
+        initialBooks: [],
+        initialCategories: [],
+      },
+    }
+  }
 }
