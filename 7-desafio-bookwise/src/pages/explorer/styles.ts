@@ -13,6 +13,14 @@ export const Header = styled('header', {
   alignItems: 'center',
   marginBottom: '3.375rem',
 
+  '& > *:nth-child(2)': {
+    width: 433,
+
+    '@media (max-width: 1024px)': {
+      width: '100%',
+    },
+  },
+
   '@media (max-width: 1024px)': {
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -38,14 +46,6 @@ export const PageTitle = styled('h1', {
 
   svg: {
     color: '$green100',
-  },
-})
-
-export const SearchInputContainer = styled('div', {
-  width: 433,
-
-  '@media (max-width: 1024px)': {
-    width: '100%',
   },
 })
 

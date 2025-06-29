@@ -26,16 +26,16 @@ import Link from 'next/link'
 const book = {
   id: 'mock-book-id',
   title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-  author: { id: 3, name: 'Zeno Rocha' },
+  author: { id: 'zeno-rocha', name: 'Zeno Rocha' },
   imageUrl: '/images/book-habitos.png',
   rating: 4,
   totalPages: 160,
   category: 'Computação, educação',
   ratings: [
     {
-      id: 1,
+      id: '1',
       user: {
-        id: 1,
+        id: 'brandon-botosh',
         name: 'Brandon Botosh',
         avatarUrl: '/images/avatar-1.jpg',
       },
@@ -45,9 +45,9 @@ const book = {
         'Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibu...',
     },
     {
-      id: 2,
+      id: '2',
       user: {
-        id: 2,
+        id: 'jaylon-franci',
         name: 'Jaylon Franci',
         avatarUrl: '/images/avatar-2.jpg',
       },
@@ -60,7 +60,7 @@ const book = {
 
 // Para simular o usuário logado, mude o id para 'user-1' ou 'user-2' para testar a edição
 const currentUserMock = {
-  id: 99,
+  id: 'cristofer-rosser',
   name: 'Cristofer Rosser',
   avatarUrl: '/images/avatar-3.jpg',
 }
@@ -71,7 +71,7 @@ type BookDetailsModalProps = {
 
 export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
   const [showRatingForm, setShowRatingForm] = useState(false)
-  const [editingRatingId, setEditingRatingId] = useState<number | null>(null)
+  const [editingRatingId, setEditingRatingId] = useState<string | null>(null)
 
   // Em um app real, useSession() do NextAuth retornaria o usuário.
   // Para este exemplo, vamos simular a sessão.
@@ -112,9 +112,9 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
               imageWidth={108}
               imageHeight={152}
               book={{
-                id: 4,
+                id: 'mock-book-id',
                 title: '14 Hábitos de Desenvolvedores Altamente Produtivos',
-                author: { id: 3, name: 'Zeno Rocha' },
+                author: { id: 'zeno-rocha', name: 'Zeno Rocha' },
                 imageUrl: '/images/book-habitos.png',
                 rating: 4,
               }}

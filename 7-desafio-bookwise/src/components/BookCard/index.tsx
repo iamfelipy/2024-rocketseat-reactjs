@@ -19,10 +19,10 @@ import { BookCardHeader } from './components/BookCardHeader'
 import dayjs from 'dayjs'
 
 interface Book {
-  id: number
+  id: string
   title: string
   author: {
-    id: number
+    id: string
     name: string
   }
   imageUrl: string
@@ -31,7 +31,7 @@ interface Book {
 
 interface BookCardProps {
   book: Book
-  user?: { id: number; name: string; avatarUrl: string }
+  user?: { id: string; name: string; avatarUrl: string }
   createdAt?: Date
   description?: string
   descriptionBottom?: string

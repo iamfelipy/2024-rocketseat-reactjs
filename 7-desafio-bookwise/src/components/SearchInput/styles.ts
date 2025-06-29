@@ -43,3 +43,17 @@ export const Input = styled('input', {
     borderColor: '$green200',
   },
 })
+
+export const ErrorMessage = styled('div', {
+  color: '$red500',
+  fontSize: '$xs',
+  marginTop: '$1',
+  fontWeight: '$medium',
+})
+
+export const SearchingIndicator = styled('div', {
+  color: '$gray400',
+  fontSize: '$xs',
+  marginTop: '$1',
+  fontStyle: 'italic',
+})

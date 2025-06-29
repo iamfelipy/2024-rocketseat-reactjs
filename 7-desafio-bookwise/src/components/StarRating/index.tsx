@@ -15,7 +15,7 @@ export default function StarRating({
   size = 'md',
   css,
 }: StarRatingProps) {
-  const [tempRating, setTempRating] = useState(1)
+  const [tempRating, setTempRating] = useState(0)
 
   const handleStarClick = (newRating: number) => {
     if (onRatingChange) {
@@ -23,7 +23,13 @@ export default function StarRating({
     }
   }
 
-  const displayRating = tempRating > 0 ? tempRating : rating
+  // Normalize rating: ensure it's an integer between 0 and 5
+  const normalizedRating = Math.max(
+    0,
+    Math.min(5, Math.round(Number(rating) || 0)),
+  )
+
+  const displayRating = tempRating > 0 ? tempRating : normalizedRating
 
   return (
     <StarContainer
