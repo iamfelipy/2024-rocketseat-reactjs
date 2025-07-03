@@ -18,8 +18,7 @@ import { BookDetailsModal } from './components/BookDetailsModal'
 import { useBooks } from '@/lib/hooks/useBooks'
 import { useCategories } from '@/lib/hooks/useCategories'
 import { SearchInput } from '@/components/SearchInput'
-import { getBooksFromDatabase } from '@/lib/database/books'
-import { getCategoriesFromDatabase } from '@/lib/database/categories'
+import { prisma } from '@/lib/prisma'
 import { useRouter } from 'next/router'
 
 interface Book {
@@ -164,13 +163,84 @@ export default function ExplorerPage({
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { search = '', category = 'all' } = ctx.query
 
-  const [initialBooks, initialCategories] = await Promise.all([
-    getBooksFromDatabase({
-      search: typeof search === 'string' ? search : undefined,
-      category: typeof category === 'string' ? category : undefined,
+  const whereClause: any = {}
+
+  if (category && category !== 'all') {
+    whereClause.categories = {
+      some: {
+        category: {
+          name: category,
+        },
+      },
+    }
+  }
+
+  if (search) {
+    whereClause.OR = [
+      {
+        name: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+      {
+        author: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      },
+    ]
+  }
+
+  const [books, initialCategories] = await Promise.all([
+    prisma.book.findMany({
+      where: whereClause,
+      include: {
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+        ratings: {
+          include: {
+            user: true,
+          },
+        },
+      },
+      orderBy: {
+        name: 'asc',
+      },
     }),
-    getCategoriesFromDatabase(),
+    prisma.category.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    }),
   ])
+
+  const initialBooks = books.map((book) => {
+    const totalRatings = book.ratings.length
+    const averageRating =
+      totalRatings > 0
+        ? Math.round(
+            book.ratings.reduce((acc, rating) => acc + rating.rate, 0) /
+              totalRatings,
+          )
+        : 0
+
+    return {
+      id: book.id,
+      name: book.name,
+      author: book.author,
+      summary: book.summary,
+      cover_url: book.cover_url,
+      total_pages: book.total_pages,
+      created_at: book.created_at.toISOString(),
+      categories: book.categories.map((cat) => cat.category),
+      average_rating: Math.round(averageRating * 10) / 10,
+      ratings_count: totalRatings,
+    }
+  })
 
   return {
     props: {

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getCategoriesFromDatabase } from '@/lib/database/categories'
+import { prisma } from '@/lib/prisma'
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,7 +10,11 @@ export default async function handler(
   }
 
   try {
-    const categories = await getCategoriesFromDatabase()
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    })
     return res.status(200).json(categories)
   } catch (error) {
     console.error('Error fetching categories:', error)
