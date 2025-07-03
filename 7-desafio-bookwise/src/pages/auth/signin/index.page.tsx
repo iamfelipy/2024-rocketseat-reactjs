@@ -37,10 +37,11 @@ export default function SignInPage() {
           <Image
             src="/images/background-login.png"
             alt="Pessoa lendo um livro em um sofá"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: 'cover' }}
             quality={100}
             priority
+            sizes="100vw"
           />
         </LogoSection>
 

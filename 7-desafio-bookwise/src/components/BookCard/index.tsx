@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef } from 'react'
 import {
   CardContainer,
   BookContent,
@@ -44,94 +44,120 @@ interface BookCardProps {
   isRead?: boolean
   css?: any
   onClick?: () => void
+  priority?: boolean
 }
 
 const MAX_DESCRIPTION_LENGTH = 228
 
-export default function BookCard({
-  book,
-  user,
-  createdAt,
-  description,
-  descriptionBottom,
-  reviewCount,
-  imageWidth,
-  imageHeight,
-  showRating = false,
-  showBookCardHeader,
-  showDateAndRating,
-  isRead,
-  css,
-  ...props
-}: BookCardProps) {
-  const [expanded, setExpanded] = useState(false)
+const BookCard = forwardRef<HTMLDivElement, BookCardProps>(
+  (
+    {
+      book,
+      user,
+      createdAt,
+      description,
+      descriptionBottom,
+      reviewCount,
+      imageWidth,
+      imageHeight,
+      showRating = false,
+      showBookCardHeader,
+      showDateAndRating,
+      isRead,
+      css,
+      priority = false,
+      ...props
+    },
+    ref,
+  ) => {
+    const [expanded, setExpanded] = useState(false)
 
-  let descToShow = description
-  let isTruncated = false
-  if (description && description.length > MAX_DESCRIPTION_LENGTH && !expanded) {
-    descToShow = description.slice(0, MAX_DESCRIPTION_LENGTH)
-    isTruncated = true
-  }
+    let descToShow = description
+    let isTruncated = false
+    if (
+      description &&
+      description.length > MAX_DESCRIPTION_LENGTH &&
+      !expanded
+    ) {
+      descToShow = description.slice(0, MAX_DESCRIPTION_LENGTH)
+      isTruncated = true
+    }
 
-  const handleSeeMore = () => {
-    setExpanded(true)
-  }
+    const handleSeeMore = () => {
+      setExpanded(true)
+    }
 
-  const relativeDate = createdAt ? dayjs(createdAt).fromNow() : null
+    const relativeDate = createdAt ? dayjs(createdAt).fromNow() : null
 
-  return (
-    <CardContainer css={css} {...props}>
-      {isRead && <ReadBadge>LIDO</ReadBadge>}
-      {showBookCardHeader && user && relativeDate && (
-        <BookCardHeader user={user} date={relativeDate} rating={book.rating} />
-      )}
-      <BookContent>
-        <BookImageContainer
-          css={{
-            width: imageWidth,
-            height: imageHeight,
-          }}
-        >
-          <BookImage src={book.imageUrl} alt={book.title} fill loading="lazy" />
-        </BookImageContainer>
-        <BookInfo>
-          {showDateAndRating && (
-            <DateAndRating>
-              <span>{relativeDate}</span>
-              <StarRating rating={book.rating} />
-            </DateAndRating>
-          )}
-          <BookTitle>{book.title}</BookTitle>
-          <BookAuthor>{book.author.name}</BookAuthor>
-          {showRating && (
-            <StarRating rating={book.rating} css={{ marginTop: 'auto' }} />
-          )}
-          {reviewCount && <ReviewCount>{reviewCount} avaliações</ReviewCount>}
-          {description && (
-            <Description>
-              {descToShow}
-              {isTruncated && !expanded && (
-                <>
-                  ...{' '}
-                  <SeeMoreButton
-                    as="span"
-                    tabIndex={0}
-                    role="button"
-                    onClick={handleSeeMore}
-                  >
-                    ver mais
-                  </SeeMoreButton>
-                </>
-              )}
-            </Description>
-          )}
-        </BookInfo>
-      </BookContent>
-      {descriptionBottom && (
-        <DescriptionBottomComponent style={{ marginTop: 16 }}>
-          {descriptionBottom}
-        </DescriptionBottomComponent>
-      )}
-    </CardContainer>
-  )
-}
+    return (
+      <CardContainer ref={ref} css={css} {...props}>
+        {isRead && <ReadBadge>LIDO</ReadBadge>}
+        {showBookCardHeader && user && relativeDate && (
+          <BookCardHeader
+            user={user}
+            date={relativeDate}
+            rating={book.rating}
+          />
+        )}
+        <BookContent>
+          <BookImageContainer
+            css={{
+              width: imageWidth,
+              height: imageHeight,
+            }}
+          >
+            <BookImage
+              src={book.imageUrl}
+              alt={book.title}
+              fill
+              loading={priority ? undefined : 'lazy'}
+              priority={priority}
+              sizes={`${imageWidth}px`}
+            />
+          </BookImageContainer>
+          <BookInfo>
+            {showDateAndRating && (
+              <DateAndRating>
+                <span>{relativeDate}</span>
+                <StarRating rating={book.rating} />
+              </DateAndRating>
+            )}
+            <BookTitle>{book.title}</BookTitle>
+            <BookAuthor>{book.author.name}</BookAuthor>
+            {showRating && (
+              <StarRating rating={book.rating} css={{ marginTop: 'auto' }} />
+            )}
+            {reviewCount && <ReviewCount>{reviewCount} avaliações</ReviewCount>}
+            {description && (
+              <Description>
+                {descToShow}
+                {isTruncated && !expanded && (
+                  <>
+                    ...{' '}
+                    <SeeMoreButton
+                      as="span"
+                      tabIndex={0}
+                      role="button"
+                      onClick={handleSeeMore}
+                    >
+                      ver mais
+                    </SeeMoreButton>
+                  </>
+                )}
+              </Description>
+            )}
+          </BookInfo>
+        </BookContent>
+        {descriptionBottom && (
+          <DescriptionBottomComponent style={{ marginTop: 16 }}>
+            {descriptionBottom}
+          </DescriptionBottomComponent>
+        )}
+      </CardContainer>
+    )
+  },
+)
+
+BookCard.displayName = 'BookCard'
+
+export default BookCard

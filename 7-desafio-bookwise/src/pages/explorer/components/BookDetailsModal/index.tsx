@@ -71,6 +71,9 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
         <Content>
           <VisuallyHidden>
             <Dialog.Title>Carregando detalhes do livro</Dialog.Title>
+            <Dialog.Description>
+              Carregando informações do livro...
+            </Dialog.Description>
           </VisuallyHidden>
           <CloseButton>
             <X size={24} />
@@ -90,6 +93,9 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
         <Content>
           <VisuallyHidden>
             <Dialog.Title>Erro ao carregar detalhes do livro</Dialog.Title>
+            <Dialog.Description>
+              Ocorreu um erro ao carregar as informações do livro.
+            </Dialog.Description>
           </VisuallyHidden>
           <CloseButton>
             <X size={24} />
@@ -126,6 +132,10 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
           <Dialog.Title>
             Detalhes do livro: {book?.name || 'Carregando...'}
           </Dialog.Title>
+          <Dialog.Description>
+            Informações detalhadas sobre o livro {book?.name || 'carregando...'}
+            , incluindo autor, páginas, categorias e avaliações.
+          </Dialog.Description>
         </VisuallyHidden>
         <CloseButton>
           <X size={24} />

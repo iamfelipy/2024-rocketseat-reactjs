@@ -156,6 +156,7 @@ export default function HomePage() {
                   }}
                   createdAt={new Date('2025-06-13T10:00:00.000Z')}
                   showDateAndRating
+                  priority
                   description="Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectu..."
                 />
               </SectionWithHeader>
