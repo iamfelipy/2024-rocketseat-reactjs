@@ -15,11 +15,11 @@ import {
 import BookCard from '@/components/BookCard'
 import * as Dialog from '@radix-ui/react-dialog'
 import { BookDetailsModal } from './components/BookDetailsModal'
-import { useBooks } from '@/lib/hooks/useBooks'
-import { useCategories } from '@/lib/hooks/useCategories'
+import { useQuery } from '@tanstack/react-query'
 import { SearchInput } from '@/components/SearchInput'
 import { prisma } from '@/lib/prisma'
 import { useRouter } from 'next/router'
+import { api } from '@/lib/axios'
 
 interface Book {
   id: string
@@ -78,16 +78,41 @@ export default function ExplorerPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedTag])
 
-  const { data: books = initialBooks, isLoading: isLoadingBooks } = useBooks({
-    category: selectedTag !== 'all' ? selectedTag : undefined,
-    search: searchQuery || undefined,
+  const { data: books = initialBooks, isLoading: isLoadingBooks } = useQuery({
+    queryKey: [
+      'books',
+      selectedTag !== 'all' ? selectedTag : undefined,
+      searchQuery || undefined,
+    ],
+    queryFn: async () => {
+      const searchParams = new URLSearchParams()
+
+      if (selectedTag !== 'all') {
+        searchParams.append('category', selectedTag)
+      }
+
+      if (searchQuery) {
+        searchParams.append('search', searchQuery)
+      }
+
+      const response = await api.get(`/books?${searchParams.toString()}`)
+      return response.data
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   })
 
-  const { data: categories = initialCategories } = useCategories()
+  const { data: categories = initialCategories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async (): Promise<Category[]> => {
+      const response = await api.get('/categories')
+      return response.data
+    },
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  })
 
-  const tags = ['all', ...categories.map((cat) => cat.name)]
+  const tags = ['all', ...categories.map((cat: Category) => cat.name)]
 
-  const transformedBooks = books.map((book) => ({
+  const transformedBooks = books.map((book: Book) => ({
     id: book.id,
     title: book.name,
     author: {
@@ -138,7 +163,7 @@ export default function ExplorerPage({
               {isLoadingBooks ? (
                 <div>Loading books...</div>
               ) : (
-                transformedBooks.map((book) => (
+                transformedBooks.map((book: any) => (
                   <Dialog.Trigger key={book.id} asChild>
                     <BookCard
                       onClick={() => setSelectedBookId(book.id)}
