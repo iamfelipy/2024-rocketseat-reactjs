@@ -8,6 +8,8 @@ import {
   StatItem,
 } from './styles'
 import * as Dialog from '@radix-ui/react-dialog'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
+
 import { BookOpen, BookmarkSimple, X } from 'phosphor-react'
 import BookCard from '@/components/BookCard'
 import { RatingsSection } from './components/RatingsSection'
@@ -44,23 +46,11 @@ interface Book {
   }
 }
 
-// Para simular o usuário logado, mude o id para 'user-1' ou 'user-2' para testar a edição
-const currentUserMock = {
-  id: 'cristofer-rosser',
-  name: 'Cristofer Rosser',
-  avatarUrl: '/images/avatar-3.jpg',
-}
-
 type BookDetailsModalProps = {
   bookId: string
 }
 
 export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
-  // Em um app real, useSession() do NextAuth retornaria o usuário.
-  // Para este exemplo, vamos simular a sessão.
-  const session = { data: { user: currentUserMock }, status: 'authenticated' }
-  const isLoggedIn = session.status === 'authenticated'
-
   const {
     data: book,
     isLoading,
@@ -79,6 +69,9 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
       <Dialog.Portal>
         <Overlay />
         <Content>
+          <VisuallyHidden>
+            <Dialog.Title>Carregando detalhes do livro</Dialog.Title>
+          </VisuallyHidden>
           <CloseButton>
             <X size={24} />
           </CloseButton>
@@ -95,6 +88,9 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
       <Dialog.Portal>
         <Overlay />
         <Content>
+          <VisuallyHidden>
+            <Dialog.Title>Erro ao carregar detalhes do livro</Dialog.Title>
+          </VisuallyHidden>
           <CloseButton>
             <X size={24} />
           </CloseButton>
@@ -126,6 +122,11 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
     <Dialog.Portal>
       <Overlay />
       <Content>
+        <VisuallyHidden>
+          <Dialog.Title>
+            Detalhes do livro: {book?.name || 'Carregando...'}
+          </Dialog.Title>
+        </VisuallyHidden>
         <CloseButton>
           <X size={24} />
         </CloseButton>
@@ -166,12 +167,7 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
           </BookStats>
         </BookDetailsContainer>
 
-        <RatingsSection
-          ratings={transformedRatings}
-          isLoggedIn={isLoggedIn}
-          currentUserId={session.data?.user?.id}
-          currentUser={session.data?.user}
-        />
+        <RatingsSection ratings={transformedRatings} />
       </Content>
     </Dialog.Portal>
   )
