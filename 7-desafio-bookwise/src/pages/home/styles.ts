@@ -23,7 +23,3 @@ export const PageTitle = styled('h1', {
     color: '$green100',
   },
 })
-
-export const LastReadBook = styled('div', {
-  marginBottom: '$10',
-})

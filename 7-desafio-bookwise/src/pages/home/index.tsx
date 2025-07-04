@@ -1,13 +1,11 @@
 import React from 'react'
 import AppLayout3Cols from '@/layouts/AppLayout3Cols'
 import Sidebar from '@/components/Sidebar'
-import { SectionWithHeader } from '@/components/SectionWithHeader'
-import BookCard from '@/components/BookCard'
-import { HomeContainer, LastReadBook, Main, PageTitle } from './styles'
-import { styled } from '@/styles'
+import { HomeContainer, Main, PageTitle } from './styles'
 import { ChartLineUp } from 'phosphor-react'
 import { RecentReviewsSection } from './components/RecentReviewsSection'
 import { LastReadSection } from './components/LastReadSection'
+import { PopularBooksSection } from './components/PopularBooksSection'
 
 export default function HomePage() {
   const isAuthenticated = true // ou sua lógica real
