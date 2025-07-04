@@ -27,9 +27,3 @@ export const PageTitle = styled('h1', {
 export const LastReadBook = styled('div', {
   marginBottom: '$10',
 })
-
-export const RecentReviewsList = styled('div', {
-  '& > section > div:last-child > div ~ div': {
-    marginTop: '$3',
-  },
-})
