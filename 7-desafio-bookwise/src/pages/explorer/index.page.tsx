@@ -54,7 +54,7 @@ export default function ExplorerPage({
   initialCategories,
   initialSearch = '',
   initialCategory = 'all',
-}: ExplorerPageProps & { initialSearch?: string; initialCategory?: string }) {
+}: ExplorerPageProps) {
   const router = useRouter()
 
   const [selectedTag, setSelectedTag] = React.useState(initialCategory)
