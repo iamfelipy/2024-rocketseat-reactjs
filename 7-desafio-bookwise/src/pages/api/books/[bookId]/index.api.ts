@@ -10,15 +10,15 @@ export default async function handler(
   }
 
   try {
-    const { id } = req.query
+    const { bookId } = req.query
 
-    if (!id || typeof id !== 'string') {
+    if (!bookId || typeof bookId !== 'string') {
       return res.status(400).json({ message: 'Book ID is required' })
     }
 
     const book = await prisma.book.findUnique({
       where: {
-        id,
+        id: bookId,
       },
       include: {
         categories: {
