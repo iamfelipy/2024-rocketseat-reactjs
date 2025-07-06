@@ -20,6 +20,7 @@ import { SearchInput } from '@/components/SearchInput'
 import { prisma } from '@/lib/prisma'
 import { useRouter } from 'next/router'
 import { api } from '@/lib/axios'
+import { getBooks } from '@/services/books.service'
 
 interface Book {
   id: string
@@ -33,8 +34,10 @@ interface Book {
     id: string
     name: string
   }>
-  average_rating: number
-  ratings_count: number
+  ratings: {
+    average: number
+    total: number
+  }
 }
 
 interface Category {
@@ -78,7 +81,7 @@ export default function ExplorerPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedTag])
 
-  const { data: books = initialBooks, isLoading: isLoadingBooks } = useQuery({
+  const { data: books, isLoading: isLoadingBooks } = useQuery({
     queryKey: [
       'books',
       selectedTag !== 'all' ? selectedTag : undefined,
@@ -99,15 +102,17 @@ export default function ExplorerPage({
       return response.data
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
+    initialData: initialBooks,
   })
 
-  const { data: categories = initialCategories } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: async (): Promise<Category[]> => {
       const response = await api.get('/categories')
       return response.data
     },
     staleTime: 1000 * 60 * 10, // 10 minutes
+    initialData: initialCategories,
   })
 
   const tags = ['all', ...categories.map((cat: Category) => cat.name)]
@@ -120,7 +125,7 @@ export default function ExplorerPage({
       name: book.author,
     },
     imageUrl: book.cover_url,
-    rating: book.average_rating,
+    rating: book.ratings.average,
     isRead: false,
   }))
 
@@ -188,53 +193,10 @@ export default function ExplorerPage({
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { search = '', category = 'all' } = ctx.query
 
-  const whereClause: any = {}
-
-  if (category && category !== 'all') {
-    whereClause.categories = {
-      some: {
-        category: {
-          name: category,
-        },
-      },
-    }
-  }
-
-  if (search) {
-    whereClause.OR = [
-      {
-        name: {
-          contains: search,
-          mode: 'insensitive',
-        },
-      },
-      {
-        author: {
-          contains: search,
-          mode: 'insensitive',
-        },
-      },
-    ]
-  }
-
   const [books, initialCategories] = await Promise.all([
-    prisma.book.findMany({
-      where: whereClause,
-      include: {
-        categories: {
-          include: {
-            category: true,
-          },
-        },
-        ratings: {
-          include: {
-            user: true,
-          },
-        },
-      },
-      orderBy: {
-        name: 'asc',
-      },
+    getBooks({
+      category: category as string,
+      search: search as string,
     }),
     prisma.category.findMany({
       orderBy: {
@@ -243,33 +205,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }),
   ])
 
-  const initialBooks = books.map((book) => {
-    const totalRatings = book.ratings.length
-    const averageRating =
-      totalRatings > 0
-        ? Math.round(
-            book.ratings.reduce((acc, rating) => acc + rating.rate, 0) /
-              totalRatings,
-          )
-        : 0
-
-    return {
-      id: book.id,
-      name: book.name,
-      author: book.author,
-      summary: book.summary,
-      cover_url: book.cover_url,
-      total_pages: book.total_pages,
-      created_at: book.created_at.toISOString(),
-      categories: book.categories.map((cat) => cat.category),
-      average_rating: Math.round(averageRating * 10) / 10,
-      ratings_count: totalRatings,
-    }
-  })
-
   return {
     props: {
-      initialBooks,
+      initialBooks: books,
       initialCategories,
       initialSearch: search,
       initialCategory: category,
