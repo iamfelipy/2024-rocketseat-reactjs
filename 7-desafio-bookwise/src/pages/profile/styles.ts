@@ -47,3 +47,30 @@ export const RecentReviewsList = styled('div', {
     lineHeight: '$base',
   },
 })
+
+export const BackButtonContainer = styled('button', {
+  display: 'flex',
+  alignItems: 'center',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+  padding: 0,
+  color: '$gray200',
+  transition: 'color 0.2s',
+
+  '&:hover': {
+    color: '$gray100',
+  },
+
+  svg: {
+    verticalAlign: 'middle',
+    marginRight: '0.75rem',
+    color: '$gray200',
+  },
+
+  span: {
+    fontSize: '$xl',
+    fontWeight: '500',
+    verticalAlign: 'middle',
+  },
+})

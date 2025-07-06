@@ -1,0 +1,209 @@
+import AppLayout3Cols from '@/layouts/AppLayout3Cols'
+import Sidebar from '@/components/Sidebar'
+import { UserProfileInfo } from '@/components/UserProfileInfo'
+import { User, CaretLeft } from 'phosphor-react'
+import Main from '@/components/Main'
+import { SectionWithHeader } from '@/components/SectionWithHeader'
+import BookCard from '@/components/BookCard'
+import {
+  BackButtonContainer,
+  Header,
+  PageTitle,
+  RecentReviewsList,
+  SearchInputContainer,
+} from '@/pages/profile/styles'
+import dayjs from 'dayjs'
+import { SearchInput } from '@/components/SearchInput'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import { getUserProfileWithReviews } from '@/services/users.service'
+import type {
+  UserReview as Review,
+  UserProfile as Profile,
+} from '@/services/users.service'
+import { api } from '@/lib/axios'
+
+function useSession() {
+  return {
+    data: {
+      user: {
+        id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
+      },
+    },
+    status: 'authenticated',
+  }
+}
+
+export default function ProfilePage({
+  initialReviews = [],
+  profile,
+}: {
+  initialSearch: string
+  initialReviews: Review[]
+  profile: Profile
+}) {
+  // Get search query from URL params
+
+  const router = useRouter()
+  const { data: session } = useSession()
+  const initialSearch = (router.query.search as string) || ''
+  const [searchQuery, setSearchQuery] = useState(initialSearch)
+
+  // Get user ID from URL params or use current session user ID
+  const userId = router.query.userId as string
+
+  // Update URL when search query changes
+  useEffect(() => {
+    const query: Record<string, string> = {}
+    if (searchQuery) query.search = searchQuery
+
+    // Determine the correct pathname based on whether we're viewing own or other's profile
+    const pathname = `/profile/${userId}`
+
+    router.replace(
+      {
+        pathname,
+        query,
+      },
+      undefined,
+      { shallow: true },
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery])
+
+  // Query for reviews with React Query
+  const { data: reviews = initialReviews, isLoading } = useQuery<Review[]>({
+    queryKey: ['reviews', userId, searchQuery],
+    queryFn: async () => {
+      const searchParams = new URLSearchParams()
+
+      if (searchQuery) {
+        searchParams.append('search', searchQuery)
+      }
+
+      const response = await api.get(
+        `/users/${userId}/reviews?${searchParams.toString()}`,
+      )
+      return response.data
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    enabled: !!userId,
+  })
+
+  const reviewsExist = reviews && reviews.length > 0
+
+  const handleGoBack = () => {
+    // Check if there's a previous page in browser history
+    if (window.history.length > 1) {
+      router.back()
+    } else {
+      // Fallback: go to home page if no previous page
+      router.push('/')
+    }
+  }
+
+  return (
+    <AppLayout3Cols
+      left={<Sidebar />}
+      right={<UserProfileInfo profile={profile} />}
+    >
+      <Main>
+        <Header>
+          <PageTitle>
+            {/* If the session user is the same as the profile user, show the current content, else show a back arrow and "Voltar" */}
+            {session?.user?.id === userId ? (
+              <>
+                <User size={32} weight="bold" />
+                {'Perfil'}
+              </>
+            ) : (
+              <BackButtonContainer onClick={handleGoBack}>
+                {/* Left arrow and "Voltar" text */}
+                <CaretLeft size={20} weight="bold" />
+                <span>Voltar</span>
+              </BackButtonContainer>
+            )}
+          </PageTitle>
+          <SearchInputContainer>
+            <SearchInput
+              placeholder="Buscar livro avaliado"
+              defaultValue={searchQuery}
+              onSearch={setSearchQuery}
+            />
+          </SearchInputContainer>
+        </Header>
+        <RecentReviewsList>
+          {isLoading && <p>Buscando avaliações...</p>}
+          {!isLoading &&
+            reviewsExist &&
+            reviews.map((review) => (
+              <SectionWithHeader
+                key={review.id}
+                title={dayjs(review.createdAt).fromNow()}
+              >
+                <BookCard
+                  css={{
+                    padding: '$6',
+                    marginBottom: '1rem',
+                  }}
+                  imageWidth={108}
+                  imageHeight={152}
+                  book={{
+                    id: String(review.id),
+                    title: review.title,
+                    author: {
+                      id: String(review.author.id),
+                      name: review.author.name,
+                    },
+                    imageUrl: review.imageUrl,
+                    rating: review.rating,
+                  }}
+                  createdAt={new Date(review.createdAt)}
+                  showRating
+                  descriptionBottom={review.descriptionBottom}
+                />
+              </SectionWithHeader>
+            ))}
+          {!isLoading && !reviewsExist && (
+            <p>Nenhuma avaliação encontrada para esta busca.</p>
+          )}
+        </RecentReviewsList>
+      </Main>
+    </AppLayout3Cols>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let { search = '', userId = '' } = context.query
+
+  // If viewing another user's profile and no userId is provided, return 404
+  if (!userId) {
+    return {
+      notFound: true,
+    }
+  }
+
+  userId = String(userId)
+  search = String(search)
+  try {
+    const { profile, reviews } = await getUserProfileWithReviews(
+      userId,
+      search as string,
+    )
+
+    return {
+      props: {
+        profile,
+        initialReviews: reviews,
+      },
+    }
+  } catch (error) {
+    console.error('Error in getServerSideProps:', error)
+
+    return {
+      notFound: true,
+    }
+  }
+}
