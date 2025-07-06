@@ -108,7 +108,6 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
     )
   }
 
-  // Transformar dados da API para o formato esperado pelo RatingsSection
   const transformedRatings = book.ratings.all.map((rating) => ({
     id: rating.id,
     rating: rating.rate,
@@ -121,7 +120,6 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
     },
   }))
 
-  // Transformar categorias para string
   const categoriesString = book.categories.map((cat) => cat.name).join(', ')
 
   return (
@@ -177,7 +175,7 @@ export function BookDetailsModal({ bookId }: BookDetailsModalProps) {
           </BookStats>
         </BookDetailsContainer>
 
-        <RatingsSection ratings={transformedRatings} />
+        <RatingsSection ratings={transformedRatings} bookId={bookId} />
       </Content>
     </Dialog.Portal>
   )

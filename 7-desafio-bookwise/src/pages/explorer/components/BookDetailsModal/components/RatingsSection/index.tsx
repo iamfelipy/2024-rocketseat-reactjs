@@ -1,9 +1,12 @@
 import { Avatar } from '@/components/Avatar'
 import StarRating from '@/components/StarRating'
 import { LinkButton } from '@/components/LinkButton'
-import { Check, X } from 'phosphor-react'
+import { Check, X, Trash } from 'phosphor-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import {
   RatingsSectionContainer,
   RatingsHeader,
@@ -18,6 +21,18 @@ import {
   ActionsContainer,
   ActionButton,
 } from './styles'
+import { useQueryClient } from '@tanstack/react-query'
+import { api } from '@/lib/axios'
+
+const ratingFormSchema = z.object({
+  rate: z.number().min(1, 'Select a rating').max(5),
+  description: z
+    .string()
+    .min(1, 'Write a review')
+    .max(450, 'Maximum 450 characters'),
+})
+
+type RatingFormData = z.infer<typeof ratingFormSchema>
 
 interface Rating {
   id: string
@@ -33,17 +48,35 @@ interface Rating {
 
 interface RatingsSectionProps {
   ratings: Rating[]
+  bookId: string
 }
 
 const MAX_RATING_LENGTH = 450
 
-export function RatingsSection({ ratings }: RatingsSectionProps) {
+export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
   const [showRatingForm, setShowRatingForm] = useState(false)
   const [editingRatingId, setEditingRatingId] = useState<string | null>(null)
-  const [rating, setRating] = useState(0)
-  const [comment, setComment] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const queryClient = useQueryClient()
 
-  // Mock session - em um app real seria useSession() do NextAuth
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<RatingFormData>({
+    resolver: zodResolver(ratingFormSchema),
+    defaultValues: {
+      rate: 0,
+      description: '',
+    },
+  })
+
+  const watchedDescription = watch('description')
+  const watchedRate = watch('rate')
+
   const session = {
     data: {
       user: {
@@ -65,33 +98,70 @@ export function RatingsSection({ ratings }: RatingsSectionProps) {
   const isRatingFormVisible = showRatingForm || editingRatingId !== null
 
   const handleRateClick = () => {
-    if (hasUserRated && userRating) {
+    if (!isLoggedIn) {
+      // TODO: Open login modal here
+      console.log('Open login modal')
+      return
+    }
+
+    if (hasUserRated) {
       setEditingRatingId(userRating.id)
-      setRating(userRating.rating)
-      setComment(userRating.comment)
+      setValue('rate', userRating.rating)
+      setValue('description', userRating.comment)
     } else {
       setShowRatingForm(true)
-      setRating(0)
-      setComment('')
+      setValue('rate', 0)
+      setValue('description', '')
     }
   }
 
   const handleCancel = () => {
     setShowRatingForm(false)
     setEditingRatingId(null)
-    setRating(0)
-    setComment('')
+    reset()
   }
 
-  const handleSave = () => {
-    // TODO: Implement save logic
-    console.log('Saving rating:', { rating, comment, editingRatingId })
-    handleCancel()
+  const handleDelete = async () => {
+    if (!userRating?.id) return
+
+    try {
+      setIsSubmitting(true)
+      await api.delete(`/books/${bookId}/ratings/${userRating.id}`)
+
+      queryClient.invalidateQueries({ queryKey: ['book', bookId] })
+      handleCancel()
+    } catch (error) {
+      console.error('Error deleting rating:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
-  const commentLength = comment.length
+  const onSubmit = async (data: RatingFormData) => {
+    try {
+      setIsSubmitting(true)
 
-  // Sort ratings to show user's rating first
+      if (editingRatingId) {
+        await api.put(`/books/${bookId}/ratings/${editingRatingId}`, {
+          rate: data.rate,
+          description: data.description,
+        })
+      } else {
+        await api.post(`/books/${bookId}/ratings`, {
+          rate: data.rate,
+          description: data.description,
+        })
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['book', bookId] })
+      handleCancel()
+    } catch (error) {
+      console.error('Error saving rating:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   const sortedRatings = [...ratings].sort((a, b) => {
     if (a.user.id === authenticatedUser?.id) return -1
     if (b.user.id === authenticatedUser?.id) return 1
@@ -102,15 +172,15 @@ export function RatingsSection({ ratings }: RatingsSectionProps) {
     <RatingsSectionContainer>
       <RatingsHeader>
         <h3>Avaliações</h3>
-        {isLoggedIn && !isRatingFormVisible && (
+        {!isRatingFormVisible && (
           <LinkButton asButton onClick={handleRateClick}>
             {hasUserRated ? 'Editar avaliação' : 'Avaliar'}
           </LinkButton>
         )}
       </RatingsHeader>
 
-      {showRatingForm && (
-        <RatingFormContainer as="form">
+      {isRatingFormVisible && (
+        <RatingFormContainer as="form" onSubmit={handleSubmit(onSubmit)}>
           <FormHeader>
             <UserInfo>
               <Avatar
@@ -121,101 +191,81 @@ export function RatingsSection({ ratings }: RatingsSectionProps) {
               />
               <span>{authenticatedUser?.name || ''}</span>
             </UserInfo>
-            <StarRating rating={rating} onRatingChange={setRating} />
+            <StarRating
+              rating={watchedRate}
+              onRatingChange={(rate) => setValue('rate', rate)}
+            />
           </FormHeader>
+
+          {errors.rate && (
+            <span style={{ color: 'red', fontSize: '0.875rem' }}>
+              {errors.rate.message}
+            </span>
+          )}
+
           <TextAreaContainer>
             <textarea
+              {...register('description')}
               placeholder="Escreva sua avaliação"
               maxLength={MAX_RATING_LENGTH}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
             />
-            <span>{`${commentLength}/${MAX_RATING_LENGTH}`}</span>
+            <span>{`${watchedDescription.length}/${MAX_RATING_LENGTH}`}</span>
           </TextAreaContainer>
+
+          {errors.description && (
+            <span style={{ color: 'red', fontSize: '0.875rem' }}>
+              {errors.description.message}
+            </span>
+          )}
+
           <ActionsContainer>
-            <ActionButton onClick={handleCancel}>
+            <ActionButton type="button" onClick={handleCancel}>
               <X size={24} />
             </ActionButton>
-            <ActionButton onClick={handleSave}>
+
+            {editingRatingId && (
+              <ActionButton
+                type="button"
+                onClick={handleDelete}
+                disabled={isSubmitting}
+              >
+                <Trash size={24} />
+              </ActionButton>
+            )}
+
+            <ActionButton type="submit" disabled={isSubmitting}>
               <Check size={24} />
             </ActionButton>
           </ActionsContainer>
         </RatingFormContainer>
       )}
 
-      {sortedRatings.map((ratingItem) => {
-        if (editingRatingId === ratingItem.id) {
-          return (
-            <RatingFormContainer key={ratingItem.id} as="form">
-              <FormHeader>
-                <UserInfo>
-                  <Avatar
-                    src={authenticatedUser?.avatarUrl || ''}
-                    alt={authenticatedUser?.name || ''}
-                    width={40}
-                    height={40}
-                  />
-                  <span>{authenticatedUser?.name || ''}</span>
-                </UserInfo>
-                <StarRating rating={rating} onRatingChange={setRating} />
-              </FormHeader>
-              <TextAreaContainer>
-                <textarea
-                  placeholder="Escreva sua avaliação"
-                  maxLength={MAX_RATING_LENGTH}
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
+      {sortedRatings.map((ratingItem) => (
+        <RatingCard key={ratingItem.id}>
+          <RatingHeader>
+            <Link
+              href={`/profile/${ratingItem.user.id}`}
+              prefetch={false}
+              style={{ textDecoration: 'none' }}
+            >
+              <UserInfoContainer>
+                <Avatar
+                  src={ratingItem.user.avatarUrl}
+                  alt={ratingItem.user.name}
+                  width={40}
+                  height={40}
                 />
-                <span>{`${commentLength}/${MAX_RATING_LENGTH}`}</span>
-              </TextAreaContainer>
-              <ActionsContainer>
-                <ActionButton onClick={handleCancel}>
-                  <X size={24} />
-                </ActionButton>
-                <ActionButton onClick={handleSave}>
-                  <Check size={24} />
-                </ActionButton>
-              </ActionsContainer>
-            </RatingFormContainer>
-          )
-        }
-        return (
-          <RatingCard
-            key={ratingItem.id}
-            onClick={() => {
-              if (ratingItem.user.id === authenticatedUser?.id) {
-                setEditingRatingId(ratingItem.id)
-                setRating(ratingItem.rating)
-                setComment(ratingItem.comment)
-              }
-            }}
-            isUserRating={ratingItem.user.id === authenticatedUser?.id}
-          >
-            <RatingHeader>
-              <Link
-                href={`/profile/${ratingItem.user.id}`}
-                prefetch={false}
-                style={{ textDecoration: 'none' }}
-              >
-                <UserInfoContainer>
-                  <Avatar
-                    src={ratingItem.user.avatarUrl}
-                    alt={ratingItem.user.name}
-                    width={40}
-                    height={40}
-                  />
-                  <UserDetails>
-                    <strong>{ratingItem.user.name}</strong>
-                    <span>{ratingItem.date}</span>
-                  </UserDetails>
-                </UserInfoContainer>
-              </Link>
-              <StarRating rating={ratingItem.rating} />
-            </RatingHeader>
-            <p>{ratingItem.comment}</p>
-          </RatingCard>
-        )
-      })}
+                <UserDetails>
+                  <strong>{ratingItem.user.name}</strong>
+                  <span>{ratingItem.date}</span>
+                </UserDetails>
+              </UserInfoContainer>
+            </Link>
+            <StarRating rating={ratingItem.rating} />
+          </RatingHeader>
+          <p>{ratingItem.comment}</p>
+        </RatingCard>
+      ))}
     </RatingsSectionContainer>
   )
 }
