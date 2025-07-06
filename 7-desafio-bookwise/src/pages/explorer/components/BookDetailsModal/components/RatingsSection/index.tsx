@@ -1,9 +1,10 @@
 import { Avatar } from '@/components/Avatar'
 import StarRating from '@/components/StarRating'
 import { LinkButton } from '@/components/LinkButton'
+import { LoginModal } from '@/components/LoginModal'
 import { Check, X, Trash } from 'phosphor-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -98,13 +99,7 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
   const isRatingFormVisible = showRatingForm || editingRatingId !== null
 
   const handleRateClick = () => {
-    if (!isLoggedIn) {
-      // TODO: Open login modal here
-      console.log('Open login modal')
-      return
-    }
-
-    if (hasUserRated) {
+    if (hasUserRated && userRating) {
       setEditingRatingId(userRating.id)
       setValue('rate', userRating.rating)
       setValue('description', userRating.comment)
@@ -122,7 +117,7 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
   }
 
   const handleDelete = async () => {
-    if (!userRating?.id) return
+    if (!userRating?.id || !isLoggedIn) return
 
     try {
       setIsSubmitting(true)
@@ -138,6 +133,8 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
   }
 
   const onSubmit = async (data: RatingFormData) => {
+    if (!isLoggedIn) return
+
     try {
       setIsSubmitting(true)
 
@@ -162,21 +159,29 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
     }
   }
 
-  const sortedRatings = [...ratings].sort((a, b) => {
-    if (a.user.id === authenticatedUser?.id) return -1
-    if (b.user.id === authenticatedUser?.id) return 1
-    return 0
-  })
+  // Memoize sorted ratings for better performance
+  const sortedRatings = useMemo(() => {
+    return [...ratings].sort((a, b) => {
+      if (a.user.id === authenticatedUser?.id) return -1
+      if (b.user.id === authenticatedUser?.id) return 1
+      return 0
+    })
+  }, [ratings, authenticatedUser?.id])
 
   return (
     <RatingsSectionContainer>
       <RatingsHeader>
         <h3>Avaliações</h3>
-        {!isRatingFormVisible && (
-          <LinkButton asButton onClick={handleRateClick}>
-            {hasUserRated ? 'Editar avaliação' : 'Avaliar'}
-          </LinkButton>
-        )}
+        {!isRatingFormVisible &&
+          (isLoggedIn ? (
+            <LinkButton asButton onClick={handleRateClick}>
+              {hasUserRated ? 'Editar avaliação' : 'Avaliar'}
+            </LinkButton>
+          ) : (
+            <LoginModal isAuthenticated={isLoggedIn}>
+              <LinkButton asButton>Avaliar</LinkButton>
+            </LoginModal>
+          ))}
       </RatingsHeader>
 
       {isRatingFormVisible && (

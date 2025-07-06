@@ -1,16 +1,26 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { CloseButton, Content, LoginButton, Overlay } from './styles'
-import { GithubLogo, GoogleLogo, X } from 'phosphor-react'
+import { X } from 'phosphor-react'
 import { ReactNode } from 'react'
+import Image from 'next/image'
 
 type LoginModalProps = {
   children: ReactNode
+  isAuthenticated?: boolean
 }
 
-export function LoginModal({ children }: LoginModalProps) {
+export function LoginModal({
+  children,
+  isAuthenticated = false,
+}: LoginModalProps) {
   const handleLogin = (provider: 'google' | 'github') => {
     // TODO: Implement login logic
     console.log(`Logging in with ${provider}`)
+  }
+
+  // If user is authenticated, just render children without modal
+  if (isAuthenticated) {
+    return <>{children}</>
   }
 
   return (
@@ -20,17 +30,30 @@ export function LoginModal({ children }: LoginModalProps) {
       <Dialog.Portal>
         <Overlay />
         <Content>
+          <Dialog.Title>Faça login para deixar sua avaliação</Dialog.Title>
+          <Dialog.Description hidden>
+            Entre com sua conta para poder avaliar este livro
+          </Dialog.Description>
           <CloseButton>
             <X size={24} />
           </CloseButton>
-          <h2>Faça login para deixar sua avaliação</h2>
           <div>
             <LoginButton onClick={() => handleLogin('google')}>
-              <GoogleLogo size={32} />
+              <Image
+                src="/images/icon-google.svg"
+                alt="Google"
+                width={32}
+                height={32}
+              />
               Entrar com Google
             </LoginButton>
             <LoginButton onClick={() => handleLogin('github')}>
-              <GithubLogo size={32} />
+              <Image
+                src="/images/icon-github.svg"
+                alt="GitHub"
+                width={32}
+                height={32}
+              />
               Entrar com GitHub
             </LoginButton>
           </div>
