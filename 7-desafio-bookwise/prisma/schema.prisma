@@ -16,7 +16,10 @@ datasource db {
 
 model User {
   id         String   @id @default(uuid())
+  username   String   @unique
   name       String
+  email      String   @unique 
+  emailVerified DateTime?
   avatar_url String?
   created_at DateTime @default(now())
 
@@ -78,10 +81,10 @@ model Rating {
 
 model Account {
   id                  String  @id @default(uuid())
-  user_id             String
+  userId             String
   type                String
   provider            String
-  provider_account_id String
+  providerAccountId String
   refresh_token       String?
   access_token        String?
   expires_at          Int?
@@ -89,18 +92,18 @@ model Account {
   scope               String?
   id_token            String?
   session_state       String?
-  user                User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, provider_account_id])
+  @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
 model Session {
   id            String   @id @default(cuid())
-  session_token String   @unique
-  user_id       String
+  sessionToken String   @unique
+  userId       String
   expires       DateTime
-  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }

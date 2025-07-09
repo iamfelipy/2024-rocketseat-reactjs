@@ -155,3 +155,15 @@ export const SignInButton = styled('button', {
     gap: '$4',
   },
 })
+
+export const AuthError = styled('div', {
+  marginTop: '$4',
+  padding: '$3 $4',
+  background: '$red500',
+  color: '$white',
+  fontSize: '$sm',
+  fontWeight: '$medium',
+  borderRadius: '$md',
+  textAlign: 'center',
+  border: '1px solid $red400',
+})
