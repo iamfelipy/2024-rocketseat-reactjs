@@ -14,6 +14,14 @@ export default async function handler(
     return res.status(400).json({ message: 'Missing or invalid userId' })
   }
 
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  })
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
   try {
     const lastRead = await prisma.rating.findFirst({
       where: { user_id: userId },
@@ -25,7 +33,7 @@ export default async function handler(
     })
 
     if (!lastRead) {
-      return res.status(404).json({ message: 'No recent reading found' })
+      return res.status(200).json(null)
     }
 
     const formatted = {

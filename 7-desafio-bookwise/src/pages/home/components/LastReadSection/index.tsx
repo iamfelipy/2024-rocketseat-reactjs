@@ -3,21 +3,7 @@ import { api } from '@/lib/axios'
 import BookCard from '@/components/BookCard'
 import { SectionWithHeader } from '@/components/SectionWithHeader'
 import { LastReadBook } from './styles'
-
-function useSession() {
-  return {
-    data: {
-      user: {
-        id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
-        name: 'Usuário Mock',
-        email: 'mock@email.com',
-        image: 'https://i.pravatar.cc/150?img=3',
-      },
-      expires: '2099-12-31T23:59:59.999Z',
-    },
-    status: 'authenticated',
-  }
-}
+import { useSession } from 'next-auth/react'
 
 interface LastRead {
   id: string
@@ -40,7 +26,7 @@ export function LastReadSection() {
     data: lastRead,
     isLoading,
     error,
-  } = useQuery<LastRead>({
+  } = useQuery<LastRead | null>({
     queryKey: ['last-read', userId],
     queryFn: async () => {
       const response = await api.get(`/users/${userId}/last-read`)
