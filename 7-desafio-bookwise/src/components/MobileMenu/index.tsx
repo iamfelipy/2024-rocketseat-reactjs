@@ -1,13 +1,10 @@
 import { styled } from '@/styles'
 import { List, X } from 'phosphor-react'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import { NavigationContent } from '../shared/NavigationContent'
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
-  const { pathname } = useRouter()
-  const isAuthenticated = true // This should match your auth logic
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -15,16 +12,6 @@ export default function MobileMenu() {
 
   const closeMenu = () => {
     setIsOpen(false)
-  }
-
-  const handleSignIn = () => {
-    closeMenu()
-    // Adicione lógica de login se necessário
-  }
-
-  const handleSignOut = () => {
-    closeMenu()
-    // Adicione lógica de logout se necessário
   }
 
   return (
@@ -41,13 +28,7 @@ export default function MobileMenu() {
             <X size={24} />
           </CloseButton>
         </MenuHeader>
-        <NavigationContent
-          pathname={pathname}
-          isAuthenticated={isAuthenticated}
-          onNavClick={closeMenu}
-          onSignIn={handleSignIn}
-          onSignOut={handleSignOut}
-        />
+        <NavigationContent />
       </MenuContent>
     </MobileMenuContainer>
   )
