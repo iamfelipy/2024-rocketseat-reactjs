@@ -62,8 +62,11 @@ export function NavigationContent() {
             <SignOut size={20} weight="bold" />
           </Button>
         ) : (
-          // Button triggers signIn from next-auth
-          <Button variant="login" onClick={() => signIn('google')}>
+          // Button triggers signIn from next-auth and redirects to /auth/signin
+          <Button
+            variant="login"
+            onClick={() => signIn(undefined, { callbackUrl: '/auth/signin' })}
+          >
             Fazer Login
             <SignIn size={20} weight="bold" />
           </Button>
