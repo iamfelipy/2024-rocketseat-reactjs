@@ -8,8 +8,6 @@ import { LastReadSection } from './components/LastReadSection'
 import { PopularBooksSection } from './components/PopularBooksSection'
 
 export default function HomePage() {
-  const isAuthenticated = true // ou sua lógica real
-
   return (
     <AppLayout3Cols left={<Sidebar />} right={<PopularBooksSection />}>
       <HomeContainer>
@@ -18,7 +16,7 @@ export default function HomePage() {
             <ChartLineUp size={32} weight="bold" />
             Início
           </PageTitle>
-          {isAuthenticated && <LastReadSection />}
+          <LastReadSection />
           <RecentReviewsSection />
         </Main>
       </HomeContainer>

@@ -19,8 +19,9 @@ interface LastRead {
 }
 
 export function LastReadSection() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const userId = session?.user?.id
+  const isAuthenticated = status === 'authenticated'
 
   const {
     data: lastRead,
@@ -35,6 +36,11 @@ export function LastReadSection() {
     staleTime: 1000 * 60 * 5,
     enabled: !!userId,
   })
+
+  // Don't render if user is not authenticated
+  if (!isAuthenticated) {
+    return null
+  }
 
   if (isLoading) {
     return <div>Carregando última leitura...</div>
