@@ -24,35 +24,20 @@ import type {
   UserProfile as Profile,
 } from '@/services/users.service'
 import { api } from '@/lib/axios'
-
-function useSession() {
-  return {
-    data: {
-      user: {
-        id: '4383f783-6ce1-4f92-b1dd-7a7a693c4aef',
-      },
-    },
-    status: 'authenticated',
-  }
-}
+import { useSession } from 'next-auth/react'
 
 export default function ProfilePage({
   initialReviews = [],
   profile,
 }: {
-  initialSearch: string
   initialReviews: Review[]
   profile: Profile
 }) {
-  // Get search query from URL params
-
   const router = useRouter()
   const { data: session } = useSession()
   const initialSearch = (router.query.search as string) || ''
   const [searchQuery, setSearchQuery] = useState(initialSearch)
-
-  // Get user ID from URL params or use current session user ID
-  const userId = router.query.userId as string
+  const userId = router?.query?.userId as string
 
   // Update URL when search query changes
   useEffect(() => {
@@ -61,7 +46,6 @@ export default function ProfilePage({
 
     // Determine the correct pathname based on whether we're viewing own or other's profile
     const pathname = `/profile/${userId}`
-
     router.replace(
       {
         pathname,
@@ -74,15 +58,13 @@ export default function ProfilePage({
   }, [searchQuery])
 
   // Query for reviews with React Query
-  const { data: reviews = initialReviews, isLoading } = useQuery<Review[]>({
+  const { data: reviews, isLoading } = useQuery<Review[]>({
     queryKey: ['reviews', userId, searchQuery],
     queryFn: async () => {
       const searchParams = new URLSearchParams()
-
       if (searchQuery) {
         searchParams.append('search', searchQuery)
       }
-
       const response = await api.get(
         `/users/${userId}/reviews?${searchParams.toString()}`,
       )
@@ -90,18 +72,36 @@ export default function ProfilePage({
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
     enabled: !!userId,
+    initialData: initialReviews,
   })
 
   const reviewsExist = reviews && reviews.length > 0
 
   const handleGoBack = () => {
-    // Check if there's a previous page in browser history
     if (window.history.length > 1) {
       router.back()
     } else {
-      // Fallback: go to home page if no previous page
       router.push('/')
     }
+  }
+
+  // Helper function to get appropriate message
+  const getEmptyStateMessage = () => {
+    const hasSearchQuery = searchQuery.trim().length > 0
+    const hasInitialReviews = initialReviews.length > 0
+    const isOwnProfile = session?.user?.id === userId
+
+    if (hasSearchQuery) {
+      return `Nenhuma avaliação encontrada para "${searchQuery}".`
+    }
+
+    if (!hasInitialReviews) {
+      return isOwnProfile
+        ? 'Você ainda não fez nenhuma avaliação.'
+        : 'Este usuário ainda não fez nenhuma avaliação.'
+    }
+
+    return 'Nenhuma avaliação encontrada.'
   }
 
   return (
@@ -112,7 +112,6 @@ export default function ProfilePage({
       <Main>
         <Header>
           <PageTitle>
-            {/* If the session user is the same as the profile user, show the current content, else show a back arrow and "Voltar" */}
             {session?.user?.id === userId ? (
               <>
                 <User size={32} weight="bold" />
@@ -120,7 +119,6 @@ export default function ProfilePage({
               </>
             ) : (
               <BackButtonContainer onClick={handleGoBack}>
-                {/* Left arrow and "Voltar" text */}
                 <CaretLeft size={20} weight="bold" />
                 <span>Voltar</span>
               </BackButtonContainer>
@@ -166,9 +164,7 @@ export default function ProfilePage({
                 />
               </SectionWithHeader>
             ))}
-          {!isLoading && !reviewsExist && (
-            <p>Nenhuma avaliação encontrada para esta busca.</p>
-          )}
+          {!isLoading && !reviewsExist && <p>{getEmptyStateMessage()}</p>}
         </RecentReviewsList>
       </Main>
     </AppLayout3Cols>
@@ -178,7 +174,6 @@ export default function ProfilePage({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let { search = '', userId = '' } = context.query
 
-  // If viewing another user's profile and no userId is provided, return 404
   if (!userId) {
     return {
       notFound: true,
