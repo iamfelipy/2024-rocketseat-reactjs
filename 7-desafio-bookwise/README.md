@@ -49,3 +49,46 @@ Uma plataforma onde leitores podem avaliar e ver avaliações de outros leitores
 - npm 
 
 #### 1. Clone o repositório
+
+```bash
+git clone <url-do-repositorio>
+cd 7-desafio-bookwise
+```
+
+#### 2. Inicie o container do PostgreSQL
+
+```bash
+# Inicia o container do PostgreSQL
+docker-compose up -d
+
+# Verifica se o container está rodando
+docker-compose ps
+```
+
+#### 3. Configure as variáveis de ambiente
+
+Duplique o arquivo `.env.example`, renomeie para `.env` na raiz do projeto e preencha as variáveis conforme necessário.
+
+#### 4. Instale as dependências
+
+```bash
+npm install
+```
+
+#### 5. Configure o banco de dados
+
+```bash
+# Gera e aplica as migrations
+npx prisma migrate deploy
+
+# Popula o banco com dados iniciais
+npx prisma db seed
+```
+
+#### 6. Execute o projeto
+
+```bash
+npm run dev
+```
+
+O projeto estará disponível em `http://localhost:3000`
