@@ -14,25 +14,20 @@ import {
 } from '@/pages/profile/styles'
 import dayjs from 'dayjs'
 import { SearchInput } from '@/components/SearchInput'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, dehydrate } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
-import { getUserProfileWithReviews } from '@/services/users.service'
+
 import type {
   UserReview as Review,
   UserProfile as Profile,
 } from '@/services/users.service'
 import { api } from '@/lib/axios'
 import { useSession } from 'next-auth/react'
+import { queryClient } from '@/lib/react-query'
 
-export default function ProfilePage({
-  initialReviews = [],
-  profile,
-}: {
-  initialReviews: Review[]
-  profile: Profile
-}) {
+export default function ProfilePage() {
   const router = useRouter()
   const { data: session } = useSession()
   const initialSearch = (router.query.search as string) || ''
@@ -58,7 +53,7 @@ export default function ProfilePage({
   }, [searchQuery])
 
   // Query for reviews with React Query
-  const { data: reviews, isLoading } = useQuery<Review[]>({
+  const { data: reviews = [], isLoading } = useQuery<Review[]>({
     queryKey: ['reviews', userId, searchQuery],
     queryFn: async () => {
       const searchParams = new URLSearchParams()
@@ -70,9 +65,19 @@ export default function ProfilePage({
       )
       return response.data
     },
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 10, // 10 seconds
     enabled: !!userId,
-    initialData: initialReviews,
+  })
+
+  // Query for profile with React Query
+  const { data: profile } = useQuery<Profile>({
+    queryKey: ['profile', userId],
+    queryFn: async () => {
+      const response = await api.get(`/users/${userId}/profile`)
+      return response.data
+    },
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    enabled: !!userId,
   })
 
   const reviewsExist = reviews && reviews.length > 0
@@ -88,14 +93,13 @@ export default function ProfilePage({
   // Helper function to get appropriate message
   const getEmptyStateMessage = () => {
     const hasSearchQuery = searchQuery.trim().length > 0
-    const hasInitialReviews = initialReviews.length > 0
     const isOwnProfile = session?.user?.id === userId
 
     if (hasSearchQuery) {
       return `Nenhuma avaliação encontrada para "${searchQuery}".`
     }
 
-    if (!hasInitialReviews) {
+    if (!hasSearchQuery) {
       return isOwnProfile
         ? 'Você ainda não fez nenhuma avaliação.'
         : 'Este usuário ainda não fez nenhuma avaliação.'
@@ -182,16 +186,35 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   userId = String(userId)
   search = String(search)
+
   try {
-    const { profile, reviews } = await getUserProfileWithReviews(
-      userId,
-      search as string,
-    )
+    // Prefetch queries for hydration using separate APIs
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ['reviews', userId, search],
+        queryFn: async () => {
+          const searchParams = new URLSearchParams()
+          if (search) {
+            searchParams.append('search', search)
+          }
+          const response = await api.get(
+            `/users/${userId}/reviews?${searchParams.toString()}`,
+          )
+          return response.data
+        },
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ['profile', userId],
+        queryFn: async () => {
+          const response = await api.get(`/users/${userId}/profile`)
+          return response.data
+        },
+      }),
+    ])
 
     return {
       props: {
-        profile,
-        initialReviews: reviews,
+        dehydratedState: dehydrate(queryClient),
       },
     }
   } catch (error) {

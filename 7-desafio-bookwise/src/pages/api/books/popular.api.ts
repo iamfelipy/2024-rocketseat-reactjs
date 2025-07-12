@@ -10,14 +10,12 @@ export default async function handler(
   }
 
   try {
-    // Buscar livros ordenados por média de avaliação e quantidade de avaliações
     const books = await prisma.book.findMany({
       include: {
         ratings: true,
       },
     })
 
-    // Calcular média e total de avaliações
     const booksWithRatings = books.map((book) => {
       const totalRatings = book.ratings.length
       const averageRating =
@@ -34,13 +32,11 @@ export default async function handler(
       }
     })
 
-    // Ordenar por média e depois por quantidade de avaliações
     booksWithRatings.sort((a, b) => {
       if (b.rating !== a.rating) return b.rating - a.rating
       return b.ratingsCount - a.ratingsCount
     })
 
-    // Retornar os 4 mais populares
     return res.status(200).json(booksWithRatings.slice(0, 4))
   } catch (error) {
     console.error('Error fetching popular books:', error)
