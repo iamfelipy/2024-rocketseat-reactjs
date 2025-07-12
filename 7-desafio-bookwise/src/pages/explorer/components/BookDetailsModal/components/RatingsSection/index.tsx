@@ -27,11 +27,11 @@ import { api } from '@/lib/axios'
 import { useSession } from 'next-auth/react'
 
 const ratingFormSchema = z.object({
-  rate: z.number().min(1, 'Select a rating').max(5),
+  rate: z.number().min(1, 'Selecione uma nota').max(5),
   description: z
     .string()
-    .min(1, 'Write a review')
-    .max(450, 'Maximum 450 characters'),
+    .min(1, 'Escreva uma avaliação')
+    .max(450, 'Máximo de 450 caracteres'),
 })
 
 type RatingFormData = z.infer<typeof ratingFormSchema>
