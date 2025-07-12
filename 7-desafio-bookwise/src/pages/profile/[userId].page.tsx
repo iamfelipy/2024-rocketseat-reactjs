@@ -195,7 +195,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         queryFn: async () => {
           const searchParams = new URLSearchParams()
           if (search) {
-            searchParams.append('search', search)
+            searchParams.append('search', search as string)
           }
           const response = await api.get(
             `/users/${userId}/reviews?${searchParams.toString()}`,
