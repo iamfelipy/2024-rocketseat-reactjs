@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+// eslint-disable-next-line camelcase
+import { unstable_getServerSession } from 'next-auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth].api'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,6 +14,12 @@ export default async function handler(
   }
 
   try {
+    const session = await unstable_getServerSession(req, res, authOptions)
+    if (!session?.user?.id) {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+    const userId = session.user.id
+
     const createRatingSchema = z.object({
       rate: z
         .number()
@@ -32,9 +41,6 @@ export default async function handler(
 
     const { rate, description } = bodyValidation.data
     const { bookId } = req.query
-
-    // Mock user ID - replace with actual session
-    const userId = '6624df61-5947-4f8c-9c7e-39c8c40fa158'
 
     // Check if user already rated this book
     const existingRating = await prisma.rating.findFirst({
