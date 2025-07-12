@@ -1,5 +1,4 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
 import AppLayout2Cols from '@/layouts/AppLayout2Cols'
 import Main from '@/components/Main'
 import Sidebar from '@/components/Sidebar'
@@ -15,12 +14,14 @@ import {
 import BookCard from '@/components/BookCard'
 import * as Dialog from '@radix-ui/react-dialog'
 import { BookDetailsModal } from './components/BookDetailsModal'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, dehydrate } from '@tanstack/react-query'
 import { SearchInput } from '@/components/SearchInput'
-import { prisma } from '@/lib/prisma'
 import { useRouter } from 'next/router'
 import { api } from '@/lib/axios'
+import { prisma } from '@/lib/prisma'
 import { getBooks } from '@/services/books.service'
+import { GetServerSideProps } from 'next'
+import { queryClient } from '@/lib/react-query'
 
 interface Book {
   id: string
@@ -45,31 +46,34 @@ interface Category {
   name: string
 }
 
-interface ExplorerPageProps {
-  initialBooks: Book[]
-  initialCategories: Category[]
-  initialSearch?: string
-  initialCategory?: string
-}
-
-export default function ExplorerPage({
-  initialBooks,
-  initialCategories,
-  initialSearch = '',
-  initialCategory = 'all',
-}: ExplorerPageProps) {
+export default function ExplorerPage() {
   const router = useRouter()
 
-  const [selectedTag, setSelectedTag] = React.useState(initialCategory)
+  // Get values from route query parameters
+  const searchFromRoute = (router.query.search as string) || ''
+  const categoryFromRoute = (router.query.category as string) || 'all'
+
+  const [selectedTag, setSelectedTag] = React.useState(categoryFromRoute)
   const [selectedBookId, setSelectedBookId] = React.useState<string | null>(
     null,
   )
-  const [searchQuery, setSearchQuery] = React.useState(initialSearch)
+  const [searchQuery, setSearchQuery] = React.useState(searchFromRoute)
 
+  // Sync state with route changes
+  React.useEffect(() => {
+    setSelectedTag(categoryFromRoute)
+  }, [categoryFromRoute])
+
+  React.useEffect(() => {
+    setSearchQuery(searchFromRoute)
+  }, [searchFromRoute])
+
+  // Update URL when state changes (for sharing)
   React.useEffect(() => {
     const query: Record<string, string> = {}
     if (searchQuery) query.search = searchQuery
     if (selectedTag && selectedTag !== 'all') query.category = selectedTag
+
     router.replace(
       {
         pathname: router.pathname,
@@ -81,12 +85,8 @@ export default function ExplorerPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedTag])
 
-  const { data: books, isLoading: isLoadingBooks } = useQuery({
-    queryKey: [
-      'books',
-      selectedTag !== 'all' ? selectedTag : undefined,
-      searchQuery || undefined,
-    ],
+  const { data: books = [], isLoading: isLoadingBooks } = useQuery({
+    queryKey: ['books', selectedTag, searchQuery],
     queryFn: async () => {
       const searchParams = new URLSearchParams()
 
@@ -102,17 +102,15 @@ export default function ExplorerPage({
       return response.data
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
-    initialData: initialBooks,
   })
 
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: async (): Promise<Category[]> => {
       const response = await api.get('/categories')
       return response.data
     },
     staleTime: 1000 * 60 * 10, // 10 minutes
-    initialData: initialCategories,
   })
 
   const tags = ['all', ...categories.map((cat: Category) => cat.name)]
@@ -193,24 +191,28 @@ export default function ExplorerPage({
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { search = '', category = 'all' } = ctx.query
 
-  const [books, initialCategories] = await Promise.all([
-    getBooks({
-      category: category as string,
-      search: search as string,
+  // Prefetch queries for hydration
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ['books', category as string, search as string],
+      queryFn: () =>
+        getBooks({
+          category: category as string,
+          search: search as string,
+        }),
     }),
-    prisma.category.findMany({
-      orderBy: {
-        name: 'asc',
-      },
+    queryClient.prefetchQuery({
+      queryKey: ['categories'],
+      queryFn: () =>
+        prisma.category.findMany({
+          orderBy: { name: 'asc' },
+        }),
     }),
   ])
 
   return {
     props: {
-      initialBooks: books,
-      initialCategories,
-      initialSearch: search,
-      initialCategory: category,
+      dehydratedState: dehydrate(queryClient),
     },
   }
 }
