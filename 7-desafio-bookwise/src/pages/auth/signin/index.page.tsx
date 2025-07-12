@@ -23,8 +23,8 @@ export default function SignInPage() {
   const isSignedIn = status === 'authenticated'
 
   const errorMessages: Record<string, string> = {
-    OAuthSignin: 'Erro ao iniciar login com o Google.',
-    OAuthCallback: 'Erro ao completar login com o Google.',
+    OAuthSignin: 'Erro ao iniciar login.',
+    OAuthCallback: 'Erro ao completar login.',
     AccessDenied: 'Acesso negado. Tente novamente.',
     OAuthAccountNotLinked: 'Essa conta já está vinculada a outro login.',
     permissions:
