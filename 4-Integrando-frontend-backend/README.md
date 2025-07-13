@@ -25,15 +25,10 @@ Aplicação front-end para o sistema de delivery de comida (inspirado em iFood/U
 
 - Cadastro de novo restaurante
 - Login como gerente de restaurante
-- Cadastro de novo cliente
-- Criação de pedidos para o restaurante
-- Gerenciamento do cardápio do restaurante
-- Gerenciamento das avaliações do restaurante
-- Envio de avaliações para restaurantes
-- Gerenciamento dos pedidos do restaurante
-- Atualização do perfil público do restaurante
-- Abrir/fechar restaurante
-- Listagem de métricas do restaurante
+- Gerenciamento dos pedidos do restaurante (listar, filtrar, visualizar detalhes, aprovar, cancelar, despachar, entregar)
+- Atualização do perfil público do restaurante (nome e descrição)
+- Listagem de métricas do restaurante (pedidos do dia, pedidos do mês, pedidos cancelados, faturamento do mês, gráfico de receitas diárias, produtos populares)
+- Logout
 
 Todas as funcionalidades possuem testes E2E.
 
