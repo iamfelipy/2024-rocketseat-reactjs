@@ -1,4 +1,4 @@
-# 🍕 pizza.shop
+# 🍕 PIZZA SHOP - SPA - REACT - TYPESCRIPT
 
 Single Page Application (SPA) front-end para sistema de delivery de comida, inspirado em iFood/Uber Eats.
 
