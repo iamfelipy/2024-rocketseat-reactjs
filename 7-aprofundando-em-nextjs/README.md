@@ -22,17 +22,20 @@ Aplicação de agendamento de compromissos desenvolvida com Next.js no bootcamp 
 
 ## 🚀 Tecnologias
 
-- [Next.js](https://nextjs.org/)
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Next Auth](https://next-auth.js.org/) – Login com Google
-- [Google APIs](https://github.com/googleapis/google-api-nodejs-client)
-- [Prisma ORM](https://www.prisma.io/)
-- [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) – Validação de formulários
-- [React Query](https://tanstack.com/query)
-- [Day.js](https://day.js.org/)
-- [Axios](https://axios-http.com/)
-- [Docker](https://www.docker.com/)
+- [Next.js](https://nextjs.org/) – Framework React para aplicações web modernas, com SSR, SSG e API Routes.
+- [React](https://react.dev/) – Biblioteca para construção de interfaces de usuário reativas.
+- [TypeScript](https://www.typescriptlang.org/) – Superset do JavaScript com tipagem estática.
+- [Next Auth](https://next-auth.js.org/) – Autenticação flexível, utilizada para login com Google.
+- [Google APIs](https://github.com/googleapis/google-api-nodejs-client) – Integração com Google Calendar e Google Meet.
+- [Prisma ORM](https://www.prisma.io/) – ORM para modelagem e acesso ao banco de dados PostgreSQL.
+- [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) – Gerenciamento e validação de formulários de forma performática.
+- [React Query](https://tanstack.com/query) – Gerenciamento de cache e requisições assíncronas.
+- [Day.js](https://day.js.org/) – Manipulação e formatação de datas.
+- [Axios](https://axios-http.com/) – Cliente HTTP para requisições à API.
+- [ESLint](https://eslint.org/) – Ferramenta para padronização e qualidade do código.
+- [nookies](https://github.com/maticzav/nookies) – Gerenciamento de cookies no Next.js (SSR e client-side).
+- [phosphor-react](https://phosphoricons.com/) – Biblioteca de ícones SVG personalizáveis.
+- [Docker](https://www.docker.com/) – Containerização do ambiente de desenvolvimento e produção.
 
 ## 🎨 Design (Figma)
 
