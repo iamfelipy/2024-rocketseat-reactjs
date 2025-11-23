@@ -24,13 +24,14 @@ import {
 } from './styles'
 import { useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
+import { useSession } from 'next-auth/react'
 
 const ratingFormSchema = z.object({
-  rate: z.number().min(1, 'Select a rating').max(5),
+  rate: z.number().min(1, 'Selecione uma nota').max(5),
   description: z
     .string()
-    .min(1, 'Write a review')
-    .max(450, 'Maximum 450 characters'),
+    .min(1, 'Escreva uma avaliação')
+    .max(450, 'Máximo de 450 caracteres'),
 })
 
 type RatingFormData = z.infer<typeof ratingFormSchema>
@@ -78,20 +79,9 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
   const watchedDescription = watch('description')
   const watchedRate = watch('rate')
 
-  const session = {
-    data: {
-      user: {
-        id: '6624df61-5947-4f8c-9c7e-39c8c40fa158',
-        name: 'Jaylon Franci',
-        avatarUrl:
-          'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-      },
-    },
-    status: 'authenticated',
-  }
-
-  const isLoggedIn = session.status === 'authenticated'
-  const authenticatedUser = session.data?.user
+  const { data: session, status } = useSession()
+  const isLoggedIn = status === 'authenticated'
+  const authenticatedUser = session?.user
 
   const userRating = ratings.find((r) => r.user.id === authenticatedUser?.id)
   const hasUserRated = !!userRating
@@ -189,7 +179,7 @@ export function RatingsSection({ ratings, bookId }: RatingsSectionProps) {
           <FormHeader>
             <UserInfo>
               <Avatar
-                src={authenticatedUser?.avatarUrl || ''}
+                src={authenticatedUser?.avatar_url || ''}
                 alt={authenticatedUser?.name || ''}
                 width={40}
                 height={40}

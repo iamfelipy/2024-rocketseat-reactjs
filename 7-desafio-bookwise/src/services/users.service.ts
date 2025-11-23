@@ -150,16 +150,3 @@ export async function getUserReviews({
     descriptionBottom: review.description,
   }))
 }
-
-// Utility function for SSR
-export async function getUserProfileWithReviews(
-  userId: string,
-  search?: string,
-) {
-  const [profile, reviews] = await Promise.all([
-    getUserProfile({ userId }),
-    getUserReviews({ userId, search }),
-  ])
-
-  return { profile, reviews }
-}

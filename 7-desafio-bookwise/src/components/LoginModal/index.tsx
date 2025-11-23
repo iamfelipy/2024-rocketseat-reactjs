@@ -3,6 +3,7 @@ import { CloseButton, Content, LoginButton, Overlay } from './styles'
 import { X } from 'phosphor-react'
 import { ReactNode } from 'react'
 import Image from 'next/image'
+import { signIn } from 'next-auth/react'
 
 type LoginModalProps = {
   children: ReactNode
@@ -13,11 +14,6 @@ export function LoginModal({
   children,
   isAuthenticated = false,
 }: LoginModalProps) {
-  const handleLogin = (provider: 'google' | 'github') => {
-    // TODO: Implement login logic
-    console.log(`Logging in with ${provider}`)
-  }
-
   // If user is authenticated, just render children without modal
   if (isAuthenticated) {
     return <>{children}</>
@@ -38,7 +34,7 @@ export function LoginModal({
             <X size={24} />
           </CloseButton>
           <div>
-            <LoginButton onClick={() => handleLogin('google')}>
+            <LoginButton onClick={() => signIn('google')}>
               <Image
                 src="/images/icon-google.svg"
                 alt="Google"
@@ -47,7 +43,7 @@ export function LoginModal({
               />
               Entrar com Google
             </LoginButton>
-            <LoginButton onClick={() => handleLogin('github')}>
+            <LoginButton onClick={() => signIn('github')}>
               <Image
                 src="/images/icon-github.svg"
                 alt="GitHub"
